@@ -1,0 +1,297 @@
+@startuml class_diagram
+
+package "Models" {
+    class Usuario {
+        - id: String
+        - nombreCompleto: String
+        - correoElectronico: String
+        - contrasena: String
+        - ciudad: String
+        - direccion: String
+        - latitud: Double
+        - longitud: Double
+        - esAdministrador: Boolean
+        - fechaRegistro: Date
+        + registrarse()
+        + iniciarSesion()
+        + cerrarSesion()
+        + editarPerfil()
+        + eliminarCuenta()
+        + recuperarContrasena()
+    }
+
+    class Reporte {
+        - id: String
+        - titulo: String
+        - descripcion: String
+        - categoria: CategoriaReporte
+        - latitud: Double
+        - longitud: Double
+        - fechaCreacion: Date
+        - estado: EstadoReporte
+        - contador_importante: Int
+        - estaVerificado: Boolean
+        - idCreador: String
+        - imagenes: List<String>
+        + crear()
+        + editar()
+        + eliminar()
+        + marcarComoResuelto()
+        + marcarComoImportante()
+    }
+
+    class Comentario {
+        - id: String
+        - texto: String
+        - fechaCreacion: Date
+        - idReporte: String
+        - idUsuario: String
+        + crear()
+        + editar()
+        + eliminar()
+    }
+
+    class Notificacion {
+        - id: String
+        - titulo: String
+        - mensaje: String
+        - fechaCreacion: Date
+        - leida: Boolean
+        - tipo: TipoNotificacion
+        - idDestinatario: String
+        - idReporte: String
+        - idComentario: String
+        + marcarComoLeida()
+        + eliminar()
+    }
+
+    class RechazarReporte {
+        - id: String
+        - motivo: String
+        - fechaRechazo: Date
+        - fechaLimiteModificacion: Date
+        - idReporte: String
+        - idModerador: String
+        + crear()
+    }
+
+    enum CategoriaReporte {
+        SEGURIDAD
+        EMERGENCIA_MEDICA
+        INFRAESTRUCTURA
+        MASCOTAS
+        COMUNIDAD
+    }
+
+    enum EstadoReporte {
+        CREADO
+        VERIFICADO
+        RECHAZADO
+        RESUELTO
+    }
+
+    enum TipoNotificacion {
+        NUEVO_REPORTE
+        NUEVO_COMENTARIO
+        REPORTE_VERIFICADO
+        REPORTE_RECHAZADO
+        REPORTE_RESUELTO
+    }
+}
+
+package "Services" {
+    class ServicioUsuario {
+        + registrarUsuario(usuario: Usuario): Usuario
+        + iniciarSesion(correo: String, contrasena: String): Usuario
+        + editarPerfil(usuario: Usuario): Usuario
+        + eliminarCuenta(idUsuario: String): Boolean
+        + recuperarContrasena(correo: String): Boolean
+        + obtenerUsuario(id: String): Usuario
+    }
+
+    class ServicioReporte {
+        + crearReporte(reporte: Reporte): Reporte
+        + editarReporte(reporte: Reporte): Reporte
+        + eliminarReporte(idReporte: String): Boolean
+        + verificarReporte(idReporte: String, idModerador: String): Boolean
+        + rechazarReporte(idReporte: String, motivo: String, idModerador: String): Boolean
+        + marcarComoResuelto(idReporte: String): Boolean
+        + marcarComoImportante(idReporte: String, idUsuario: String): Boolean
+        + obtenerReporteCercanos(latitud: Double, longitud: Double, radio: Double): List<Reporte>
+        + obtenerReporte(id: String): Reporte
+    }
+
+    class ServicioComentario {
+        + crearComentario(comentario: Comentario): Comentario
+        + editarComentario(comentario: Comentario): Comentario
+        + eliminarComentario(idComentario: String): Boolean
+        + obtenerComentariosPorReporte(idReporte: String): List<Comentario>
+    }
+
+    class ServicioNotificacion {
+        + enviarNotificacion(notificacion: Notificacion): Boolean
+        + obtenerNotificacionesPorUsuario(idUsuario: String): List<Notificacion>
+        + marcarNotificacionComoLeida(idNotificacion: String): Boolean
+    }
+
+    class ServicioImagen {
+        + subirImagen(imagen: File): String
+        + eliminarImagen(url: String): Boolean
+    }
+
+    class ServicioUbicacion {
+        + obtenerCoordenadas(direccion: String): Pair<Double, Double>
+        + validarDistancia(origen: Pair<Double, Double>, destino: Pair<Double, Double>): Double
+    }
+}
+
+package "Repositories" {
+    interface RepositorioUsuario {
+        + guardar(usuario: Usuario): Usuario
+        + actualizar(usuario: Usuario): Usuario
+        + eliminar(idUsuario: String): Boolean
+        + buscarPorId(id: String): Usuario
+        + buscarPorCorreo(correo: String): Usuario
+    }
+
+    interface RepositorioReporte {
+        + guardar(reporte: Reporte): Reporte
+        + actualizar(reporte: Reporte): Reporte
+        + eliminar(idReporte: String): Boolean
+        + buscarPorId(id: String): Reporte
+        + buscarPorCoordenadas(latitud: Double, longitud: Double, radio: Double): List<Reporte>
+        + buscarPorCategoria(categoria: CategoriaReporte): List<Reporte>
+        + buscarPorUsuario(idUsuario: String): List<Reporte>
+    }
+
+    interface RepositorioComentario {
+        + guardar(comentario: Comentario): Comentario
+        + actualizar(comentario: Comentario): Comentario
+        + eliminar(idComentario: String): Boolean
+        + buscarPorReporte(idReporte: String): List<Comentario>
+    }
+
+    interface RepositorioNotificacion {
+        + guardar(notificacion: Notificacion): Notificacion
+        + actualizar(notificacion: Notificacion): Notificacion
+        + eliminar(idNotificacion: String): Boolean
+        + buscarPorUsuario(idUsuario: String): List<Notificacion>
+    }
+}
+
+' Relaciones
+Usuario "1" -- "0..*" Reporte : crea >
+Usuario "1" -- "0..*" Comentario : escribe >
+Reporte "1" -- "0..*" Comentario : tiene >
+Usuario "1" -- "0..*" Notificacion : recibe >
+Reporte "1" -- "0..*" RechazarReporte : puede tener >
+Usuario "1" -- "0..*" RechazarReporte : moderador rechaza >
+
+ServicioUsuario -- RepositorioUsuario : usa >
+ServicioReporte -- RepositorioReporte : usa >
+ServicioComentario -- RepositorioComentario : usa >
+ServicioNotificacion -- RepositorioNotificacion : usa >
+
+@enduml
+
+@startuml Use_Case
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuario No Registrado" as UNR
+actor "Cliente" as CL
+actor "Administrador/Moderador" as ADM
+actor "Sistema de Notificaciones" as SN
+
+rectangle "Sistema de Reportes Comunitarios" {
+  ' Casos de uso para Usuario No Registrado
+  usecase "Registrarse" as UC1
+  usecase "Iniciar Sesión" as UC2
+  usecase "Recuperar Contraseña" as UC3
+  
+  ' Casos de uso para Cliente
+  usecase "Crear Reporte" as UC4
+  usecase "Editar Reporte Propio" as UC5
+  usecase "Eliminar Reporte Propio" as UC6
+  usecase "Visualizar Reportes en Mapa" as UC7
+  usecase "Marcar Reporte como Resuelto" as UC8
+  usecase "Marcar Reporte como Importante" as UC9
+  usecase "Agregar Comentario" as UC10
+  usecase "Ver Notificaciones" as UC11
+  usecase "Editar Perfil" as UC12
+  usecase "Eliminar Cuenta" as UC13
+  usecase "Modificar Reporte Rechazado" as UC14
+  usecase "Ver Detalle de Reporte" as UC15
+  usecase "Subir Imágenes" as UC16
+  usecase "Ver Lista de Reportes" as UC17
+  
+  ' Casos de uso para Administrador/Moderador
+  usecase "Verificar Reporte" as UC18
+  usecase "Rechazar Reporte" as UC19
+  usecase "Eliminar Cualquier Reporte" as UC20
+  usecase "Marcar Cualquier Reporte como Resuelto" as UC21
+  usecase "Gestionar Usuarios" as UC22
+  
+  ' Casos de uso para Sistema de Notificaciones
+  usecase "Enviar Notificación de Nuevo Reporte" as UC23
+  usecase "Enviar Notificación de Nuevo Comentario" as UC24
+  usecase "Enviar Notificación de Reporte Verificado" as UC25
+  usecase "Enviar Notificación de Reporte Rechazado" as UC26
+  
+  ' Relaciones para Usuario No Registrado
+  UNR --> UC1
+  UNR --> UC2
+  UNR --> UC3
+  
+  ' Relaciones para Cliente
+  CL --> UC2
+  CL --> UC3
+  CL --> UC4
+  CL --> UC5
+  CL --> UC6
+  CL --> UC7
+  CL --> UC8
+  CL --> UC9
+  CL --> UC10
+  CL --> UC11
+  CL --> UC12
+  CL --> UC13
+  CL --> UC14
+  CL --> UC15
+  CL --> UC16
+  CL --> UC17
+  
+  ' Relaciones para Administrador/Moderador
+  ADM --> UC2
+  ADM --> UC3
+  ADM --> UC7
+  ADM --> UC10
+  ADM --> UC11
+  ADM --> UC12
+  ADM --> UC13
+  ADM --> UC15
+  ADM --> UC17
+  ADM --> UC18
+  ADM --> UC19
+  ADM --> UC20
+  ADM --> UC21
+  ADM --> UC22
+  
+  ' Relaciones para Sistema de Notificaciones
+  SN --> UC23
+  SN --> UC24
+  SN --> UC25
+  SN --> UC26
+  
+  ' Relaciones de extensión e inclusión
+  UC4 ..> UC16 : <<include>>
+  UC5 ..> UC16 : <<include>>
+  UC4 ..> UC7 : <<include>>
+  UC19 ..> UC26 : <<include>>
+  UC10 ..> UC24 : <<include>>
+  UC18 ..> UC25 : <<include>>
+  UC14 ..> UC4 : <<extend>>
+}
+
+@enduml
