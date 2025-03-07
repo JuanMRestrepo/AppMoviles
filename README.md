@@ -3,16 +3,16 @@
 ## 📱 About the Project
 This project is a mobile application developed using Kotlin and Java. It is built with Android Studio and aims to provide a platform that allows citizens to easily and efficiently report risk or emergency situations in their environment..
 
-## Features
+## 🚀Features
 - User authentication (Sign up, Login, Logout)
 - Profile management
 
-## Technologies Used
+## 🛠️Technologies Used
 - Kotlin
 - Java
 - Android Studio
 
-## Installation
+## 📦Installation
 To run the project locally, follow these steps:
 
 1. Clone the repository:
