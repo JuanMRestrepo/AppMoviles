@@ -1,4 +1,4 @@
-@startuml class_diagram
+@startuml Models
 
 package "Models" {
     class Usuario {
@@ -7,9 +7,6 @@ package "Models" {
         - correoElectronico: String
         - contrasena: String
         - ciudad: String
-        - direccion: String
-        - latitud: Double
-        - longitud: Double
         - esAdministrador: Boolean
         - fechaRegistro: Date
         + registrarse()
@@ -25,8 +22,7 @@ package "Models" {
         - titulo: String
         - descripcion: String
         - categoria: CategoriaReporte
-        - latitud: Double
-        - longitud: Double
+        - Ciudad : String
         - fechaCreacion: Date
         - estado: EstadoReporte
         - contador_importante: Int
@@ -98,7 +94,17 @@ package "Models" {
         REPORTE_RESUELTO
     }
 }
+' Relaciones
+Usuario "1" -- "0..*" Reporte : crea >
+Usuario "1" -- "0..*" Comentario : escribe >
+Reporte "1" -- "0..*" Comentario : tiene >
+Usuario "1" -- "0..*" Notificacion : recibe >
+Reporte "1" -- "0..*" RechazarReporte : puede tener >
+Usuario "1" -- "0..*" RechazarReporte : moderador rechaza >
 
+@enduml
+
+@startuml Services & Repositories
 package "Services" {
     class ServicioUsuario {
         + registrarUsuario(usuario: Usuario): Usuario
@@ -180,13 +186,6 @@ package "Repositories" {
 }
 
 ' Relaciones
-Usuario "1" -- "0..*" Reporte : crea >
-Usuario "1" -- "0..*" Comentario : escribe >
-Reporte "1" -- "0..*" Comentario : tiene >
-Usuario "1" -- "0..*" Notificacion : recibe >
-Reporte "1" -- "0..*" RechazarReporte : puede tener >
-Usuario "1" -- "0..*" RechazarReporte : moderador rechaza >
-
 ServicioUsuario -- RepositorioUsuario : usa >
 ServicioReporte -- RepositorioReporte : usa >
 ServicioComentario -- RepositorioComentario : usa >
