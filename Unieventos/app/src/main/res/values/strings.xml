@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Unieventos</string>
+    <string name="emailValidation">El correo no es válido</string>
+    <string name="emailLabel">Correo electrónico</string>
+    <string name="passwordValidation">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="passwordLabel">Contraseña</string>
+    <string name="loginButton">Login</string>
+    <string name="registerButton">Registro</string>
+    <string name="welcomeMessage">Bienvenido</string>
+    <string name="loginValidation">Correo o contraseña incorrectos</string>
+    <string name="messageTest">En construccion :)</string>
+    <string name="userIconDescription">Icono de usuario</string>
+</resources>
