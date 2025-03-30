@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.unieventos.ui.navigation.Navigation
 import com.unieventos.ui.screens.HomeScreen
 import com.unieventos.ui.screens.LoginScreen
 import com.unieventos.ui.screens.SingUpScreen
@@ -16,10 +17,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UnieventosTheme {
+                UnieventosTheme {
+                    Navigation()
+                }
                 //HomeScreen()
-                //LoginScreen()
-                //SingUpScreen()
-                PruebaScreen()
             }
         }
     }

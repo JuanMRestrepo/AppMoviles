@@ -31,7 +31,9 @@ import androidx.compose.ui.unit.sp
 import com.unieventos.R
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateToLogIn: () -> Unit
+) {
 
     Scaffold { paddingValues ->
         Box(
@@ -39,6 +41,7 @@ fun HomeScreen() {
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
+
 
             Image(
                 painter = painterResource(id = R.drawable.fondo),
@@ -92,7 +95,7 @@ fun HomeScreen() {
                         contentColor = Color.White
                     ),
                     onClick = {
-                        /* Acción de login */
+                        navigateToLogIn()
                     }
                 ) {
                     Text(text = infoBoton, fontSize = 18.sp)
@@ -114,6 +117,8 @@ fun HomeScreen() {
                         }
                     )
                 }
+
+
             }
         }
     }
