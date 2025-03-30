@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.unieventos.ui.screens.HomeScreen
 import com.unieventos.ui.screens.LoginScreen
-import com.unieventos.ui.screens.PruebaScreen
 import com.unieventos.ui.screens.SingUpScreen
+import com.unieventos.ui.screens.PruebaScreen
 import com.unieventos.ui.theme.UnieventosTheme
 
 class MainActivity : ComponentActivity() {
