@@ -8,6 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import com.unieventos.ui.screens.HomeScreen
 import com.unieventos.ui.screens.LoginScreen
 import com.unieventos.ui.screens.SingUpScreen
+import com.unieventos.ui.screens.RestartPassword1
+import com.unieventos.ui.screens.RestartPassword2
 
 @Composable
 fun Navigation(){
@@ -24,14 +26,52 @@ fun Navigation(){
                     navigateToLogIn = {
                         navController.navigate(RouteScreen.LoginScreen)
                     }
+                    ,
+                    navigateToSingUp = {
+                        navController.navigate(RouteScreen.SingUpScreen)
+                    }
                 )
             }
+
             composable <RouteScreen.LoginScreen> {
-                LoginScreen()
+                LoginScreen(
+                    navigateToRestart = {
+                        navController.navigate(RouteScreen.RestartPassword1Screen)
+                    },
+                    navigateToSingUp = {
+                        navController.navigate(RouteScreen.SingUpScreen)
+                    }
+                )
             }
+
             composable <RouteScreen.SingUpScreen> {
-                SingUpScreen()
+                SingUpScreen(
+                    navigateToLogIn = {
+                        navController.navigate(RouteScreen.LoginScreen)
+                    }
+                )
             }
+
+            composable <RouteScreen.RestartPassword2Screen> {
+                RestartPassword2 (
+                    navigateToLogIn = {
+                        navController.navigate(RouteScreen.LoginScreen)
+                    }
+                )
+            }
+
+            composable <RouteScreen.RestartPassword1Screen> {
+                RestartPassword1 (
+                    navigateToLogIn = {
+                        navController.navigate(RouteScreen.LoginScreen)
+                    }
+                    ,
+                    navigateToRestart2 = {
+                        navController.navigate(RouteScreen.RestartPassword2Screen)
+                    }
+                )
+            }
+
         }
     }
 }

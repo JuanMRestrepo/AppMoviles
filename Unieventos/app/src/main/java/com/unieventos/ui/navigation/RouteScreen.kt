@@ -11,8 +11,13 @@ sealed class RouteScreen {
     data object LoginScreen : RouteScreen()
 
     @Serializable
-    data object SingUpScreen : RouteScreen()
+    data object RestartPassword1Screen : RouteScreen()
 
+    @Serializable
+    data object RestartPassword2Screen : RouteScreen()
+
+    @Serializable
+    data object SingUpScreen : RouteScreen()
 
 
 }

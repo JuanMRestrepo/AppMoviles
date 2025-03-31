@@ -32,7 +32,8 @@ import com.unieventos.R
 
 @Composable
 fun HomeScreen(
-    navigateToLogIn: () -> Unit
+    navigateToLogIn: () -> Unit,
+    navigateToSingUp: () -> Unit
 ) {
 
     Scaffold { paddingValues ->
@@ -41,7 +42,6 @@ fun HomeScreen(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-
 
             Image(
                 painter = painterResource(id = R.drawable.fondo),
@@ -113,12 +113,10 @@ fun HomeScreen(
                         color = Color(0xFFFF4B3A),
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable {
-                            /* Acción de singup */
+                            navigateToSingUp()
                         }
                     )
                 }
-
-
             }
         }
     }

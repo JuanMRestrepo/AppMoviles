@@ -42,8 +42,10 @@ import com.unieventos.R
 import com.unieventos.ui.components.TextFieldForm
 
 @Composable
-fun LoginScreen() {
-
+fun LoginScreen(
+    navigateToRestart: () -> Unit,
+    navigateToSingUp: () -> Unit
+) {
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
@@ -126,9 +128,11 @@ fun LoginScreen() {
                                         .width(200.dp)
                                         .height(50.dp)
                                         .align(Alignment.CenterEnd),
-                                    onClick = {},
                                     colors = ButtonDefaults.buttonColors(Color(0xFFD3CED5)),
-                                    shape = RoundedCornerShape(20.dp)
+                                    shape = RoundedCornerShape(20.dp),
+                                    onClick = {
+                                        navigateToSingUp()
+                                    },
                                 ) {
                                     Text("Sign Up", color = Color.White)
                                 }
@@ -210,7 +214,7 @@ fun LoginScreen() {
                             text = "Forgot Password?",
                             color = Color.Black,
                             modifier = Modifier.clickable {
-                                /* Acción de singup */
+                                navigateToRestart()
                             }
                         )
                     }
