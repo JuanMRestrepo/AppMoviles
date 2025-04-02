@@ -19,5 +19,8 @@ sealed class RouteScreen {
     @Serializable
     data object SingUpScreen : RouteScreen()
 
+    @Serializable
+    data object VerificationAccountScreen : RouteScreen()
+
 
 }

@@ -1,14 +1,16 @@
 package com.unieventos.ui.components
 
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
@@ -26,17 +28,15 @@ fun TextFieldForm(
 
     var isError by rememberSaveable { mutableStateOf(false) }
 
-    OutlinedTextField(
+    TextField(
         modifier = modifier,
         value = value,
-        singleLine = true,
         isError = isError,
         supportingText = {
             if(isError){
                 Text(text = supportingText)
             }
         },
-
         visualTransformation = if(isPassword) {PasswordVisualTransformation()} else {VisualTransformation.None},
         keyboardOptions = keyboardOptions,
         label = {
@@ -45,6 +45,16 @@ fun TextFieldForm(
         onValueChange = {
             onValueChange(it)
             isError = onValidate(it)
-        }
+        },
+        colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = Color.Black,
+            errorIndicatorColor = Color.Red,
+            unfocusedIndicatorColor = Color.Gray,
+            disabledIndicatorColor = Color.Transparent,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            errorContainerColor = Color.White,
+            disabledContainerColor = Color.White
+        )
     )
 }

@@ -1,10 +1,9 @@
 package com.unieventos.ui.screens
 
-import android.content.Context
+import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,14 +15,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,22 +35,31 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.DropdownMenu
+import com.unieventos.ui.components.TextFieldForm
+import com.unieventos.ui.components.TextFieldSing
 
 @Composable
 fun SingUpScreen(
-    navigateToLogIn: () -> Unit
+    navigateToLogIn: () -> Unit,
+    navigateToVerification: () -> Unit
 ) {
     Scaffold { padding ->
-        SingUpForm(padding, navigateToLogIn)
+        SingUpForm(padding, navigateToLogIn, navigateToVerification)
     }
 }
 
 @Composable
-fun SingUpForm(padding: PaddingValues, navigateToLogIn: () -> Unit) {
+fun SingUpForm(
+    padding: PaddingValues,
+    navigateToLogIn: () -> Unit,
+    navigateToVerification: () -> Unit
+) {
+
     val context = LocalContext.current
 
     Box(
@@ -65,13 +71,13 @@ fun SingUpForm(padding: PaddingValues, navigateToLogIn: () -> Unit) {
         val cities = listOf("Armenia", "Pereira", "Manizales")
         var name by rememberSaveable { mutableStateOf("") }
         var city by rememberSaveable { mutableStateOf("") }
-        var addres by rememberSaveable { mutableStateOf("") }
+        var address by rememberSaveable { mutableStateOf("") }
         var email by rememberSaveable { mutableStateOf("") }
         var password by rememberSaveable { mutableStateOf("") }
 
         Image(
             painter = painterResource(id = R.drawable.fondo),
-            contentDescription = "imagen de fondo",
+            contentDescription = stringResource(id = R.string.imageFond),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(140.dp)
@@ -99,7 +105,6 @@ fun SingUpForm(padding: PaddingValues, navigateToLogIn: () -> Unit) {
             Image(
                 painter = painterResource(id = R.drawable.logo_report),
                 contentDescription = stringResource(id = R.string.imageLogo),
-
                 modifier = Modifier
                     .width(200.dp)
                     .height(220.dp)
@@ -126,11 +131,15 @@ fun SingUpForm(padding: PaddingValues, navigateToLogIn: () -> Unit) {
                         .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+
+                    val infoBtnLogin = stringResource(id = R.string.logInBtn)
+                    val infoBtnSignup = stringResource(id = R.string.singUpText)
+                    val registerCorrect = stringResource(id = R.string.registerSuccessfully)
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                            .padding(top = 20.dp)
                     ) {
                         Box(
                             modifier = Modifier.fillMaxWidth()
@@ -146,7 +155,7 @@ fun SingUpForm(padding: PaddingValues, navigateToLogIn: () -> Unit) {
                                     navigateToLogIn()
                                 }
                             ) {
-                                Text("Log in", color = Color.White)
+                                Text(infoBtnLogin, color = Color.White)
                             }
                             Button(
                                 modifier = Modifier
@@ -157,37 +166,26 @@ fun SingUpForm(padding: PaddingValues, navigateToLogIn: () -> Unit) {
                                 colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
                                 shape = RoundedCornerShape(20.dp)
                             ) {
-                                Text("Sign Up", color = Color.White)
+                                Text(infoBtnSignup, color = Color.White)
                             }
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
 
                     Text(
-                        text = "Create New Account",
+                        text = stringResource(id = R.string.newAccount),
                         color = Color.Black,
                         fontSize = 23.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
+                        fontWeight = FontWeight.Bold
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    TextField(
+                    TextFieldSing(
                         value = name,
-                        onValueChange = { name = it },
-                        label = { Text("Name") },
-                        modifier = Modifier.width(280.dp),
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Color.Black,
-                            unfocusedIndicatorColor = Color.Gray,
-                            disabledIndicatorColor = Color.Transparent,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent
-                        )
+                        onValueChange = {name = it},
+                        label = stringResource(id = R.string.nameLabel)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -202,69 +200,57 @@ fun SingUpForm(padding: PaddingValues, navigateToLogIn: () -> Unit) {
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    TextField(
-                        value = addres,
-                        onValueChange = { addres = it },
-                        label = { Text(text = stringResource(id = R.string.address)) },
-                        modifier = Modifier.width(280.dp),
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Color.Black,
-                            unfocusedIndicatorColor = Color.Gray,
-                            disabledIndicatorColor = Color.Transparent,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent
-                        )
+                    TextFieldSing(
+                        value = address,
+                        onValueChange = {address = it},
+                        label = stringResource(id = R.string.addressLabel)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    TextField(
+                    TextFieldForm(
                         value = email,
-                        onValueChange = { email = it },
-                        label = { Text(text = stringResource(id = R.string.emailLabel)) },
-                        modifier = Modifier.width(280.dp),
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Color.Black,
-                            unfocusedIndicatorColor = Color.Gray,
-                            disabledIndicatorColor = Color.Transparent,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent
-                        )
+                        onValueChange = {
+                            email = it
+                        },
+                        supportingText = stringResource(id = R.string.emailValidation),
+                        label = stringResource(id = R.string.emailLabel),
+                        onValidate = {
+                            !Patterns.EMAIL_ADDRESS.matcher(it).matches()
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        isPassword = false
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    TextField(
+                    TextFieldForm(
                         value = password,
-                        onValueChange = { password = it },
-                        label = { Text(text = stringResource(id = R.string.passwordLabel)) },
-                        modifier = Modifier.width(280.dp),
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Color.Black,
-                            unfocusedIndicatorColor = Color.Gray,
-                            disabledIndicatorColor = Color.Transparent,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent
-                        )
+                        onValueChange = {
+                            password = it
+                        },
+                        supportingText = stringResource(id = R.string.passwordValidation),
+                        label = stringResource(id = R.string.passwordLabel),
+                        onValidate = {
+                            password.length < 6
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        isPassword = true
                     )
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(35.dp))
 
                     Button(
                         colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
                         shape = RoundedCornerShape(30.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 30.dp)
                             .height(60.dp),
                         onClick = {
-                            Toast.makeText(context, "Registrado con éxito", Toast.LENGTH_SHORT).show()
+                            navigateToVerification()
                         },
                     ) {
-                        Text("Sign Up", color = Color.White)
+                        Text(infoBtnSignup, color = Color.White)
                     }
                 }
             }

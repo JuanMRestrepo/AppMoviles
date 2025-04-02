@@ -72,6 +72,8 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
+                val infoBoton = stringResource(id = R.string.logInBtn)
+
                 Spacer(modifier = Modifier.height(60.dp))
 
                 Image(
@@ -83,7 +85,6 @@ fun HomeScreen(
                 )
 
                 Spacer(modifier = Modifier.height(400.dp))
-                val infoBoton = stringResource(id = R.string.logInBtn)
 
                 Button (
                     modifier = Modifier

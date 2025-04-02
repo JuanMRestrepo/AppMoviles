@@ -1,27 +1,44 @@
 <resources>
     <string name="app_name">Unieventos</string>
-    <string name="emailValidation">El correo no es válido</string>
-    <string name="passwordValidation">La contraseña debe tener al menos 6 caracteres</string>
-    <string name="loginButton">Login</string>
     <string name="registerButton">Registro</string>
     <string name="welcomeMessage">Bienvenido</string>
     <string name="loginValidation">Correo o contraseña incorrectos</string>
     <string name="messageTest">En construccion :)</string>
     <string name="userIconDescription">Icono de usuario</string>
 
-    <string name="imageFond">Imagen de fondo</string>
-    <string name="imageLogo">Imagen logo de la aplicacion</string>
+    <string name="imageFond">Background image</string>
+    <string name="imageLogo">Application logo image</string>
     <string name="noAccount">Don\'t have an account? </string>
     <string name="logInBtn">Log in</string>
     <string name="singUpText">Sign up</string>
-    <string name="passwordLabel">Password</string>
     <string name="passwordConfLabel">Confirm Password</string>
     <string name="codeSent">Enter code</string>
     <string name="resendCode">Resend code</string>
-    <string name="address">Address</string>
+    <string name="addressLabel">Address</string>
     <string name="emailLabel">Email</string>
-
-
+    <string name="emailValidation">The email is not valid</string>
+    <string name="passwordLabel">Password</string>
+    <string name="passwordValidation">The password must be at least 6 characters long</string>
+    <string name="welcomeHome">Welcome to Save Report</string>
+    <string name="forgotPswd">Forgot Password?</string>
+    <string name="newAccount">Create New Account</string>
+    <string name="nameLabel">Name</string>
+    <string name="registerSuccessfully">Successfully registered</string>
+    <string name="returnIcon">Return</string>
+    <string name="homeIcon">Home</string>
+    <string name="recoverLabel">Recover password</string>
+    <string name="yourEmailLabel">Enter your email</string>
+    <string name="sendCodeLbl">Send code</string>
+    <string name="enterCodeLbl">Enter the code we sent to your email</string>
+    <string name="codeValidation">Enter a valid code</string>
+    <string name="validateAccountLbl">Validate account</string>
+    <string name="enterPasswordLbl">Enter your new password</string>
+    <string name="enterPassword2Lbl">Repeat your new password</string>
+    <string name="importantLbl">Important: </string>
+    <string name="restText">Make sure you set a strong password with numbers</string>
+    <string name="changePasswordLbl">Change password</string>
+    <string name="verificationLbl">We are verifying your</string>
+    <string name="verificationLbl2">account...</string>
 
 
 

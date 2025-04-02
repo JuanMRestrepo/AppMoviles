@@ -43,7 +43,8 @@ import com.unieventos.ui.components.TextFieldForm
 
 @Composable
 fun RestartPassword2(
-    navigateToLogIn: () -> Unit
+    navigateToHome: () -> Unit,
+    navigateToRestart1: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Column(
@@ -67,27 +68,26 @@ fun RestartPassword2(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton (
-                        onClick = {navigateToLogIn()
+                        onClick = {
+                            navigateToRestart1()
                         }
                     ) {
                         Icon(
-                            painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel),
-                            contentDescription = "Close",
+                            painter = painterResource(
+                                id = android.R.drawable.ic_menu_revert),
+                            contentDescription = stringResource(id = R.string.returnIcon),
                             tint = Color.White
                         )
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(onClick = { /* TODO: Handle share action */ }) {
+                    IconButton(
+                        onClick = {
+                            navigateToHome()
+                        }
+                    ) {
                         Icon(
-                            painter = painterResource(id = android.R.drawable.ic_menu_share),
-                            contentDescription = "Share",
-                            tint = Color.White
-                        )
-                    }
-                    IconButton(onClick = { /* TODO: Handle notifications action */ }) {
-                        Icon(
-                            painter = painterResource(id = android.R.drawable.ic_dialog_info),
-                            contentDescription = "Notifications",
+                            painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel),
+                            contentDescription = stringResource(id = R.string.homeIcon),
                             tint = Color.White
                         )
                     }
@@ -114,6 +114,9 @@ fun RestartPassword2(
                             .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
+                        val changeLbl = stringResource(id = R.string.changePasswordLbl)
+
                         Box(
                             modifier = Modifier
                                 .width(280.dp)
@@ -121,10 +124,10 @@ fun RestartPassword2(
                             contentAlignment = Alignment.Center
                         )
                         {
+
                             Image(
                                 painter = painterResource(id = R.drawable.save_report),
                                 contentDescription = stringResource(id = R.string.imageLogo),
-
                                 modifier = Modifier
                                     .width(190.dp)
                                     .height(190.dp)
@@ -140,7 +143,7 @@ fun RestartPassword2(
                         }
 
                         Text(
-                            text = "Recover password",
+                            text = stringResource(id = R.string.recoverLabel),
                             color = Color(0xFEE53935),
                             fontSize = 30.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -151,7 +154,7 @@ fun RestartPassword2(
                         Spacer(modifier = Modifier.height(40.dp))
 
                         Text(
-                            text = "Enter your new password",
+                            text = stringResource(id = R.string.enterPasswordLbl),
                             color = Color.Black,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -176,7 +179,7 @@ fun RestartPassword2(
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Text(
-                            text = "Repeat your new password",
+                            text = stringResource(id = R.string.enterPassword2Lbl),
                             color = Color.Black,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -206,10 +209,10 @@ fun RestartPassword2(
                                 .padding(start = 30.dp),
                             text = buildAnnotatedString {
                                 withStyle(style = SpanStyle(color = Color(0xFFFF4A3D))) {
-                                    append("Important: ")
+                                    append(stringResource(id = R.string.importantLbl))
                                 }
                                 withStyle(style = SpanStyle(color = Color.Black)) {
-                                    append("Make sure you set a strong password with numbers")
+                                    append(stringResource(id = R.string.restText))
                                 }
                             },
                             fontSize = 15.sp,
@@ -228,13 +231,12 @@ fun RestartPassword2(
 
                             },
                         ) {
-                            Text("Change password", color = Color.White,
+                            Text(changeLbl, color = Color.White,
                                 fontSize = 17.sp, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
             }
-
         }
     }
 }

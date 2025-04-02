@@ -10,6 +10,7 @@ import com.unieventos.ui.screens.LoginScreen
 import com.unieventos.ui.screens.SingUpScreen
 import com.unieventos.ui.screens.RestartPassword1
 import com.unieventos.ui.screens.RestartPassword2
+import com.unieventos.ui.screens.VerificationAccountScreen
 
 @Composable
 fun Navigation(){
@@ -25,8 +26,7 @@ fun Navigation(){
                 HomeScreen(
                     navigateToLogIn = {
                         navController.navigate(RouteScreen.LoginScreen)
-                    }
-                    ,
+                    },
                     navigateToSingUp = {
                         navController.navigate(RouteScreen.SingUpScreen)
                     }
@@ -48,14 +48,20 @@ fun Navigation(){
                 SingUpScreen(
                     navigateToLogIn = {
                         navController.navigate(RouteScreen.LoginScreen)
+                    },
+                    navigateToVerification = {
+                        navController.navigate(RouteScreen.VerificationAccountScreen)
                     }
                 )
             }
 
             composable <RouteScreen.RestartPassword2Screen> {
                 RestartPassword2 (
-                    navigateToLogIn = {
-                        navController.navigate(RouteScreen.LoginScreen)
+                    navigateToRestart1 = {
+                        navController.navigate(RouteScreen.RestartPassword1Screen)
+                    },
+                    navigateToHome = {
+                        navController.navigate(RouteScreen.HomeScreen)
                     }
                 )
             }
@@ -64,13 +70,31 @@ fun Navigation(){
                 RestartPassword1 (
                     navigateToLogIn = {
                         navController.navigate(RouteScreen.LoginScreen)
-                    }
-                    ,
+                    },
                     navigateToRestart2 = {
                         navController.navigate(RouteScreen.RestartPassword2Screen)
+                    },
+                    navigateToHome = {
+                        navController.navigate(RouteScreen.HomeScreen)
                     }
                 )
             }
+
+            composable <RouteScreen.VerificationAccountScreen> {
+                VerificationAccountScreen(
+                    navigateToSingUp = {
+                        navController.navigate(RouteScreen.SingUpScreen)
+                    },
+                    navigateToHome = {
+                        navController.navigate(RouteScreen.HomeScreen)
+                    },
+                    navigateToLogIn = {
+                        navController.navigate(RouteScreen.LoginScreen)
+                    }
+                )
+            }
+
+
 
         }
     }

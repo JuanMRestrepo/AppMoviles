@@ -1,7 +1,6 @@
 package com.unieventos.ui.screens
 
 import android.util.Patterns
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -33,19 +31,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.ui.components.ItemText
 import com.unieventos.ui.components.TextFieldForm
 
 @Composable
-fun RestartPassword1(
-    navigateToLogIn: () -> Unit,
+fun VerificationAccountScreen(
+    navigateToSingUp: () -> Unit,
     navigateToHome: () -> Unit,
-    navigateToRestart2: () -> Unit
+    navigateToLogIn: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Column(
@@ -55,10 +53,9 @@ fun RestartPassword1(
                 .background(Color(0xFFE6E6E6)),
         ) {
 
-            var email by rememberSaveable { mutableStateOf("") }
             var code by rememberSaveable { mutableStateOf("") }
-            val sendCode = stringResource(id = R.string.sendCodeLbl);
-            val validateAccount = stringResource(id = R.string.validateAccountLbl);
+            val verificationLbl = stringResource(id = R.string.verificationLbl);
+            val verificationLbl2 = stringResource(id = R.string.verificationLbl2);
 
             Box(
                 modifier = Modifier
@@ -73,7 +70,7 @@ fun RestartPassword1(
                 ) {
                     IconButton (
                         onClick = {
-                            navigateToLogIn()
+                            navigateToSingUp()
                         }
                     ) {
                         Icon(
@@ -84,7 +81,6 @@ fun RestartPassword1(
                         )
                     }
                     Spacer(modifier = Modifier.weight(1f))
-
                     IconButton(
                         onClick = {
                             navigateToHome()
@@ -103,109 +99,90 @@ fun RestartPassword1(
 
             Box(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .padding(top = 30.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
+
+                Column (
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    ItemText(
+                        supportingText = verificationLbl
+                    )
+
+                    ItemText(
+                        supportingText = verificationLbl2
+                    )
+                }
+
                 Surface(
                     modifier = Modifier
+                        .padding(top = 110.dp)
                         .width(355.dp)
-                        .height(740.dp),
+                        .height(560.dp),
                     color = Color.White,
                     shape = RoundedCornerShape(40.dp)
                 ) {
-
                     Column(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .padding(20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Box(
-                            modifier = Modifier
-                                .width(280.dp)
-                                .height(120.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.save_report),
-                                contentDescription = stringResource(id = R.string.imageLogo),
-                                modifier = Modifier
-                                    .width(90.dp)
-                                    .height(90.dp)
-                            )
+                        val infoBtnLogin = stringResource(id = R.string.logInBtn)
+                        val infoBtnSignup = stringResource(id = R.string.singUpText)
+                        val validateAccountLbl = stringResource(id = R.string.validateAccountLbl)
 
-                            HorizontalDivider(
-                                color = Color(0xFEE53935),
-                                thickness = 1.dp,
-                                modifier = Modifier.
-                                padding(top = 70.dp)
-                            )
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 40.dp)
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxWidth()
+                            ){
+                                Button(
+                                    modifier = Modifier
+                                        .width(200.dp)
+                                        .height(50.dp)
+                                        .align(Alignment.CenterStart),
+                                    colors = ButtonDefaults.buttonColors(Color(0xFFD3CED5)),
+                                    shape = RoundedCornerShape(20.dp),
+                                    onClick = {
+                                        navigateToLogIn()
+                                    }
+                                ) {
+                                    Text(infoBtnLogin, color = Color.White)
+                                }
+                                Button(
+                                    modifier = Modifier
+                                        .width(150.dp)
+                                        .height(50.dp)
+                                        .align(Alignment.CenterEnd),
+                                    onClick = { },
+                                    colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
+                                    shape = RoundedCornerShape(20.dp)
+                                ) {
+                                    Text(infoBtnSignup, color = Color.White)
+                                }
+                            }
                         }
 
-                        Text(
-                            text = stringResource(id = R.string.recoverLabel),
-                            color = Color(0xFEE53935),
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier
-                                .padding(top = 15.dp)
-                                .padding(start = 40.dp)
-                                .align(alignment = Alignment.Start)
-                        )
-
-                        Spacer(modifier = Modifier.height(25.dp))
-
-                        Text(
-                            text = stringResource(id = R.string.yourEmailLabel),
-                            color = Color.Black,
-                            fontSize = 13.sp,
-                            modifier = Modifier
-                                .padding(start = 40.dp)
-                                .align(alignment = Alignment.Start)
-                        )
-
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        TextFieldForm(
-                            value = email,
-                            onValueChange = {
-                                email = it
-                            },
-                            supportingText = stringResource(id = R.string.emailValidation),
-                            label = stringResource(id = R.string.emailLabel),
-                            onValidate = {
-                                !Patterns.EMAIL_ADDRESS.matcher(it).matches()
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            isPassword = false
-                        )
-
-                        Button(
-                            colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
-                            shape = RoundedCornerShape(30.dp),
-                            modifier = Modifier
-                                .width(160.dp)
-                                .padding(top = 20.dp)
-                                .height(50.dp),
-                            onClick = {
-
-                            },
-                        ) {
-                            Text(sendCode, color = Color.White,
-                                fontSize = 17.sp, fontWeight = FontWeight.Bold)
-                        }
-
-                        Spacer(modifier = Modifier.height(30.dp))
+                        Spacer(modifier = Modifier.height(40.dp))
 
                         Text(
                             text = stringResource(id = R.string.enterCodeLbl),
                             color = Color.Black,
-                            fontSize = 13.sp,
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .align(alignment = Alignment.CenterHorizontally)
                         )
 
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        //Verificar validacion de codigo enviado
+                        Spacer(modifier = Modifier.height(60.dp))
 
                         TextFieldForm(
                             value = code,
@@ -229,7 +206,6 @@ fun RestartPassword1(
                             color = Color(0xFFFF4B3A),
                             textDecoration = TextDecoration.Underline,
                             modifier = Modifier.clickable {
-                                /* Acción de reenviar codigo */
                             }
                         )
 
@@ -239,14 +215,13 @@ fun RestartPassword1(
                             colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
                             shape = RoundedCornerShape(30.dp),
                             modifier = Modifier
-                                .width(300.dp)
-                                .height(60.dp),
-                            onClick = {
-                                navigateToRestart2()
-                            },
+                                .fillMaxWidth()
+                                .height(80.dp)
+                                .padding(top = 30.dp)
+                            ,
+                            onClick = { },
                         ) {
-                            Text(validateAccount, color = Color.White,
-                                fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                            Text(validateAccountLbl, color = Color.White)
                         }
                     }
                 }
@@ -254,4 +229,3 @@ fun RestartPassword1(
         }
     }
 }
-

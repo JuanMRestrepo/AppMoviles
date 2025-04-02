@@ -22,6 +22,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,7 +59,7 @@ fun LoginScreen(
 
             Image(
                 painter = painterResource(id = R.drawable.fondo),
-                contentDescription = "iamgen de fondo",
+                contentDescription = stringResource(id = R.string.imageFond),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(350.dp)
@@ -86,7 +87,6 @@ fun LoginScreen(
                 Image(
                     painter = painterResource(id = R.drawable.logo_report),
                     contentDescription = stringResource(id = R.string.imageLogo),
-
                     modifier = Modifier
                         .width(200.dp)
                         .height(220.dp)
@@ -107,18 +107,20 @@ fun LoginScreen(
                     color = Color.White,
                     shape = RoundedCornerShape(40.dp)
                 ) {
-
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
+                        val infoBtnLogin = stringResource(id = R.string.logInBtn)
+                        val infoBtnSignup = stringResource(id = R.string.singUpText)
+
                         Row (
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 20.dp),
-                            horizontalArrangement = Arrangement.SpaceEvenly
+                                .padding(top = 20.dp)
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxWidth()
@@ -134,7 +136,7 @@ fun LoginScreen(
                                         navigateToSingUp()
                                     },
                                 ) {
-                                    Text("Sign Up", color = Color.White)
+                                    Text(infoBtnSignup, color = Color.White)
                                 }
                                 Button(
                                     modifier = Modifier
@@ -146,20 +148,18 @@ fun LoginScreen(
                                     onClick = {
                                     }
                                 ) {
-                                    Text("Log in", color = Color.White)
+                                    Text(infoBtnLogin, color = Color.White)
                                 }
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(40.dp))
 
                         Text(
-                            text = "Welcome to Save Report",
+                            text = stringResource(id = R.string.welcomeHome),
                             color = Color.Black,
                             fontSize = 23.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .padding(top = 30.dp)
+                            fontWeight = FontWeight.Bold
                         )
 
                         Spacer(modifier = Modifier.height(40.dp))
@@ -199,19 +199,22 @@ fun LoginScreen(
                             shape = RoundedCornerShape(30.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .height(80.dp)
                                 .padding(top = 30.dp)
-                                .height(60.dp),
+                            ,
                             onClick = {
-
+                                /*
+                                    INICIO DE SESIÓN
+                                */
                             },
                         ) {
-                            Text("Log in", color = Color.White)
+                            Text(infoBtnLogin, color = Color.White)
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Text(
-                            text = "Forgot Password?",
+                            text = stringResource(id = R.string.forgotPswd),
                             color = Color.Black,
                             modifier = Modifier.clickable {
                                 navigateToRestart()

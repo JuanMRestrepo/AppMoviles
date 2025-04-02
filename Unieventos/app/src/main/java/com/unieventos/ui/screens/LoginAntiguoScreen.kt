@@ -114,7 +114,7 @@ fun LoginAntForm(
                     imageVector = Icons.Rounded.Person,
                     contentDescription = stringResource(id = R.string.userIconDescription)
                 )
-                Text(text = stringResource(id = R.string.loginButton))
+                Text(text = stringResource(id = R.string.logInBtn))
             }
 
             Spacer(modifier = Modifier.width(15.dp))
