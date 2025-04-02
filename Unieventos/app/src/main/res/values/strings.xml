@@ -2,9 +2,9 @@
     <string name="app_name">Unieventos</string>
     <string name="registerButton">Registro</string>
     <string name="welcomeMessage">Bienvenido</string>
-    <string name="loginValidation">Correo o contraseña incorrectos</string>
-    <string name="messageTest">En construccion :)</string>
-    <string name="userIconDescription">Icono de usuario</string>
+    <string name="loginValidation">Email or password incorrect</string>
+    <string name="singUpIcon">Icon singUp</string>
+    <string name="loginIcon">Icon login</string>
 
     <string name="imageFond">Background image</string>
     <string name="imageLogo">Application logo image</string>

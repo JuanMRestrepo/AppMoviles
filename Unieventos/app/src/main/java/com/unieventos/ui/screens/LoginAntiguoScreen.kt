@@ -98,7 +98,7 @@ fun LoginAntForm(
 
             val mensajeBienvenido = stringResource(id = R.string.welcomeMessage)
             val mensageValidacion = stringResource(id = R.string.loginValidation)
-            val mensajeEnConstruccion = stringResource(id = R.string.messageTest)
+            val mensajeEnConstruccion = stringResource(id = R.string.singUpIcon)
 
             Button(
                 enabled = email.isNotEmpty() && password.isNotEmpty(),
@@ -112,7 +112,7 @@ fun LoginAntForm(
             ) {
                 Icon (
                     imageVector = Icons.Rounded.Person,
-                    contentDescription = stringResource(id = R.string.userIconDescription)
+                    contentDescription = stringResource(id = R.string.emailLabel)
                 )
                 Text(text = stringResource(id = R.string.logInBtn))
             }
@@ -126,7 +126,7 @@ fun LoginAntForm(
             ) {
                 Icon (
                     imageVector = Icons.Rounded.Face,
-                    contentDescription = stringResource(id = R.string.userIconDescription)
+                    contentDescription = stringResource(id = R.string.emailLabel)
                 )
                 Text(text = stringResource(id = R.string.welcomeMessage))
             }

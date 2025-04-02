@@ -44,7 +44,8 @@ import com.unieventos.ui.components.TextFieldForm
 @Composable
 fun RestartPassword2(
     navigateToHome: () -> Unit,
-    navigateToRestart1: () -> Unit
+    navigateToRestart1: () -> Unit,
+    navigateToLogIn: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Column(
@@ -228,7 +229,9 @@ fun RestartPassword2(
                                 .padding(top = 30.dp)
                                 .height(60.dp),
                             onClick = {
-
+                                /* ¿Recuperación de contraseña exitosa? volvemos al inicio
+                                *  para iniciar sesión con las credenciales nuevas */
+                                navigateToLogIn()
                             },
                         ) {
                             Text(changeLbl, color = Color.White,

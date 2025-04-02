@@ -32,6 +32,7 @@ fun TextFieldForm(
         modifier = modifier,
         value = value,
         isError = isError,
+        singleLine = true,
         supportingText = {
             if(isError){
                 Text(text = supportingText)

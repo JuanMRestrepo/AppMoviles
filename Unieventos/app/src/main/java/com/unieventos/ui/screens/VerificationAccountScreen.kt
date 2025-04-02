@@ -219,7 +219,11 @@ fun VerificationAccountScreen(
                                 .height(80.dp)
                                 .padding(top = 30.dp)
                             ,
-                            onClick = { },
+                            onClick = {
+                                /* ¿Creación de cuenta exitosa? volvemos al inicio
+                                *  para iniciar sesión con la cuenta creada */
+                                navigateToLogIn()
+                            },
                         ) {
                             Text(validateAccountLbl, color = Color.White)
                         }

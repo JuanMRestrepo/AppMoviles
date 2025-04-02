@@ -13,11 +13,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Login
+import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -250,6 +255,12 @@ fun SingUpForm(
                             navigateToVerification()
                         },
                     ) {
+                        Icon(
+                            imageVector = Icons.Default.PersonAdd,
+                            contentDescription = stringResource(id = R.string.singUpIcon),
+                            tint = Color.White
+                        )
+                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text(infoBtnSignup, color = Color.White)
                     }
                 }

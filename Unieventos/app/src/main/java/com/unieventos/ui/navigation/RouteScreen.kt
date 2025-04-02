@@ -22,5 +22,14 @@ sealed class RouteScreen {
     @Serializable
     data object VerificationAccountScreen : RouteScreen()
 
+    @Serializable
+    data object UserMenuScreen : RouteScreen()
+
+    @Serializable
+    data object AdminMenuScreen : RouteScreen()
+
+    @Serializable
+    data class ReportDetail(val id: String) : RouteScreen()
+
 
 }

@@ -9,7 +9,6 @@ import com.unieventos.ui.navigation.RouteScreen
 import com.unieventos.ui.screens.HomeScreen
 import com.unieventos.ui.screens.LoginScreen
 import com.unieventos.ui.screens.SingUpScreen
-import com.unieventos.ui.screens.PruebaScreen
 import com.unieventos.ui.screens.RestartPassword1
 import com.unieventos.ui.screens.VerificationAccountScreen
 import com.unieventos.ui.screens.SingUpScreen
@@ -20,11 +19,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
+
             UnieventosTheme {
                 UnieventosTheme {
                     Navigation()
                 }
             }
+
+
 
         }
     }

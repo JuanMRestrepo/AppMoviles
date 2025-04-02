@@ -5,12 +5,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.unieventos.ui.screens.HomeScreen
 import com.unieventos.ui.screens.LoginScreen
 import com.unieventos.ui.screens.SingUpScreen
 import com.unieventos.ui.screens.RestartPassword1
 import com.unieventos.ui.screens.RestartPassword2
 import com.unieventos.ui.screens.VerificationAccountScreen
+import com.unieventos.ui.screens.AdminMenuScreen
+import com.unieventos.ui.screens.ReportDetailScreen
+import com.unieventos.ui.screens.UserMenuScreen
 
 @Composable
 fun Navigation(){
@@ -40,6 +44,12 @@ fun Navigation(){
                     },
                     navigateToSingUp = {
                         navController.navigate(RouteScreen.SingUpScreen)
+                    },
+                    navigateToAdmin = {
+                        navController.navigate(RouteScreen.AdminMenuScreen)
+                    },
+                    navigateToUser = {
+                        navController.navigate(RouteScreen.UserMenuScreen)
                     }
                 )
             }
@@ -62,6 +72,9 @@ fun Navigation(){
                     },
                     navigateToHome = {
                         navController.navigate(RouteScreen.HomeScreen)
+                    },
+                    navigateToLogIn = {
+                        navController.navigate(RouteScreen.LoginScreen)
                     }
                 )
             }
@@ -94,6 +107,24 @@ fun Navigation(){
                 )
             }
 
+            composable <RouteScreen.AdminMenuScreen> {
+                AdminMenuScreen()
+            }
+
+            composable <RouteScreen.UserMenuScreen> {
+                UserMenuScreen(
+                    navigateToDetail = { id ->
+                        navController.navigate(RouteScreen.ReportDetail(id))
+                    }
+                )
+            }
+
+            composable <RouteScreen.ReportDetail> {
+                val args = it.toRoute<RouteScreen.ReportDetail>()
+                ReportDetailScreen(
+                    id = args.id
+                )
+            }
 
 
         }

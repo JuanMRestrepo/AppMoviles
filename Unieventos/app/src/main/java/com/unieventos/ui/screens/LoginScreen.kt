@@ -1,12 +1,15 @@
 package com.unieventos.ui.screens
 
+import android.content.Context
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,11 +17,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Login
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -33,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,186 +49,226 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.TextFieldForm
+import com.unieventos.ui.navigation.RouteScreen
 
 @Composable
 fun LoginScreen(
     navigateToRestart: () -> Unit,
-    navigateToSingUp: () -> Unit
+    navigateToSingUp: () -> Unit,
+    navigateToAdmin: () -> Unit,
+    navigateToUser: () -> Unit
+){
+
+    val context = LocalContext.current
+
+    Scaffold { padding ->
+        LoginScreenForm(
+            padding = padding,
+            context = context,
+            navigateToRestart,
+            navigateToSingUp,
+            navigateToAdmin,
+            navigateToUser
+        )
+    }
+}
+
+@Composable
+fun LoginScreenForm(
+    padding: PaddingValues,
+    context: Context,
+    navigateToRestart: () -> Unit,
+    navigateToSingUp: () -> Unit,
+    navigateToAdmin: () -> Unit,
+    navigateToUser: () -> Unit
 ) {
-    Scaffold { paddingValues ->
+    Box(
+        modifier = Modifier
+            .padding(padding)
+            .fillMaxSize()
+            .background(Color(0xF3FFFFFF))
+    ) {
+        var email by rememberSaveable { mutableStateOf("") }
+        var password by rememberSaveable { mutableStateOf("") }
+        val loginValidation = stringResource(id = R.string.loginValidation)
+
+        Image(
+            painter = painterResource(id = R.drawable.fondo),
+            contentDescription = stringResource(id = R.string.imageFond),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(350.dp)
+                .clip(
+                    RoundedCornerShape(
+                        bottomStart = 40.dp,
+                        bottomEnd = 40.dp
+                    )
+                ),
+            contentScale = ContentScale.Crop
+        )
+
         Box(
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-                .background(Color(0xF3FFFFFF))
+                .fillMaxWidth()
+                .height(350.dp)
+                .background(
+                    color = Color(0xFFFF4B3A).copy(alpha = 0.35f),
+                    shape = RoundedCornerShape(
+                        bottomStart = 40.dp,
+                        bottomEnd = 40.dp
+                    )
+                ),
         ) {
-            var email by rememberSaveable { mutableStateOf("") }
-            var password by rememberSaveable { mutableStateOf("") }
-
             Image(
-                painter = painterResource(id = R.drawable.fondo),
-                contentDescription = stringResource(id = R.string.imageFond),
+                painter = painterResource(id = R.drawable.logo_report),
+                contentDescription = stringResource(id = R.string.imageLogo),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(350.dp)
-                    .clip(
-                        RoundedCornerShape(
-                            bottomStart = 40.dp,
-                            bottomEnd = 40.dp
-                        )
-                    ),
-                contentScale = ContentScale.Crop
+                    .width(200.dp)
+                    .height(220.dp)
+                    .align(Alignment.Center)
+                    .offset(y = (-60).dp)
             )
+        }
 
-            Box(
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            Surface(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(350.dp)
-                    .background(
-                        color = Color(0xFFFF4B3A).copy(alpha = 0.35f),
-                        shape = RoundedCornerShape(
-                            bottomStart = 40.dp,
-                            bottomEnd = 40.dp
-                        )
-                    ),
+                    .padding(top = 270.dp)
+                    .width(355.dp)
+                    .height(560.dp),
+                color = Color.White,
+                shape = RoundedCornerShape(40.dp)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_report),
-                    contentDescription = stringResource(id = R.string.imageLogo),
+                Column(
                     modifier = Modifier
-                        .width(200.dp)
-                        .height(220.dp)
-                        .align(Alignment.Center)
-                        .offset(y = (-60).dp)
-                )
-            }
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                Surface(
-                    modifier = Modifier
-                        .padding(top = 270.dp)
-                        .width(355.dp)
-                        .height(560.dp),
-                    color = Color.White,
-                    shape = RoundedCornerShape(40.dp)
+                        .fillMaxSize()
+                        .padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
+
+                    val infoBtnLogin = stringResource(id = R.string.logInBtn)
+                    val infoBtnSignup = stringResource(id = R.string.singUpText)
+
+                    Row (
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
                     ) {
-
-                        val infoBtnLogin = stringResource(id = R.string.logInBtn)
-                        val infoBtnSignup = stringResource(id = R.string.singUpText)
-
-                        Row (
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 20.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxWidth()
-                            ){
-                                Button(
-                                    modifier = Modifier
-                                        .width(200.dp)
-                                        .height(50.dp)
-                                        .align(Alignment.CenterEnd),
-                                    colors = ButtonDefaults.buttonColors(Color(0xFFD3CED5)),
-                                    shape = RoundedCornerShape(20.dp),
-                                    onClick = {
-                                        navigateToSingUp()
-                                    },
-                                ) {
-                                    Text(infoBtnSignup, color = Color.White)
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                        ){
+                            Button(
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .height(50.dp)
+                                    .align(Alignment.CenterEnd),
+                                colors = ButtonDefaults.buttonColors(Color(0xFFD3CED5)),
+                                shape = RoundedCornerShape(20.dp),
+                                onClick = {
+                                    navigateToSingUp()
+                                },
+                            ) {
+                                Text(infoBtnSignup, color = Color.White)
+                            }
+                            Button(
+                                modifier = Modifier
+                                    .width(150.dp)
+                                    .height(50.dp)
+                                    .align(Alignment.CenterStart),
+                                colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
+                                shape = RoundedCornerShape(20.dp),
+                                onClick = {
                                 }
-                                Button(
-                                    modifier = Modifier
-                                        .width(150.dp)
-                                        .height(50.dp)
-                                        .align(Alignment.CenterStart),
-                                    colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
-                                    shape = RoundedCornerShape(20.dp),
-                                    onClick = {
-                                    }
-                                ) {
-                                    Text(infoBtnLogin, color = Color.White)
-                                }
+                            ) {
+                                Text(infoBtnLogin, color = Color.White)
                             }
                         }
-
-                        Spacer(modifier = Modifier.height(40.dp))
-
-                        Text(
-                            text = stringResource(id = R.string.welcomeHome),
-                            color = Color.Black,
-                            fontSize = 23.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Spacer(modifier = Modifier.height(40.dp))
-
-                        TextFieldForm(
-                            value = email,
-                            onValueChange = {
-                                email = it
-                            },
-                            supportingText = stringResource(id = R.string.emailValidation),
-                            label = stringResource(id = R.string.emailLabel),
-                            onValidate = {
-                                !Patterns.EMAIL_ADDRESS.matcher(it).matches()
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            isPassword = false
-                        )
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        TextFieldForm(
-                            value = password,
-                            onValueChange = {
-                                password = it
-                            },
-                            supportingText = stringResource(id = R.string.passwordValidation),
-                            label = stringResource(id = R.string.passwordLabel),
-                            onValidate = {
-                                password.length < 6
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            isPassword = true
-                        )
-
-                        Button(
-                            colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
-                            shape = RoundedCornerShape(30.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(80.dp)
-                                .padding(top = 30.dp)
-                            ,
-                            onClick = {
-                                /*
-                                    INICIO DE SESIÓN
-                                */
-                            },
-                        ) {
-                            Text(infoBtnLogin, color = Color.White)
-                        }
-
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        Text(
-                            text = stringResource(id = R.string.forgotPswd),
-                            color = Color.Black,
-                            modifier = Modifier.clickable {
-                                navigateToRestart()
-                            }
-                        )
                     }
+
+                    Spacer(modifier = Modifier.height(40.dp))
+
+                    Text(
+                        text = stringResource(id = R.string.welcomeHome),
+                        color = Color.Black,
+                        fontSize = 23.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.height(40.dp))
+
+                    TextFieldForm(
+                        value = email,
+                        onValueChange = {
+                            email = it
+                        },
+                        supportingText = stringResource(id = R.string.emailValidation),
+                        label = stringResource(id = R.string.emailLabel),
+                        onValidate = {
+                            !Patterns.EMAIL_ADDRESS.matcher(it).matches()
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        isPassword = false
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    TextFieldForm(
+                        value = password,
+                        onValueChange = {
+                            password = it
+                        },
+                        supportingText = stringResource(id = R.string.passwordValidation),
+                        label = stringResource(id = R.string.passwordLabel),
+                        onValidate = {
+                            password.length < 6
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        isPassword = true
+                    )
+
+                    Button(
+                        colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
+                        shape = RoundedCornerShape(30.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(80.dp)
+                            .padding(top = 30.dp)
+                        ,
+                        onClick = {
+                            when {
+                                email == "admin@gmail.com" && password == "admin123" -> {
+                                    navigateToAdmin()
+                                }
+                                email == "andres@gmail.com" && password == "andres123" -> {
+                                    navigateToUser()
+                                }
+                                else -> {
+                                    Toast.makeText(context, loginValidation, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.Login,
+                            contentDescription = stringResource(id = R.string.loginIcon),
+                            tint = Color.White
+                        )
+                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                        Text(infoBtnLogin, color = Color.White)
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Text(
+                        text = stringResource(id = R.string.forgotPswd),
+                        color = Color.Black,
+                        modifier = Modifier.clickable {
+                            navigateToRestart()
+                        }
+                    )
                 }
             }
         }
