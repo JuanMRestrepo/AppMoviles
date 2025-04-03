@@ -73,6 +73,21 @@ fun LoginScreenForm(
             ) {
                 val infoBtnLogin = stringResource(id = R.string.logInBtn)
                 val infoBtnSignup = stringResource(id = R.string.singUpText)
+
+                /*
+                Credenciales para accede como usuario o admin
+
+                *ADMINISTRADOR*
+                email == "admin@gmail.com" && password == "admin123" -> {
+                    navigateToAdmin()
+                }
+
+                *USUARIO*
+                email == "andres@gmail.com" && password == "andres123" -> {
+                    navigateToUser()
+                }
+                 */
+
                 ColumnContentLogin(
                     context = context,
                     loginValidation = loginValidation,
