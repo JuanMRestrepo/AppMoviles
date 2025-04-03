@@ -12,7 +12,7 @@ import com.unieventos.ui.screens.SingUpScreen
 import com.unieventos.ui.screens.RestartPassword1
 import com.unieventos.ui.screens.RestartPassword2
 import com.unieventos.ui.screens.VerificationAccountScreen
-import com.unieventos.ui.screens.AdminMenuScreen
+import com.unieventos.ui.admins.AdminMenuScreen
 import com.unieventos.ui.screens.ReportDetailScreen
 import com.unieventos.ui.clientes.UserMenuScreen
 
@@ -109,7 +109,11 @@ fun Navigation(){
             }
 
             composable <RouteScreen.AdminMenuScreen> {
-                AdminMenuScreen()
+                AdminMenuScreen(
+                    navigateToDetail = { id ->
+                        navController.navigate(RouteScreen.ReportDetail(id))
+                    }
+                )
             }
 
             composable <RouteScreen.UserMenuScreen> {
@@ -126,8 +130,6 @@ fun Navigation(){
                     id = args.id
                 )
             }
-
-
         }
     }
 }

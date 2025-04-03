@@ -11,9 +11,11 @@ sealed class RouteUserTab {
     data object Reports : RouteUserTab()
 
     @Serializable
+    data object CreateReport : RouteUserTab()
+
+    @Serializable
     data object Notifications : RouteUserTab()
 
     @Serializable
     data object Profile : RouteUserTab()
-
 }

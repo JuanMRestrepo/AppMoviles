@@ -3,14 +3,21 @@
     <string name="registerButton">Registro</string>
     <string name="welcomeMessage">Bienvenido</string>
     <string name="loginValidation">Email or password incorrect</string>
+
     <string name="singUpIcon">Icon singUp</string>
     <string name="loginIcon">Icon login</string>
+    <string name="logoutIcon">Icon logout</string>
 
+    <string name="imagePerfil">Perfil image</string>
+    <string name="imageReport">Report image</string>
+    <string name="messagePerfil">"¡Hello, User!"</string>
+    <string name="messagePerfilAdmin">"¡Hello, Admin!"</string>
     <string name="imageFond">Background image</string>
     <string name="imageLogo">Application logo image</string>
     <string name="noAccount">Don\'t have an account? </string>
     <string name="logInBtn">Log in</string>
     <string name="singUpText">Sign up</string>
+    <string name="logOutBtn">Log Out</string>
     <string name="passwordConfLabel">Confirm Password</string>
     <string name="codeSent">Enter code</string>
     <string name="resendCode">Resend code</string>
@@ -37,10 +44,22 @@
     <string name="importantLbl">Important: </string>
     <string name="restText">Make sure you set a strong password with numbers</string>
     <string name="changePasswordLbl">Change password</string>
+    <string name="changeUserLbl">Change user</string>
     <string name="verificationLbl">We are verifying your</string>
     <string name="verificationLbl2">account...</string>
-
-
+    <string name="inProgress">In progress :D</string>
+    <string name="mapImage">Map image</string>
+    <string name="newReportLbl">Create new report</string>
+    <string name="titleLbl">Title</string>
+    <string name="descriptionLbl">Description</string>
+    <string name="categoryLbl">Category</string>
+    <string name="uploadImageLbl">Upload images</string>
+    <string name="selectLbl">Select location</string>
+    <string name="createLbl">Create</string>
+    <string name="editLbl">Edit my profile</string>
+    <string name="saveItems">Saved items</string>
+    <string name="activityLbl">Your activity</string>
+    <string name="deleteAccountLbl">Delete account</string>
 
 
 

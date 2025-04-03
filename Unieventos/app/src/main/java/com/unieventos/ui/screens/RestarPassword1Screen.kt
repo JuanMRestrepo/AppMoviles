@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.TextFieldForm
+import com.unieventos.ui.components.TopBarDefect2
 
 @Composable
 fun RestartPassword1(
@@ -60,44 +61,10 @@ fun RestartPassword1(
             val sendCode = stringResource(id = R.string.sendCodeLbl);
             val validateAccount = stringResource(id = R.string.validateAccountLbl);
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(Color(0xFEE53935)),
-                contentAlignment = Alignment.Center
-            ) {
-                Row (
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton (
-                        onClick = {
-                            navigateToLogIn()
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                id = android.R.drawable.ic_menu_revert),
-                            contentDescription = stringResource(id = R.string.returnIcon),
-                            tint = Color.White
-                        )
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    IconButton(
-                        onClick = {
-                            navigateToHome()
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel),
-                            contentDescription = stringResource(id = R.string.homeIcon),
-                            tint = Color.White
-                        )
-                    }
-                }
-            }
+            TopBarDefect2(
+                navigateToLogIn = navigateToLogIn,
+                navigateToHome = navigateToHome
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 

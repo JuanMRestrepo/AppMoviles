@@ -6,10 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,8 +16,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.TextFieldForm
+import com.unieventos.ui.components.TopBarDefect3
 
 @Composable
 fun RestartPassword2(
@@ -54,46 +51,13 @@ fun RestartPassword2(
                 .padding(paddingValues)
                 .background(Color(0xFFE6E6E6)),
         ) {
-            var email by rememberSaveable { mutableStateOf("") }
             var password by rememberSaveable { mutableStateOf("") }
+            var confirmPassword by rememberSaveable { mutableStateOf("") }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(Color(0xFEE53935)),
-                contentAlignment = Alignment.Center
-            ) {
-                Row (
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton (
-                        onClick = {
-                            navigateToRestart1()
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                id = android.R.drawable.ic_menu_revert),
-                            contentDescription = stringResource(id = R.string.returnIcon),
-                            tint = Color.White
-                        )
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                    IconButton(
-                        onClick = {
-                            navigateToHome()
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel),
-                            contentDescription = stringResource(id = R.string.homeIcon),
-                            tint = Color.White
-                        )
-                    }
-                }
-            }
+            TopBarDefect3 (
+                navigateToRestart1 = navigateToRestart1,
+                navigateToHome = navigateToHome
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -123,9 +87,7 @@ fun RestartPassword2(
                                 .width(280.dp)
                                 .height(180.dp),
                             contentAlignment = Alignment.Center
-                        )
-                        {
-
+                        ) {
                             Image(
                                 painter = painterResource(id = R.drawable.save_report),
                                 contentDescription = stringResource(id = R.string.imageLogo),
@@ -133,7 +95,6 @@ fun RestartPassword2(
                                     .width(190.dp)
                                     .height(190.dp)
                             )
-
                             HorizontalDivider(
                                 color = Color(0xFEE53935),
                                 thickness = 1.dp,
@@ -142,7 +103,6 @@ fun RestartPassword2(
 
                             )
                         }
-
                         Text(
                             text = stringResource(id = R.string.recoverLabel),
                             color = Color(0xFEE53935),
@@ -189,14 +149,14 @@ fun RestartPassword2(
                         Spacer(modifier = Modifier.height(20.dp))
 
                         TextFieldForm(
-                            value = password,
+                            value = confirmPassword,
                             onValueChange = {
-                                password = it
+                                confirmPassword = it
                             },
                             supportingText = stringResource(id = R.string.passwordValidation),
                             label = stringResource(id = R.string.passwordConfLabel),
                             onValidate = {
-                                password.length < 6
+                                confirmPassword.length < 6
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             isPassword = true
@@ -228,11 +188,7 @@ fun RestartPassword2(
                                 .width(300.dp)
                                 .padding(top = 30.dp)
                                 .height(60.dp),
-                            onClick = {
-                                /* ¿Recuperación de contraseña exitosa? volvemos al inicio
-                                *  para iniciar sesión con las credenciales nuevas */
-                                navigateToLogIn()
-                            },
+                            onClick = { navigateToLogIn() },
                         ) {
                             Text(changeLbl, color = Color.White,
                                 fontSize = 17.sp, fontWeight = FontWeight.Bold)

@@ -36,8 +36,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.ui.components.ButtonHandlingSing
 import com.unieventos.ui.components.ItemText
 import com.unieventos.ui.components.TextFieldForm
+import com.unieventos.ui.components.TopBarDefect
 
 @Composable
 fun VerificationAccountScreen(
@@ -57,43 +59,10 @@ fun VerificationAccountScreen(
             val verificationLbl = stringResource(id = R.string.verificationLbl);
             val verificationLbl2 = stringResource(id = R.string.verificationLbl2);
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(Color(0xFEE53935)),
-                contentAlignment = Alignment.Center
-            ) {
-                Row (
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton (
-                        onClick = {
-                            navigateToSingUp()
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                id = android.R.drawable.ic_menu_revert),
-                            contentDescription = stringResource(id = R.string.returnIcon),
-                            tint = Color.White
-                        )
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                    IconButton(
-                        onClick = {
-                            navigateToHome()
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel),
-                            contentDescription = stringResource(id = R.string.homeIcon),
-                            tint = Color.White
-                        )
-                    }
-                }
-            }
+            TopBarDefect(
+                navigateToSingUp = navigateToSingUp,
+                navigateToHome = navigateToHome
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -103,7 +72,6 @@ fun VerificationAccountScreen(
                     .padding(top = 30.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
-
                 Column (
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -111,7 +79,6 @@ fun VerificationAccountScreen(
                     ItemText(
                         supportingText = verificationLbl
                     )
-
                     ItemText(
                         supportingText = verificationLbl2
                     )
@@ -136,40 +103,11 @@ fun VerificationAccountScreen(
                         val infoBtnSignup = stringResource(id = R.string.singUpText)
                         val validateAccountLbl = stringResource(id = R.string.validateAccountLbl)
 
-                        Row (
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 40.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxWidth()
-                            ){
-                                Button(
-                                    modifier = Modifier
-                                        .width(200.dp)
-                                        .height(50.dp)
-                                        .align(Alignment.CenterStart),
-                                    colors = ButtonDefaults.buttonColors(Color(0xFFD3CED5)),
-                                    shape = RoundedCornerShape(20.dp),
-                                    onClick = {
-                                        navigateToLogIn()
-                                    }
-                                ) {
-                                    Text(infoBtnLogin, color = Color.White)
-                                }
-                                Button(
-                                    modifier = Modifier
-                                        .width(150.dp)
-                                        .height(50.dp)
-                                        .align(Alignment.CenterEnd),
-                                    onClick = { },
-                                    colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
-                                    shape = RoundedCornerShape(20.dp)
-                                ) {
-                                    Text(infoBtnSignup, color = Color.White)
-                                }
-                            }
-                        }
+                        ButtonHandlingSing(
+                            navigateToLogIn = navigateToLogIn,
+                            infoBtnLogin = infoBtnLogin,
+                            infoBtnSignup = infoBtnSignup
+                        )
 
                         Spacer(modifier = Modifier.height(40.dp))
 
@@ -184,6 +122,7 @@ fun VerificationAccountScreen(
 
                         Spacer(modifier = Modifier.height(60.dp))
 
+                        /*Pendiente*/
                         TextFieldForm(
                             value = code,
                             onValueChange = {
@@ -192,7 +131,7 @@ fun VerificationAccountScreen(
                             supportingText = stringResource(id = R.string.codeValidation),
                             label = stringResource(id = R.string.codeSent),
                             onValidate = {
-                                //Ajustar logica de codigo enviado
+
                                 !Patterns.EMAIL_ADDRESS.matcher(it).matches()
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -219,11 +158,7 @@ fun VerificationAccountScreen(
                                 .height(80.dp)
                                 .padding(top = 30.dp)
                             ,
-                            onClick = {
-                                /* ¿Creación de cuenta exitosa? volvemos al inicio
-                                *  para iniciar sesión con la cuenta creada */
-                                navigateToLogIn()
-                            },
+                            onClick = { navigateToLogIn() },
                         ) {
                             Text(validateAccountLbl, color = Color.White)
                         }
@@ -233,3 +168,4 @@ fun VerificationAccountScreen(
         }
     }
 }
+

@@ -70,14 +70,14 @@ import com.unieventos.ui.components.TextFieldForm
 import java.time.LocalDateTime
 import java.time.format.TextStyle
 
+//Pruebas de interfaces
+
 /*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PruebaScreen(
     navigateToDetail: (String) -> Unit
 ) {
-
-
 
     var lista = listOf<Report>(
         Report(
@@ -107,9 +107,7 @@ fun PruebaScreen(
             Location(1.0, 2.0),
             LocalDateTime.now()
         )
-
     )
-
 
     Scaffold(
         topBar = {
@@ -120,7 +118,6 @@ fun PruebaScreen(
             )
         }
     ) {  paddingValues ->
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -136,7 +133,6 @@ fun PruebaScreen(
         }
     }
 }
-
 
 @Composable
 fun ReportCard(

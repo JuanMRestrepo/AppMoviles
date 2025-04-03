@@ -1,7 +1,5 @@
-package com.unieventos.ui.clientes.tabs
+package com.unieventos.ui.admins.tabs
 
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,6 +20,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.unieventos.R
 
 @Composable
-fun ProfileTab(
+fun ProfileAdminTab(
 ){
     Column(
         modifier = Modifier
@@ -63,7 +63,7 @@ fun ProfileTab(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(id = R.string.messagePerfil),
+            text = stringResource(id = R.string.messagePerfilAdmin),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )

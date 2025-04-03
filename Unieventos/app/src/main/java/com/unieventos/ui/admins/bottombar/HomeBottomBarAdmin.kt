@@ -1,12 +1,18 @@
-package com.unieventos.ui.clientes.bottombar
+package com.unieventos.ui.admins.bottombar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.Analytics
+import androidx.compose.material.icons.outlined.Assignment
+import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Notifications
@@ -22,43 +28,44 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.unieventos.ui.admins.navigation.RouteAdminTab
+import com.unieventos.ui.clientes.bottombar.NavigationBarUser
 import com.unieventos.ui.clientes.navigation.RouteUserTab
 
 @Composable
-fun HomeBottomBar(
+fun HomeBottomBarAdmin(
     navController: NavHostController
-) {
-    val selectedColor = Color(0xFFFF4B3A)
-    var lista = listOf<NavigationBarUser>(
-        NavigationBarUser(
+    ) {
+        val selectedColor = Color(0xFFFF4B3A)
+        var lista = listOf<NavigationAdminUser>(
+
+        NavigationAdminUser(
             icon = Icons.Outlined.Home,
-            route = RouteUserTab.Home,
+            route = RouteAdminTab.HomeAdmin,
             title = "Home",
             iconSelected = Icons.Filled.Home
         ),
-        NavigationBarUser(
-            icon = Icons.Outlined.List,
-            route = RouteUserTab.Reports,
-            title = "List",
-            iconSelected = Icons.Filled.List
+        NavigationAdminUser(
+            icon = Icons.Outlined.Group,
+            route = RouteAdminTab.UsersAdmin,
+            title = "Users",
+            iconSelected = Icons.Filled.Group
         ),
-        NavigationBarUser(
-            icon = Icons.Outlined.AddCircle,
-            route = RouteUserTab.CreateReport,
-            title = "",
-            iconSelected = Icons.Filled.AddCircle,
-            showLabel = false,
-            isCenterItem = true
+        NavigationAdminUser(
+            icon = Icons.Outlined.Assignment,
+            route = RouteAdminTab.ReportsAdmin,
+            title = "Reports",
+            iconSelected = Icons.Filled.Assignment
         ),
-        NavigationBarUser(
-            icon = Icons.Outlined.Notifications,
-            route = RouteUserTab.Notifications,
-            title = "Alerts",
-            iconSelected = Icons.Filled.Notifications
+        NavigationAdminUser(
+            icon = Icons.Outlined.Analytics,
+            route = RouteAdminTab.StaticsAdmin,
+            title = "Stats",
+            iconSelected = Icons.Filled.Analytics
         ),
-        NavigationBarUser(
+        NavigationAdminUser(
             icon = Icons.Outlined.Person,
-            route = RouteUserTab.Profile,
+            route = RouteAdminTab.ProfileAdmin,
             title = "You",
             iconSelected = Icons.Filled.Person
         )
@@ -75,8 +82,8 @@ fun HomeBottomBar(
                     Text(text = it.title)
                 },
                 onClick = {
-                    navController.navigate(it.route){
-                        popUpTo(navController.graph.startDestinationId){
+                    navController.navigate(it.route) {
+                        popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
                         launchSingleTop = true
@@ -84,12 +91,12 @@ fun HomeBottomBar(
                     }
                 },
                 icon = {
-                    if(isSelected){
+                    if (isSelected) {
                         Icon(
                             imageVector = it.iconSelected,
                             contentDescription = it.title,
-                            )
-                    }else {
+                        )
+                    } else {
                         Icon(
                             imageVector = it.icon,
                             contentDescription = it.title,
@@ -100,18 +107,16 @@ fun HomeBottomBar(
                     selectedIconColor = selectedColor,
                     selectedTextColor = selectedColor,
                 ),
-                selected = isSelected,
-                alwaysShowLabel = it.showLabel
+                selected = isSelected
             )
         }
     }
 }
 
-data class NavigationBarUser(
-    val route: RouteUserTab,
+data class NavigationAdminUser(
+    val route: RouteAdminTab,
     val title: String,
     val icon: ImageVector,
     val iconSelected: ImageVector,
-    val showLabel: Boolean = true,
-    val isCenterItem: Boolean = false
 )
+

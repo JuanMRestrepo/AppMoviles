@@ -19,16 +19,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
-
             UnieventosTheme {
                 UnieventosTheme {
                     Navigation()
                 }
             }
-            //minuto 45
-
-
         }
     }
 }

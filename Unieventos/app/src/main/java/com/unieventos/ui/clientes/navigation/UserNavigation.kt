@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.unieventos.ui.clientes.tabs.CreateReportTab
 import com.unieventos.ui.clientes.tabs.HomeUserTab
 import com.unieventos.ui.clientes.tabs.MyReportsTab
 import com.unieventos.ui.clientes.tabs.NotificationsTab
@@ -31,6 +32,10 @@ fun UserNavigation(
             MyReportsTab(
                 navigateToDetail = navigateToDetail
             )
+        }
+
+        composable <RouteUserTab.CreateReport> {
+            CreateReportTab()
         }
 
         composable <RouteUserTab.Notifications> {
