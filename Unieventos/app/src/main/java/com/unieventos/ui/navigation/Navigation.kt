@@ -14,7 +14,7 @@ import com.unieventos.ui.screens.RestartPassword2
 import com.unieventos.ui.screens.VerificationAccountScreen
 import com.unieventos.ui.screens.AdminMenuScreen
 import com.unieventos.ui.screens.ReportDetailScreen
-import com.unieventos.ui.screens.UserMenuScreen
+import com.unieventos.ui.clientes.UserMenuScreen
 
 @Composable
 fun Navigation(){
@@ -25,6 +25,7 @@ fun Navigation(){
         NavHost(
             navController = navController,
             startDestination = RouteScreen.HomeScreen
+            //startDestination = RouteScreen.UserMenuScreen
         ) {
             composable <RouteScreen.HomeScreen> {
                 HomeScreen(

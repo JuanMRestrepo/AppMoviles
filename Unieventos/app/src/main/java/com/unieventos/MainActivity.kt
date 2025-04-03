@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     Navigation()
                 }
             }
-
+            //minuto 45
 
 
         }
