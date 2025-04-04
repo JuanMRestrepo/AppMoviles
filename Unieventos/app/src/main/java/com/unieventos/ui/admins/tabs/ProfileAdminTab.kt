@@ -35,6 +35,7 @@ import com.unieventos.R
 
 @Composable
 fun ProfileAdminTab(
+    navigateToEditAdminProfile: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -79,14 +80,21 @@ fun ProfileAdminTab(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 ProfileOption(text = changeUser, isRed = true)
-                ProfileOption(text = editProfile, isRed = true)
+                Spacer(modifier = Modifier.height(20.dp))
+                ProfileOption(text = editProfile, isRed = true,
+                    onClick = {
+                        navigateToEditAdminProfile()
+                    })
+                Spacer(modifier = Modifier.height(20.dp))
                 ProfileOption(text = saveItems, isRed = true)
+                Spacer(modifier = Modifier.height(20.dp))
                 ProfileOption(text = activityLbl, isRed = true)
+                Spacer(modifier = Modifier.height(20.dp))
                 ProfileOption(text = deleteAccountLbl, isRed = true)
             }
         }
 
-        Spacer(modifier = Modifier.height(140.dp))
+        Spacer(modifier = Modifier.height(55.dp))
 
         Button(
             onClick = { },
@@ -107,12 +115,19 @@ fun ProfileAdminTab(
 }
 
 @Composable
-fun ProfileOption(text: String, hasArrow: Boolean = false, isRed: Boolean = false) {
+fun ProfileOption(
+    text: String,
+    hasArrow: Boolean = false,
+    isRed: Boolean = false,
+    onClick: (() -> Unit)? = null
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .clickable {  },
+            .clickable {
+                onClick?.invoke()
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

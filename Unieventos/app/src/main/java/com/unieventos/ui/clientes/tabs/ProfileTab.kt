@@ -35,6 +35,7 @@ import com.unieventos.R
 
 @Composable
 fun ProfileTab(
+    navigateToEditProfile: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -78,15 +79,25 @@ fun ProfileTab(
             colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.1f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                ProfileOption(text = changeUser, isRed = true)
-                ProfileOption(text = editProfile, isRed = true)
+                ProfileOption(
+                    text = changeUser,
+                    isRed = true
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                ProfileOption(text = editProfile, isRed = true,
+                    onClick = {
+                        navigateToEditProfile()
+                    })
+                Spacer(modifier = Modifier.height(20.dp))
                 ProfileOption(text = saveItems, isRed = true)
+                Spacer(modifier = Modifier.height(20.dp))
                 ProfileOption(text = activityLbl, isRed = true)
+                Spacer(modifier = Modifier.height(20.dp))
                 ProfileOption(text = deleteAccountLbl, isRed = true)
             }
         }
 
-        Spacer(modifier = Modifier.height(140.dp))
+        Spacer(modifier = Modifier.height(60.dp))
 
         Button(
             onClick = { },
@@ -107,13 +118,20 @@ fun ProfileTab(
 }
 
 @Composable
-fun ProfileOption(text: String, hasArrow: Boolean = false, isRed: Boolean = false) {
+fun ProfileOption(
+    text: String,
+    hasArrow: Boolean = false,
+    isRed: Boolean = false,
+    onClick: (() -> Unit)? = null
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .clickable {  },
-        verticalAlignment = Alignment.CenterVertically
+            .clickable {
+                onClick?.invoke()
+            },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = text,

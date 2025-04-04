@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.unieventos.ui.clientes.tabs.CreateReportTab
+import com.unieventos.ui.clientes.tabs.EditProfileTab
 import com.unieventos.ui.clientes.tabs.HomeUserTab
 import com.unieventos.ui.clientes.tabs.MyReportsTab
 import com.unieventos.ui.clientes.tabs.NotificationsTab
@@ -43,7 +44,16 @@ fun UserNavigation(
         }
 
         composable <RouteUserTab.Profile> {
-            ProfileTab()
+            ProfileTab(
+                navigateToEditProfile = {
+                    navController.navigate(RouteUserTab.EditProfile)
+                }
+            )
         }
+
+        composable <RouteUserTab.EditProfile> {
+            EditProfileTab()
+        }
+
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.unieventos.ui.admins.tabs.EditProfileAdminTab
 import com.unieventos.ui.admins.tabs.HomeAdminTab
 import com.unieventos.ui.admins.tabs.ProfileAdminTab
 import com.unieventos.ui.admins.tabs.ReportVerifiedTab
@@ -44,7 +45,16 @@ fun AdminNavigation(
         }
 
         composable<RouteAdminTab.ProfileAdmin> {
-            ProfileAdminTab()
+            ProfileAdminTab(
+                navigateToEditAdminProfile = {
+                    navController.navigate(RouteAdminTab.EditProfileAdmin)
+                }
+            )
         }
+
+        composable<RouteAdminTab.EditProfileAdmin> {
+            EditProfileAdminTab()
+        }
+
     }
 }

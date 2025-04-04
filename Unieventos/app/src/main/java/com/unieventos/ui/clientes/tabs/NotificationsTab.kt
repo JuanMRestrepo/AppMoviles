@@ -4,8 +4,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun NotificationsTab() {
-    Text(
-        text = "Notificaciones"
-    )
+fun NotificationsTab(){
+    Text(text = "Notifications")
 }

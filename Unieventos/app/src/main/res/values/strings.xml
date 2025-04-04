@@ -60,8 +60,10 @@
     <string name="saveItems">Saved items</string>
     <string name="activityLbl">Your activity</string>
     <string name="deleteAccountLbl">Delete account</string>
-
-
+    <string name="messageEdit">Select the change you want to change information</string>
+    <string name="editInformation">Edit Information</string>
+    <string name="fullNameLbl">Full Name</string>
+    <string name="cityOfResidenceLbl">City Of Residence</string>
 
 
 </resources>

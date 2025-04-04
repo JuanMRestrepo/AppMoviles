@@ -18,4 +18,8 @@ sealed class RouteUserTab {
 
     @Serializable
     data object Profile : RouteUserTab()
+
+    @Serializable
+    data object EditProfile : RouteUserTab()
+
 }

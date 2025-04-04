@@ -39,8 +39,6 @@ fun HomeTopBar() {
         actions = {
             IconButton(onClick = { Toast.makeText(context, mensajeEnConstruccion, Toast.LENGTH_SHORT).show() }) {
                 Icon(
-                    modifier = Modifier
-                        .padding(end = 20.dp),
                     imageVector = Icons.Outlined.Settings,
                     contentDescription = "Settings",
                     tint = Color.Red
