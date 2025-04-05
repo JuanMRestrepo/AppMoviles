@@ -24,8 +24,8 @@ fun Navigation(){
     Surface {
         NavHost(
             navController = navController,
-            //startDestination = RouteScreen.HomeScreen
-            startDestination = RouteScreen.AdminMenuScreen
+            startDestination = RouteScreen.HomeScreen
+            //startDestination = RouteScreen.AdminMenuScreen
         ) {
             composable <RouteScreen.HomeScreen> {
                 HomeScreen(
