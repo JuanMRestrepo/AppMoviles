@@ -1,11 +1,12 @@
 # AppMoviles
 
 ## 📱 About the Project
-This project is a mobile application developed using Kotlin and Java. It is built with Android Studio and aims to provide a platform that allows citizens to easily and efficiently report risk or emergency situations in their environment..
+This project is a mobile application developed using Kotlin and Java. It is built with Android Studio and aims to provide a platform that allows citizens to easily and efficiently report risk or emergency situations in their environment.
 
 ## 🚀Features
 - User authentication (Sign up, Login, Logout)
 - Profile management
+- Map i
 
 ## 🛠️Technologies Used
 - Kotlin
@@ -32,7 +33,7 @@ To run the project locally, follow these steps:
 - [Jhon Andres Diaz](https://github.com/JhonAndresDiaz)
 
 ## 👥 Contributors
-- [Carlos Andres Florez Villarraga]()
+- [Carlos Andres Florez Villarraga](https://github.com/carlosflorezvi)
 
 
 
