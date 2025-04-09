@@ -1,6 +1,6 @@
 package com.unieventos.model
 
-import android.location.Address
+import com.unieventos.model.Address
 
 class User(
     var id: String,

@@ -9,6 +9,8 @@ class Report(
     var state: ReportState,
     var images: List<String>,
     var location: Location,
+    var isSave: Boolean,
     var fecha: LocalDateTime,
+    var idUser: String
     ) {
 }

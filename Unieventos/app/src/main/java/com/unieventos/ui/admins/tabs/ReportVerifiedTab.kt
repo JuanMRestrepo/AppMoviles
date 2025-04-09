@@ -39,7 +39,9 @@ fun ReportVerifiedTab(
             ReportState.ACCEPTED,
             listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
             Location(1.0, 2.0),
-            LocalDateTime.now()
+            true,
+            LocalDateTime.now(),
+            "1"
         ),
         Report(
             "2",
@@ -48,7 +50,9 @@ fun ReportVerifiedTab(
             ReportState.ACCEPTED,
             listOf("https://picsum.photos/200/300"),
             Location(1.0, 2.0),
-            LocalDateTime.now()
+            false,
+            LocalDateTime.now(),
+            "1"
         ),
         Report(
             "3",
@@ -57,7 +61,9 @@ fun ReportVerifiedTab(
             ReportState.ACCEPTED,
             listOf("https://picsum.photos/200/300"),
             Location(1.0, 2.0),
-            LocalDateTime.now()
+            false,
+            LocalDateTime.now(),
+            "2"
         )
     )
 

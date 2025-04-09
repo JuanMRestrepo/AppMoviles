@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.unieventos.R
+import com.unieventos.ui.screens.TestUsers
 
 @Composable
 fun ButtonLogin(
@@ -41,10 +42,10 @@ fun ButtonLogin(
         ,
         onClick = {
             when {
-                email == "admin@gmail.com" && password == "admin123" -> {
+                email == TestUsers.adminUser.email && password == TestUsers.adminUser.password -> {
                     navigateToAdmin()
                 }
-                email == "andres@gmail.com" && password == "andres123" -> {
+                email == TestUsers.normalUser.email && password == TestUsers.normalUser.password -> {
                     navigateToUser()
                 }
                 else -> {

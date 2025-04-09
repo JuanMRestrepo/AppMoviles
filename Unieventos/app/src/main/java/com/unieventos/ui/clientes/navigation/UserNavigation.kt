@@ -13,6 +13,8 @@ import com.unieventos.ui.clientes.tabs.HomeUserTab
 import com.unieventos.ui.clientes.tabs.MyReportsTab
 import com.unieventos.ui.clientes.tabs.NotificationsTab
 import com.unieventos.ui.clientes.tabs.ProfileTab
+import com.unieventos.ui.clientes.tabs.SavedItemsTab
+import com.unieventos.ui.clientes.tabs.YourActivityTab
 
 @Composable
 fun UserNavigation(
@@ -47,6 +49,12 @@ fun UserNavigation(
             ProfileTab(
                 navigateToEditProfile = {
                     navController.navigate(RouteUserTab.EditProfile)
+                },
+                navigateToSavedItemsTab = {
+                    navController.navigate(RouteUserTab.SavedItems)
+                },
+                navigateToYourActivity = {
+                    navController.navigate(RouteUserTab.YourActivity)
                 }
             )
         }
@@ -55,5 +63,17 @@ fun UserNavigation(
             EditProfileTab()
         }
 
+        composable <RouteUserTab.SavedItems> {
+            SavedItemsTab(
+                navigateToDetail = navigateToDetail
+            )
+        }
+
+        composable <RouteUserTab.YourActivity> {
+            YourActivityTab(
+                navigateToDetail = navigateToDetail,
+                currentUserId = "1"
+            )
+        }
     }
 }

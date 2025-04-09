@@ -16,12 +16,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.outlined.ArrowForward
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +41,9 @@ import com.unieventos.R
 
 @Composable
 fun ProfileTab(
-    navigateToEditProfile: () -> Unit
+    navigateToEditProfile: () -> Unit,
+    navigateToSavedItemsTab: () -> Unit,
+    navigateToYourActivity: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -44,7 +52,7 @@ fun ProfileTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        val changeUser = stringResource(id = R.string.changeUserLbl)
+        //val changeUser = stringResource(id = R.string.changeUserLbl)
         val editProfile = stringResource(id = R.string.editLbl)
         val saveItems = stringResource(id = R.string.saveItems)
         val activityLbl = stringResource(id = R.string.activityLbl)
@@ -78,22 +86,73 @@ fun ProfileTab(
             shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.1f))
         ) {
+
+            var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+
             Column(modifier = Modifier.padding(16.dp)) {
+                /*
                 ProfileOption(
                     text = changeUser,
                     isRed = true
                 )
+                 */
+                Spacer(modifier = Modifier.height(5.dp))
+
+                ProfileOption(
+                    text = editProfile,
+                    isRed = true,
+                    onClick = { navigateToEditProfile() })
                 Spacer(modifier = Modifier.height(20.dp))
-                ProfileOption(text = editProfile, isRed = true,
-                    onClick = {
-                        navigateToEditProfile()
-                    })
+
+                ProfileOption(
+                    text = saveItems,
+                    isRed = true,
+                    onClick = { navigateToSavedItemsTab() })
                 Spacer(modifier = Modifier.height(20.dp))
-                ProfileOption(text = saveItems, isRed = true)
+
+                ProfileOption(
+                    text = activityLbl,
+                    isRed = true,
+                    onClick = { navigateToYourActivity() })
                 Spacer(modifier = Modifier.height(20.dp))
-                ProfileOption(text = activityLbl, isRed = true)
-                Spacer(modifier = Modifier.height(20.dp))
-                ProfileOption(text = deleteAccountLbl, isRed = true)
+
+                ProfileOption(
+                    text = deleteAccountLbl,
+                    isRed = true,
+                    onClick = { showDeleteDialog = true }
+                )
+            }
+
+            if (showDeleteDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDeleteDialog = false },
+                    title = {
+                        Text(
+                            text = stringResource(id = R.string.deleteAccountLbl),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    },
+                    text = {
+                        Text(stringResource(id = R.string.deleteMessageLbl))
+                    },
+                    confirmButton = {
+                        TextButton (
+                            onClick = {
+                                showDeleteDialog = false
+                                //navigateToLogIn()
+                            }
+                        ) {
+                            Text(stringResource(id = R.string.deleteLbl), color = Color.Red)
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(
+                            onClick = { showDeleteDialog = false }
+                        ) {
+                            Text(stringResource(id = R.string.closeLbl))
+                        }
+                    }
+                )
             }
         }
 
@@ -120,7 +179,6 @@ fun ProfileTab(
 @Composable
 fun ProfileOption(
     text: String,
-    hasArrow: Boolean = false,
     isRed: Boolean = false,
     onClick: (() -> Unit)? = null
 ) {
@@ -139,8 +197,5 @@ fun ProfileOption(
             fontSize = 16.sp,
             modifier = Modifier.weight(1f)
         )
-        if (hasArrow) {
-            Icon(Icons.Outlined.ArrowForward, contentDescription = "Arrow", tint = Color.Black)
-        }
     }
 }

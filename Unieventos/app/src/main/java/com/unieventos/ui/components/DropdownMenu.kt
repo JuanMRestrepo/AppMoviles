@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropdownMenu(
+    modifier: Modifier,
     value:String,
     onValueChange: (String) -> Unit,
     items: List<String>,
@@ -35,7 +36,7 @@ fun DropdownMenu(
         onExpandedChange = { expanded = !expanded }
     ) {
         OutlinedTextField(
-            modifier = Modifier.menuAnchor(),
+            modifier = modifier.menuAnchor(),
             value = value,
             onValueChange = {},
             readOnly = true,
@@ -48,7 +49,7 @@ fun DropdownMenu(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Transparent,  // Oculta el borde completo
+                focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
                 disabledBorderColor = Color.Transparent,
                 focusedContainerColor = Color.Transparent,

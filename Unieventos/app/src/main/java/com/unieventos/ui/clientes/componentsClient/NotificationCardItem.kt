@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -30,27 +31,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.unieventos.R
-import com.unieventos.model.Report
+import com.unieventos.model.Notification
 
 @Composable
-fun ReportCardItem(
-    report: Report,
-    navigateToDetail: (String) -> Unit
+fun NotificationCardItem(
+    notification: Notification,
 ) {
-    var showDropdown by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { navigateToDetail(report.id) }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = report.images[0],
-            contentDescription = stringResource(id = R.string.imageReport),
-            modifier = Modifier
-                .size(64.dp)
-                .clip(RoundedCornerShape(8.dp))
+        Icon(
+            imageVector = Icons.Default.Person,
+            contentDescription = stringResource(id = R.string.moreOptionsLbl),
+            tint = Color(0xFFE74C3C)
         )
         Column(
             modifier = Modifier
@@ -58,41 +54,14 @@ fun ReportCardItem(
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = report.title,
+                text = notification.title,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = report.description,
+                text = notification.message,
                 color = Color.Gray,
                 fontSize = 14.sp
             )
         }
-        /*
-        Box {
-            IconButton(onClick = { showDropdown = true }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(id = R.string.moreOptionsLbl),
-                    tint = Color(0xFFE74C3C)
-                )
-            }
-
-            DropdownMenu(
-                expanded = showDropdown,
-                onDismissRequest = { showDropdown = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(id = R.string.deleteLbl)) },
-                    onClick = { }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(id = R.string.closeLbl)) },
-                    onClick = { showDropdown = false }
-                )
-            }
-
-
-        }
-        */
     }
 }

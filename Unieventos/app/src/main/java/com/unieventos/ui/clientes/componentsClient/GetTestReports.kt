@@ -18,7 +18,9 @@ fun GetTestReports(): List<Report> {
                 ReportState.ACCEPTED,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
                 Location(1.0, 2.0),
-                LocalDateTime.now()
+                false,
+                LocalDateTime.now(),
+                "1"
             ),
             Report(
                 "2",
@@ -27,7 +29,9 @@ fun GetTestReports(): List<Report> {
                 ReportState.ACCEPTED,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
                 Location(1.0, 2.0),
-                LocalDateTime.now()
+                false,
+                LocalDateTime.now(),
+                "1"
             ),
             Report(
                 "3",
@@ -36,7 +40,42 @@ fun GetTestReports(): List<Report> {
                 ReportState.ACCEPTED,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
                 Location(1.0, 2.0),
-                LocalDateTime.now()
+                false,
+                LocalDateTime.now(),
+                "2"
+            ),
+            Report(
+                "4",
+                "Report 4",
+                "Pereira",
+                ReportState.ACCEPTED,
+                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
+                Location(3.0, 6.0),
+                true,
+                LocalDateTime.now(),
+                "3"
+            ),
+            Report(
+                "5",
+                "Report 5",
+                "Armenia",
+                ReportState.ACCEPTED,
+                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
+                Location(3.0, 6.0),
+                true,
+                LocalDateTime.now(),
+                "3"
+            ),
+            Report(
+                "6",
+                "Report 6",
+                "Armenia",
+                ReportState.ACCEPTED,
+                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
+                Location(3.0, 6.0),
+                false,
+                LocalDateTime.now(),
+                "1"
             )
         )
     }

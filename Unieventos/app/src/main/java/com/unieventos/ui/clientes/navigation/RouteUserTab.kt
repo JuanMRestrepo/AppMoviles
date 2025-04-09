@@ -22,4 +22,9 @@ sealed class RouteUserTab {
     @Serializable
     data object EditProfile : RouteUserTab()
 
+    @Serializable
+    data object SavedItems : RouteUserTab()
+
+    @Serializable
+    data object YourActivity : RouteUserTab()
 }

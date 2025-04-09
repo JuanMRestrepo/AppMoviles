@@ -25,7 +25,7 @@ fun UserMenuScreen(
         UserNavigation(
             paddingValues = paddingValues,
             navController = navController,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = navigateToDetail,
         )
     }
 }
