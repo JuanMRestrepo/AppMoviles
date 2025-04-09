@@ -1,4 +1,4 @@
-package com.unieventos.ui.clientes.componentsClient
+package com.unieventos.ui.admins.componentsAdmin
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,11 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
-import com.unieventos.model.Notification
+import com.unieventos.model.User
 
 @Composable
-fun NotificationCardItem(
-    notification: Notification,
+fun UserCardItem(
+    user: User,
 ) {
     Row(
         modifier = Modifier
@@ -40,11 +40,11 @@ fun NotificationCardItem(
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = notification.title,
+                text = user.name,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = notification.message,
+                text = user.id,
                 color = Color.Gray,
                 fontSize = 14.sp
             )

@@ -46,7 +46,7 @@ fun ProfileAdminTab(
 
         val changeUser = stringResource(id = R.string.changeUserLbl)
         val editProfile = stringResource(id = R.string.editLbl)
-        val saveItems = stringResource(id = R.string.saveItems)
+        val allReportslbl = stringResource(id = R.string.allReportslbl)
         val activityLbl = stringResource(id = R.string.activityLbl)
         val deleteAccountLbl = stringResource(id = R.string.deleteAccountLbl)
         val logOutBtn = stringResource(id = R.string.logOutBtn)
@@ -79,17 +79,16 @@ fun ProfileAdminTab(
             colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.1f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                ProfileOption(text = changeUser, isRed = true)
-                Spacer(modifier = Modifier.height(20.dp))
+                //ProfileOption(text = changeUser, isRed = true)
+                Spacer(modifier = Modifier.height(5.dp))
                 ProfileOption(text = editProfile, isRed = true,
                     onClick = {
                         navigateToEditAdminProfile()
                     })
                 Spacer(modifier = Modifier.height(20.dp))
-                ProfileOption(text = saveItems, isRed = true)
+                ProfileOption(text = allReportslbl, isRed = true)
                 Spacer(modifier = Modifier.height(20.dp))
-                ProfileOption(text = activityLbl, isRed = true)
-                Spacer(modifier = Modifier.height(20.dp))
+                //ProfileOption(text = activityLbl, isRed = true)
                 ProfileOption(text = deleteAccountLbl, isRed = true)
             }
         }
