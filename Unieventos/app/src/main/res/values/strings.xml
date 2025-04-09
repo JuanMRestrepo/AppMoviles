@@ -7,6 +7,11 @@
     <string name="singUpIcon">Icon singUp</string>
     <string name="loginIcon">Icon login</string>
     <string name="logoutIcon">Icon logout</string>
+    <string name="SearchIcon">Search</string>
+    <string name="moreOptionsLbl">More Options</string>
+    <string name="deleteLbl">Delete</string>
+    <string name="closeLbl">Close</string>
+
 
     <string name="imagePerfil">Perfil image</string>
     <string name="imageReport">Report image</string>

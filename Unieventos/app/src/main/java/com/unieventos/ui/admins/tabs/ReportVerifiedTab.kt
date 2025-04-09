@@ -24,6 +24,7 @@ import com.unieventos.R
 import com.unieventos.model.Location
 import com.unieventos.model.Report
 import com.unieventos.model.ReportState
+import com.unieventos.ui.clientes.componentsClient.ReportCardItem
 import java.time.LocalDateTime
 
 @Composable
@@ -66,7 +67,7 @@ fun ReportVerifiedTab(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(lista) {
-            com.unieventos.ui.clientes.tabs.ReportCard (
+            ReportCardItem (
                 report = it,
                 navigateToDetail = navigateToDetail
             )
