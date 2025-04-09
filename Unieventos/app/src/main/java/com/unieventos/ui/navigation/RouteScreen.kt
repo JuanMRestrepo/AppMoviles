@@ -1,5 +1,6 @@
 package com.unieventos.ui.navigation
 
+import com.unieventos.ui.clientes.navigation.RouteUserTab
 import kotlinx.serialization.Serializable
 
 sealed class RouteScreen {
@@ -31,5 +32,7 @@ sealed class RouteScreen {
     @Serializable
     data class ReportDetail(val id: String) : RouteScreen()
 
+    @Serializable
+    data object Settings : RouteScreen()
 
 }

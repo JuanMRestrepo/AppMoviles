@@ -18,13 +18,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.unieventos.R
+import com.unieventos.ui.clientes.navigation.RouteUserTab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(navController: NavHostController) {
     val context = LocalContext.current
     val mensajeEnConstruccion = stringResource(id = R.string.inProgress)
+
     TopAppBar(
         title = {},
         navigationIcon  = {
@@ -37,7 +40,9 @@ fun HomeTopBar() {
             )
         },
         actions = {
-            IconButton(onClick = { Toast.makeText(context, mensajeEnConstruccion, Toast.LENGTH_SHORT).show() }) {
+            IconButton(onClick =  {
+                navController.navigate(RouteUserTab.Settings)
+            }) {
                 Icon(
                     imageVector = Icons.Outlined.Settings,
                     contentDescription = "Settings",

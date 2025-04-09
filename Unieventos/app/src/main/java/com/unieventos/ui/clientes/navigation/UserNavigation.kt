@@ -15,6 +15,7 @@ import com.unieventos.ui.clientes.tabs.NotificationsTab
 import com.unieventos.ui.clientes.tabs.ProfileTab
 import com.unieventos.ui.clientes.tabs.SavedItemsTab
 import com.unieventos.ui.clientes.tabs.YourActivityTab
+import com.unieventos.ui.screens.SettingsTab
 
 @Composable
 fun UserNavigation(
@@ -74,6 +75,10 @@ fun UserNavigation(
                 navigateToDetail = navigateToDetail,
                 currentUserId = "1"
             )
+        }
+
+        composable <RouteUserTab.Settings>  {
+            SettingsTab()
         }
     }
 }

@@ -27,4 +27,8 @@ sealed class RouteUserTab {
 
     @Serializable
     data object YourActivity : RouteUserTab()
+
+    @Serializable
+    data object Settings : RouteUserTab()
+
 }

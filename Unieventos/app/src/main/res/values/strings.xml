@@ -11,6 +11,7 @@
     <string name="moreOptionsLbl">More Options</string>
     <string name="deleteLbl">Delete</string>
     <string name="closeLbl">Close</string>
+    <string name="settingsLbl">Settings</string>
 
     <string name="noReportsLbl">You have not created any reports yet</string>
     <string name="imagePerfil">Perfil image</string>

@@ -14,7 +14,9 @@ fun UserMenuScreen(
     val navController = rememberNavController()
     Scaffold(
         topBar = {
-            HomeTopBar()
+            HomeTopBar(
+                navController = navController
+            )
         },
         bottomBar = {
             HomeBottomBar(

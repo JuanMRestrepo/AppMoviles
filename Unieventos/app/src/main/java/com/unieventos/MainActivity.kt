@@ -5,13 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.unieventos.ui.navigation.Navigation
-import com.unieventos.ui.navigation.RouteScreen
-import com.unieventos.ui.screens.HomeScreen
-import com.unieventos.ui.screens.LoginScreen
-import com.unieventos.ui.screens.SingUpScreen
-import com.unieventos.ui.screens.RestartPassword1
-import com.unieventos.ui.screens.VerificationAccountScreen
-import com.unieventos.ui.screens.SingUpScreen
+import com.unieventos.ui.screens.SettingsTab
 import com.unieventos.ui.theme.UnieventosTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +13,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
+
             UnieventosTheme {
                 UnieventosTheme {
                     Navigation()
                 }
             }
+
+
+
+            //SettingsTab()
         }
     }
 }

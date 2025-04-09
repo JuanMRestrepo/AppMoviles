@@ -57,7 +57,7 @@ fun YourActivityTab(
         ) {
             Text(
                 text = stringResource(id = R.string.listYourReports),
-                color = Color.Red,
+                color = Color(0xFFFF4A3D),
                 fontSize = 25.sp,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
