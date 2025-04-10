@@ -1,4 +1,4 @@
-package com.unieventos.ui.clientes.componentsClient
+package com.unieventos.ui.admins.componentsAdmin
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -8,7 +8,7 @@ import com.unieventos.model.ReportState
 import java.time.LocalDateTime
 
 @Composable
-fun GetTestReports(): List<Report> {
+fun GetTestReportsPending(): List<Report> {
     return remember {
         listOf(
             Report(
@@ -37,7 +37,7 @@ fun GetTestReports(): List<Report> {
                 "3",
                 "Report 3",
                 "Manizales",
-                ReportState.ACCEPTED,
+                ReportState.PENDING,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
                 Location(1.0, 2.0),
                 false,
@@ -48,7 +48,7 @@ fun GetTestReports(): List<Report> {
                 "4",
                 "Report 4",
                 "Pereira",
-                ReportState.ACCEPTED,
+                ReportState.PENDING,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
                 Location(3.0, 6.0),
                 true,
@@ -68,14 +68,36 @@ fun GetTestReports(): List<Report> {
             ),
             Report(
                 "6",
-                "Report 6",
+                "Report 5",
                 "Armenia",
                 ReportState.PENDING,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
                 Location(3.0, 6.0),
-                false,
+                true,
                 LocalDateTime.now(),
                 "1"
+            ),
+            Report(
+                "7",
+                "Report 7",
+                "Armenia",
+                ReportState.PENDING,
+                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
+                Location(3.0, 6.0),
+                true,
+                LocalDateTime.now(),
+                "3"
+            ),
+            Report(
+                "8",
+                "Report 8",
+                "Armenia",
+                ReportState.PENDING,
+                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
+                Location(3.0, 6.0),
+                true,
+                LocalDateTime.now(),
+                "3"
             )
         )
     }

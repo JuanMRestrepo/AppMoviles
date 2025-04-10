@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import com.unieventos.ui.clientes.componentsClient.GetTestReports
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
 import com.unieventos.ui.clientes.componentsClient.ReportsList
+import com.unieventos.ui.clientes.componentsClient.ReportsListStatus
 
 @Composable
 fun MyReportsTab(
@@ -47,6 +48,6 @@ fun MyReportsTab(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 15.dp)
         )
-        ReportsList (reports = filteredReports, navigateToDetail = navigateToDetail)
+        ReportsListStatus (reports = filteredReports, navigateToDetail = navigateToDetail)
     }
 }

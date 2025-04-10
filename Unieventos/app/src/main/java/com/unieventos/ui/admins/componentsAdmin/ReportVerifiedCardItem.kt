@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Beenhere
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -42,6 +43,8 @@ fun ReportVerifiedCardItem(
 ) {
 
     var showRejectDialog by rememberSaveable { mutableStateOf(false) }
+    var showAcceptDialog by rememberSaveable { mutableStateOf(false) }
+
     var rejectReason by rememberSaveable { mutableStateOf("") }
     val primaryColor = Color(0xFFFF4A3D)
 
@@ -65,7 +68,7 @@ fun ReportVerifiedCardItem(
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = report.id,
+                text = report.state.toString(),
                 color = Color.Gray,
                 fontSize = 14.sp
             )
@@ -85,10 +88,12 @@ fun ReportVerifiedCardItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Default.Beenhere,
+                imageVector = Icons.Default.Check,
                 contentDescription = stringResource(id = R.string.moreOptionsLbl),
                 tint = Color(0xFF006400),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable { showAcceptDialog = true }
             )
             Icon(
                 imageVector = Icons.Default.Close,
@@ -143,6 +148,45 @@ fun ReportVerifiedCardItem(
                     },
                     colors = ButtonDefaults.textButtonColors(
                         contentColor = primaryColor
+                    )
+                ) {
+                    Text(stringResource(id = R.string.closeLbl))
+                }
+            },
+            containerColor = Color.White
+        )
+    }
+
+    if (showAcceptDialog) {
+        AlertDialog(
+            onDismissRequest = { showAcceptDialog = false },
+            title = {
+                Text(
+                    text = stringResource(id = R.string.confirmLbl),
+                    color = Color(0xFF006400),
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(stringResource(id = R.string.sureConfirmLbl))
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showAcceptDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF006400)
+                    )
+                ) {
+                    Text(stringResource(id = R.string.confirmLbl))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showAcceptDialog = false },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = Color.Gray
                     )
                 ) {
                     Text(stringResource(id = R.string.closeLbl))

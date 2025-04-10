@@ -1,19 +1,12 @@
 package com.unieventos.ui.clientes.componentsClient
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -67,32 +60,5 @@ fun ReportCardItem(
                 fontSize = 14.sp
             )
         }
-        /*
-        Box {
-            IconButton(onClick = { showDropdown = true }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(id = R.string.moreOptionsLbl),
-                    tint = Color(0xFFE74C3C)
-                )
-            }
-
-            DropdownMenu(
-                expanded = showDropdown,
-                onDismissRequest = { showDropdown = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(id = R.string.deleteLbl)) },
-                    onClick = { }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(id = R.string.closeLbl)) },
-                    onClick = { showDropdown = false }
-                )
-            }
-
-
-        }
-        */
     }
 }

@@ -25,8 +25,6 @@ import com.unieventos.ui.clientes.navigation.RouteUserTab
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopBar(navController: NavHostController) {
-    val context = LocalContext.current
-    val mensajeEnConstruccion = stringResource(id = R.string.inProgress)
 
     TopAppBar(
         title = {},

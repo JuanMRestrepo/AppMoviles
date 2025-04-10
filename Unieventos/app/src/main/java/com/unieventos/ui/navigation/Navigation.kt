@@ -25,8 +25,8 @@ fun Navigation(){
         NavHost(
             navController = navController,
             //startDestination = RouteScreen.HomeScreen
-            //startDestination = RouteScreen.UserMenuScreen
-            startDestination = RouteScreen.AdminMenuScreen
+            startDestination = RouteScreen.UserMenuScreen
+            //startDestination = RouteScreen.AdminMenuScreen
         ) {
             composable <RouteScreen.HomeScreen> {
                 HomeScreen(

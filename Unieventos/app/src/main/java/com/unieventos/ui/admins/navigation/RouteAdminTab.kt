@@ -22,4 +22,7 @@ sealed class RouteAdminTab {
     @Serializable
     data object EditProfileAdmin : RouteAdminTab()
 
+    @Serializable
+    data object AllReports : RouteAdminTab()
+
 }

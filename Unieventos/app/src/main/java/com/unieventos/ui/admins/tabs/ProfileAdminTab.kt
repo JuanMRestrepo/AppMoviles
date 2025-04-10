@@ -35,7 +35,8 @@ import com.unieventos.R
 
 @Composable
 fun ProfileAdminTab(
-    navigateToEditAdminProfile: () -> Unit
+    navigateToEditAdminProfile: () -> Unit,
+    navigateToAllReports: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -86,7 +87,10 @@ fun ProfileAdminTab(
                         navigateToEditAdminProfile()
                     })
                 Spacer(modifier = Modifier.height(20.dp))
-                ProfileOption(text = allReportslbl, isRed = true)
+                ProfileOption(text = allReportslbl, isRed = true,
+                    onClick = {
+                        navigateToAllReports()
+                    })
                 Spacer(modifier = Modifier.height(20.dp))
                 //ProfileOption(text = activityLbl, isRed = true)
                 ProfileOption(text = deleteAccountLbl, isRed = true)
