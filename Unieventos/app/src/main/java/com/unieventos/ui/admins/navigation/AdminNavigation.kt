@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.unieventos.ui.admins.tabs.AllReportsTab
 import com.unieventos.ui.admins.tabs.EditProfileAdminTab
 import com.unieventos.ui.admins.tabs.HomeAdminTab
@@ -14,6 +15,9 @@ import com.unieventos.ui.admins.tabs.ProfileAdminTab
 import com.unieventos.ui.admins.tabs.ReportVerifiedTab
 import com.unieventos.ui.admins.tabs.StaticsTab
 import com.unieventos.ui.admins.tabs.UsersAdminTab
+import com.unieventos.ui.clientes.tabs.DetailReportTab
+import com.unieventos.ui.clientes.tabs.EditReportTab
+import com.unieventos.ui.screens.SettingsTab
 
 @Composable
 fun AdminNavigation(
@@ -64,5 +68,20 @@ fun AdminNavigation(
                 navigateToDetail = navigateToDetail
             )
         }
+
+        composable <RouteAdminTab.Setting>  {
+            SettingsTab()
+        }
+
+        composable <RouteAdminTab.ReportDetailAdmin> {
+            val args = it.toRoute<RouteAdminTab.ReportDetailAdmin>()
+            DetailReportTab (
+                id = args.id,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
     }
 }

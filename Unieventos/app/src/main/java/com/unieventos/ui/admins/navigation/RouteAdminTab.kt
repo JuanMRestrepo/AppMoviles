@@ -1,5 +1,6 @@
 package com.unieventos.ui.admins.navigation
 
+import com.unieventos.ui.clientes.navigation.RouteUserTab
 import kotlinx.serialization.Serializable
 
 sealed class RouteAdminTab {
@@ -24,5 +25,11 @@ sealed class RouteAdminTab {
 
     @Serializable
     data object AllReports : RouteAdminTab()
+
+    @Serializable
+    data object Setting : RouteAdminTab()
+
+    @Serializable
+    data class ReportDetailAdmin(val id: String) : RouteAdminTab()
 
 }

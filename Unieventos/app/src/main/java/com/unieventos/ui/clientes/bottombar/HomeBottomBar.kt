@@ -20,8 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.unieventos.R
 import com.unieventos.ui.clientes.navigation.RouteUserTab
 
 @Composable
@@ -33,13 +35,13 @@ fun HomeBottomBar(
         NavigationBarUser(
             icon = Icons.Outlined.Home,
             route = RouteUserTab.Home,
-            title = "Home",
+            title = stringResource(id = R.string.homeIcon),
             iconSelected = Icons.Filled.Home
         ),
         NavigationBarUser(
             icon = Icons.Outlined.List,
             route = RouteUserTab.Reports,
-            title = "List",
+            title = stringResource(id = R.string.listIcon),
             iconSelected = Icons.Filled.List
         ),
         NavigationBarUser(
@@ -53,13 +55,13 @@ fun HomeBottomBar(
         NavigationBarUser(
             icon = Icons.Outlined.Notifications,
             route = RouteUserTab.Notifications,
-            title = "Alerts",
+            title = stringResource(id = R.string.alertIcon),
             iconSelected = Icons.Filled.Notifications
         ),
         NavigationBarUser(
             icon = Icons.Outlined.Person,
             route = RouteUserTab.Profile,
-            title = "You",
+            title = stringResource(id = R.string.youIcon),
             iconSelected = Icons.Filled.Person
         )
     )

@@ -1,5 +1,6 @@
-package com.unieventos.ui.screens
+package com.unieventos.ui.clientes.tabs
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,10 +21,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
+import androidx.compose.material.icons.automirrored.filled.Login
 import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -46,15 +51,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.clientes.componentsClient.CommentsItem
+import com.unieventos.ui.screens.TestUsers
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReportDetailScreen(
+fun EditReportTab(
     id: String,
     onNavigateBack: () -> Unit
 ) {
@@ -98,7 +105,7 @@ fun ReportDetailScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp, top = 30.dp),
+                        .padding(start = 20.dp, end = 20.dp, top = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -107,6 +114,23 @@ fun ReportDetailScreen(
                         color = Color(0xFEE53935),
                         fontSize = 25.sp,
                     )
+                    Button(
+                        colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
+                        shape = RoundedCornerShape(30.dp),
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(40.dp),
+                        onClick = {},
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(id = R.string.editIcon),
+                            tint = Color.White
+                        )
+                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                        Text(stringResource(id = R.string.editingLbl), color = Color.White)
+                    }
+
                     Icon(
                         imageVector = Icons.Filled.BookmarkBorder,
                         contentDescription = "Save",
@@ -138,8 +162,7 @@ fun ReportDetailScreen(
                                     fontWeight = FontWeight.Normal
                                 )
                             },
-                            modifier = Modifier.fillMaxWidth(),
-                            readOnly = true,
+                            modifier = Modifier.fillMaxWidth()
                         )
 
                         OutlinedTextField(
@@ -272,7 +295,6 @@ fun ReportDetailScreen(
                             }
                         }
 
-
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(5.dp)
@@ -301,7 +323,7 @@ fun ReportDetailScreen(
                                     fontSize = 14.sp
                                 )
                                 Text(
-                                    text = "Ramon Salazar",
+                                    text = "You",
                                     fontSize = 14.sp
                                 )
                             }

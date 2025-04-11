@@ -78,13 +78,11 @@ fun StaticsTab() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .background(Color(0xFFF8F9FA))
             .verticalScroll(scrollState)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
                 .padding(bottom = 10.dp)
         ) {
             Text(
@@ -104,11 +102,9 @@ fun StaticsTab() {
                         shape = RoundedCornerShape(8.dp)
                     )
                     .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
             ) {
                 Box(
                     modifier = Modifier
-                        .background(Color(0xFFEDE7F6))
                         .padding(horizontal = 16.dp, vertical = 12.dp)
                 ) {
                     Text(
@@ -131,8 +127,7 @@ fun StaticsTab() {
                 ) {
                     Icon(
                         imageVector = Icons.Default.CalendarToday,
-                        contentDescription = stringResource(id = R.string.selectDateLbl),
-                        tint = Color.Red
+                        contentDescription = stringResource(id = R.string.selectDateLbl)
                     )
                 }
             }
@@ -141,7 +136,6 @@ fun StaticsTab() {
 
             Text(
                 text = "MM/DD/YYYY",
-                color = Color.Gray,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(start = 4.dp)
             )
@@ -171,7 +165,6 @@ fun StaticsTab() {
 
         Button(
             onClick = { /*  */ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF4A3D)),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(65.dp)

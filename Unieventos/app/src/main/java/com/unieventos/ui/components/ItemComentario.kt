@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/*
 @Composable
 fun ItemComentario(
     texto: String,
@@ -82,3 +83,4 @@ fun ItemComentario(
         }
     }
 }
+ */

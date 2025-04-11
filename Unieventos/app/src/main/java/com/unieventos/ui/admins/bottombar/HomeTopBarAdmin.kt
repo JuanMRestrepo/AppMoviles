@@ -1,6 +1,5 @@
 package com.unieventos.ui.admins.bottombar
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -10,44 +9,41 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.unieventos.R
+import com.unieventos.ui.admins.navigation.RouteAdminTab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopBarAdmin(){
-    val context = LocalContext.current
-    val mensajeEnConstruccion = stringResource(id = R.string.inProgress)
+fun HomeTopBarAdmin(navController: NavHostController){
+
     TopAppBar(
         title = {},
         navigationIcon  = {
             Image(
-                painter = painterResource(id = R.drawable.logo_black),
-                contentDescription = "Save Report",
+                painter = painterResource(id = R.drawable.save_report),
+                contentDescription = stringResource(id = R.string.imageLogo),
                 modifier = Modifier
                     .width(90.dp)
                     .padding(start = 20.dp)
             )
         },
         actions = {
-            IconButton(onClick = { Toast.makeText(context, mensajeEnConstruccion, Toast.LENGTH_SHORT).show() }) {
+            IconButton(onClick =  {
+                navController.navigate(RouteAdminTab.Setting)
+            }) {
                 Icon(
                     imageVector = Icons.Outlined.Settings,
-                    contentDescription = "Settings",
-                    tint = Color.Red
+                    contentDescription = stringResource(id = R.string.settingsLbl),
+                    tint = Color(0xFEE53935)
                 )
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
-            titleContentColor = Color.Black
-        )
+        }
     )
 }

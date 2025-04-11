@@ -31,4 +31,10 @@ sealed class RouteUserTab {
     @Serializable
     data object Settings : RouteUserTab()
 
+    @Serializable
+    data class ReportDetail(val id: String) : RouteUserTab()
+
+    @Serializable
+    data class ReportDetailEdit(val id: String) : RouteUserTab()
+
 }

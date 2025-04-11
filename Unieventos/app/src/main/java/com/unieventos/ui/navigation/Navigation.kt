@@ -13,8 +13,8 @@ import com.unieventos.ui.screens.RestartPassword1
 import com.unieventos.ui.screens.RestartPassword2
 import com.unieventos.ui.screens.VerificationAccountScreen
 import com.unieventos.ui.admins.AdminMenuScreen
-import com.unieventos.ui.screens.ReportDetailScreen
 import com.unieventos.ui.clientes.UserMenuScreen
+import com.unieventos.ui.clientes.tabs.DetailReportTab
 
 @Composable
 fun Navigation(){
@@ -24,8 +24,8 @@ fun Navigation(){
     Surface {
         NavHost(
             navController = navController,
-            //startDestination = RouteScreen.HomeScreen
-            startDestination = RouteScreen.UserMenuScreen
+            startDestination = RouteScreen.HomeScreen
+            //startDestination = RouteScreen.UserMenuScreen
             //startDestination = RouteScreen.AdminMenuScreen
         ) {
             composable <RouteScreen.HomeScreen> {
@@ -69,8 +69,8 @@ fun Navigation(){
 
             composable <RouteScreen.RestartPassword2Screen> {
                 RestartPassword2 (
-                    navigateToRestart1 = {
-                        navController.navigate(RouteScreen.RestartPassword1Screen)
+                    onNavigateBack = {
+                        navController.popBackStack()
                     },
                     navigateToHome = {
                         navController.navigate(RouteScreen.HomeScreen)
@@ -83,8 +83,8 @@ fun Navigation(){
 
             composable <RouteScreen.RestartPassword1Screen> {
                 RestartPassword1 (
-                    navigateToLogIn = {
-                        navController.navigate(RouteScreen.LoginScreen)
+                    onNavigateBack = {
+                        navController.popBackStack()
                     },
                     navigateToRestart2 = {
                         navController.navigate(RouteScreen.RestartPassword2Screen)
@@ -97,8 +97,8 @@ fun Navigation(){
 
             composable <RouteScreen.VerificationAccountScreen> {
                 VerificationAccountScreen(
-                    navigateToSingUp = {
-                        navController.navigate(RouteScreen.SingUpScreen)
+                    onNavigateBack = {
+                        navController.popBackStack()
                     },
                     navigateToHome = {
                         navController.navigate(RouteScreen.HomeScreen)
@@ -110,25 +110,20 @@ fun Navigation(){
             }
 
             composable <RouteScreen.AdminMenuScreen> {
-                AdminMenuScreen(
-                    navigateToDetail = { id ->
-                        navController.navigate(RouteScreen.ReportDetail(id))
-                    }
-                )
+                AdminMenuScreen()
             }
 
             composable <RouteScreen.UserMenuScreen> {
-                UserMenuScreen(
-                    navigateToDetail = { id ->
-                        navController.navigate(RouteScreen.ReportDetail(id))
-                    }
-                )
+                UserMenuScreen()
             }
 
             composable <RouteScreen.ReportDetail> {
                 val args = it.toRoute<RouteScreen.ReportDetail>()
-                ReportDetailScreen(
-                    id = args.id
+                DetailReportTab (
+                    id = args.id,
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
                 )
             }
         }

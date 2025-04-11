@@ -1,7 +1,6 @@
-package com.unieventos.ui.admins.componentsAdmin
+package com.unieventos.ui.clientes.componentsClient
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,18 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -30,17 +24,21 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.unieventos.R
-import com.unieventos.model.User
+import com.unieventos.model.Report
 
 @Composable
-fun UserCardItem(
-    user: User,
+fun ReportCardEditItem(
+    report: Report,
+    navigateToDetail: (String) -> Unit,
+    navigateToEdit: (String) -> Unit
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     val primaryColor = Color(0xFFFF4A3D)
@@ -49,13 +47,16 @@ fun UserCardItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(25.dp, 15.dp),
+            .clickable { navigateToDetail(report.id) }
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = Icons.Default.Person,
-            contentDescription = stringResource(id = R.string.moreOptionsLbl),
-            tint = primaryColor
+        AsyncImage(
+            model = report.images[0],
+            contentDescription = stringResource(id = R.string.imageReport),
+            modifier = Modifier
+                .size(64.dp)
+                .clip(RoundedCornerShape(8.dp))
         )
         Column(
             modifier = Modifier
@@ -63,12 +64,11 @@ fun UserCardItem(
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = user.name,
+                text = report.title,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = user.id,
-                color = Color.Gray,
+                text = report.description,
                 fontSize = 14.sp
             )
         }
@@ -77,7 +77,6 @@ fun UserCardItem(
             Icon(
                 imageVector = Icons.Default.MoreVert,
                 contentDescription = stringResource(id = R.string.moreOptionsLbl),
-                tint = primaryColor,
                 modifier = Modifier
                     .size(24.dp)
                     .clickable { expanded = true }
@@ -92,8 +91,18 @@ fun UserCardItem(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = stringResource(id = R.string.deleteLbl),
-                            color = primaryColor
+                            text = stringResource(id = R.string.editingLbl)
+                        )
+                    },
+                    onClick = {
+                        expanded = false
+                        navigateToEdit(report.id)
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = stringResource(id = R.string.deleteLbl)
                         )
                     },
                     onClick = {
@@ -104,35 +113,35 @@ fun UserCardItem(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = stringResource(id = R.string.closeLbl),
-                            color = primaryColor
+                            text = stringResource(id = R.string.closeLbl)
                         )
                     },
                     onClick = {
                         expanded = false
                     }
                 )
-                if (showDeleteDialog) {
-                    AlertDialog(
-                        onDismissRequest = { showDeleteDialog = false },
-                        title = { Text(stringResource(id = R.string.deleteUserLbl)) },
-                        text = { Text(stringResource(id = R.string.deleteUserSureLbl)) },
-                        confirmButton = {
-                            TextButton (
-                                onClick = {
-                                    showDeleteDialog = false
-                                }
-                            ) {
-                                Text(stringResource(id = R.string.deleteLbl), color = Color.Red)
+            }
+
+            if (showDeleteDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDeleteDialog = false },
+                    title = { Text(stringResource(id = R.string.deleteReportLbl)) },
+                    text = { Text(stringResource(id = R.string.deleteReportSureLbl)) },
+                    confirmButton = {
+                        TextButton (
+                            onClick = {
+                                showDeleteDialog = false
                             }
-                        },
-                        dismissButton = {
-                            TextButton(onClick = { showDeleteDialog = false }) {
-                                Text(stringResource(id = R.string.closeLbl))
-                            }
+                        ) {
+                            Text(stringResource(id = R.string.deleteLbl), color = primaryColor)
                         }
-                    )
-                }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showDeleteDialog = false }) {
+                            Text(stringResource(id = R.string.closeLbl))
+                        }
+                    }
+                )
             }
         }
     }

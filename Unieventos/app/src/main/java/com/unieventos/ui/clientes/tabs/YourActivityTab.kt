@@ -1,6 +1,5 @@
 package com.unieventos.ui.clientes.tabs
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,18 +20,18 @@ import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.clientes.componentsClient.GetTestReports
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
-import com.unieventos.ui.clientes.componentsClient.ReportsList
+import com.unieventos.ui.clientes.componentsClient.ReportListEdit
 
 @Composable
 fun YourActivityTab(
     navigateToDetail: (String) -> Unit,
-    currentUserId: String
+    currentUserId: String,
+    navigateToEdit: (String) -> Unit
 ) {
     val reports = GetTestReports()
     var searchQuery by remember { mutableStateOf("") }
 
     val filteredReports = remember(searchQuery, currentUserId) {
-
     val userReports = reports.filter { it.idUser == currentUserId }
 
         if (searchQuery.isEmpty()) {
@@ -48,12 +47,10 @@ fun YourActivityTab(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
                 .padding(start = 20.dp, top = 15.dp)
         ) {
             Text(
@@ -82,7 +79,10 @@ fun YourActivityTab(
                 Text(stringResource(id = R.string.noReportsLbl))
             }
         } else {
-            ReportsList (reports = filteredReports, navigateToDetail = navigateToDetail)
+            ReportListEdit (
+                reports = filteredReports,
+                navigateToDetail = navigateToDetail,
+                navigateToEdit = navigateToEdit)
         }
     }
 }

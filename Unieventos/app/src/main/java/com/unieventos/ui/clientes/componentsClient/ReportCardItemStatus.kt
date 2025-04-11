@@ -41,7 +41,6 @@ fun ReportCardItemStatus(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // Contenido principal
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
                 model = report.images[0],
@@ -106,7 +105,5 @@ fun ReportCardItemStatus(
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
-
-
     }
 }

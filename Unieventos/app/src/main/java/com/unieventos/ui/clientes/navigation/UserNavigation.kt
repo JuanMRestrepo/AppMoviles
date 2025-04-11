@@ -7,8 +7,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.unieventos.ui.clientes.tabs.CreateReportTab
+import com.unieventos.ui.clientes.tabs.DetailReportTab
 import com.unieventos.ui.clientes.tabs.EditProfileTab
+import com.unieventos.ui.clientes.tabs.EditReportTab
 import com.unieventos.ui.clientes.tabs.HomeUserTab
 import com.unieventos.ui.clientes.tabs.MyReportsTab
 import com.unieventos.ui.clientes.tabs.NotificationsTab
@@ -21,7 +24,8 @@ import com.unieventos.ui.screens.SettingsTab
 fun UserNavigation(
     paddingValues: PaddingValues,
     navController: NavHostController,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String) -> Unit,
+    navigateToEdit: (String) -> Unit
 ) {
     NavHost(
         modifier = Modifier.padding(paddingValues),
@@ -73,12 +77,33 @@ fun UserNavigation(
         composable <RouteUserTab.YourActivity> {
             YourActivityTab(
                 navigateToDetail = navigateToDetail,
-                currentUserId = "1"
+                currentUserId = "1",
+                navigateToEdit = navigateToEdit
             )
         }
 
         composable <RouteUserTab.Settings>  {
             SettingsTab()
+        }
+
+        composable <RouteUserTab.ReportDetail> {
+            val args = it.toRoute<RouteUserTab.ReportDetail>()
+            DetailReportTab (
+                id = args.id,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable <RouteUserTab.ReportDetailEdit> {
+            val args = it.toRoute<RouteUserTab.ReportDetailEdit>()
+            EditReportTab (
+                id = args.id,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

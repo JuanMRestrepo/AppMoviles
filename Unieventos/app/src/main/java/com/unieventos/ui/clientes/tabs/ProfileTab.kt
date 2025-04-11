@@ -3,9 +3,7 @@ package com.unieventos.ui.clientes.tabs
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,14 +14,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -38,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.ui.components.ItemDeleteAccount
+import com.unieventos.ui.components.ProfileOption
 
 @Composable
 fun ProfileTab(
@@ -65,7 +62,7 @@ fun ProfileTab(
             painter = painterResource(id = R.drawable.fondo),
             contentDescription = stringResource(id = R.string.imagePerfil),
             modifier = Modifier
-                .size(100.dp)
+                .size(130.dp)
                 .clip(CircleShape)
         )
 
@@ -86,9 +83,7 @@ fun ProfileTab(
             shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.1f))
         ) {
-
             var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
-
             Column(modifier = Modifier.padding(16.dp)) {
                 /*
                 ProfileOption(
@@ -122,38 +117,10 @@ fun ProfileTab(
                     onClick = { showDeleteDialog = true }
                 )
             }
-
-            if (showDeleteDialog) {
-                AlertDialog(
-                    onDismissRequest = { showDeleteDialog = false },
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.deleteAccountLbl),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    },
-                    text = {
-                        Text(stringResource(id = R.string.deleteMessageLbl))
-                    },
-                    confirmButton = {
-                        TextButton (
-                            onClick = {
-                                showDeleteDialog = false
-                                //navigateToLogIn()
-                            }
-                        ) {
-                            Text(stringResource(id = R.string.deleteLbl), color = Color.Red)
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(
-                            onClick = { showDeleteDialog = false }
-                        ) {
-                            Text(stringResource(id = R.string.closeLbl))
-                        }
-                    }
-                )
-            }
+            ItemDeleteAccount(
+                showDeleteDialog = showDeleteDialog,
+                onDismissRequest = { showDeleteDialog = false }
+            )
         }
 
         Spacer(modifier = Modifier.height(60.dp))
@@ -176,26 +143,3 @@ fun ProfileTab(
     }
 }
 
-@Composable
-fun ProfileOption(
-    text: String,
-    isRed: Boolean = false,
-    onClick: (() -> Unit)? = null
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable {
-                onClick?.invoke()
-            },
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = text,
-            color = if (isRed) Color.Red else Color.Black,
-            fontSize = 16.sp,
-            modifier = Modifier.weight(1f)
-        )
-    }
-}

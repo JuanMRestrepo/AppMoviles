@@ -1,6 +1,5 @@
 package com.unieventos.ui.clientes.tabs
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,10 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import com.unieventos.ui.clientes.componentsClient.GetTestReports
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
-import com.unieventos.ui.clientes.componentsClient.ReportsList
 import com.unieventos.ui.clientes.componentsClient.ReportsListStatus
 
 @Composable
@@ -39,7 +36,6 @@ fun MyReportsTab(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         ModifiedSearchBar(
             query = searchQuery,

@@ -1,21 +1,15 @@
 package com.unieventos.ui.admins.bottombar
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.AddCircle
 import androidx.compose.material.icons.outlined.Analytics
 import androidx.compose.material.icons.outlined.Assignment
 import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.List
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -26,11 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.unieventos.R
 import com.unieventos.ui.admins.navigation.RouteAdminTab
-import com.unieventos.ui.clientes.bottombar.NavigationBarUser
-import com.unieventos.ui.clientes.navigation.RouteUserTab
 
 @Composable
 fun HomeBottomBarAdmin(
@@ -42,31 +36,31 @@ fun HomeBottomBarAdmin(
         NavigationAdminUser(
             icon = Icons.Outlined.Home,
             route = RouteAdminTab.HomeAdmin,
-            title = "Home",
+            title = stringResource(id = R.string.homeIcon),
             iconSelected = Icons.Filled.Home
         ),
         NavigationAdminUser(
             icon = Icons.Outlined.Group,
             route = RouteAdminTab.UsersAdmin,
-            title = "Users",
+            title = stringResource(id = R.string.usersIcon),
             iconSelected = Icons.Filled.Group
         ),
         NavigationAdminUser(
             icon = Icons.Outlined.Assignment,
             route = RouteAdminTab.ReportsAdmin,
-            title = "Reports",
+            title = stringResource(id = R.string.reportsIcon),
             iconSelected = Icons.Filled.Assignment
         ),
         NavigationAdminUser(
             icon = Icons.Outlined.Analytics,
             route = RouteAdminTab.StaticsAdmin,
-            title = "Stats",
+            title = stringResource(id = R.string.staticsLbl),
             iconSelected = Icons.Filled.Analytics
         ),
         NavigationAdminUser(
             icon = Icons.Outlined.Person,
             route = RouteAdminTab.ProfileAdmin,
-            title = "You",
+            title = stringResource(id = R.string.youIcon),
             iconSelected = Icons.Filled.Person
         )
     )
@@ -75,7 +69,6 @@ fun HomeBottomBarAdmin(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         lista.forEach {
-
             val isSelected = currentDestination?.route == it.route::class.qualifiedName
             NavigationBarItem(
                 label = {

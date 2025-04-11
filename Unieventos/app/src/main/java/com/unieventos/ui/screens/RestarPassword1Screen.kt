@@ -6,10 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,8 +16,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,11 +36,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.TextFieldForm
-import com.unieventos.ui.components.TopBarDefect2
+import com.unieventos.ui.components.topBars.TopBarDefect
 
 @Composable
 fun RestartPassword1(
-    navigateToLogIn: () -> Unit,
+    onNavigateBack: () -> Unit,
     navigateToHome: () -> Unit,
     navigateToRestart2: () -> Unit
 ) {
@@ -61,8 +57,8 @@ fun RestartPassword1(
             val sendCode = stringResource(id = R.string.sendCodeLbl);
             val validateAccount = stringResource(id = R.string.validateAccountLbl);
 
-            TopBarDefect2(
-                navigateToLogIn = navigateToLogIn,
+            TopBarDefect (
+                onNavigateBack,
                 navigateToHome = navigateToHome
             )
 
@@ -172,8 +168,6 @@ fun RestartPassword1(
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        //Verificar validacion de codigo enviado
-
                         TextFieldForm(
                             value = code,
                             onValueChange = {
@@ -182,7 +176,6 @@ fun RestartPassword1(
                             supportingText = stringResource(id = R.string.codeValidation),
                             label = stringResource(id = R.string.codeSent),
                             onValidate = {
-                                //Ajustar logica de codigo enviado
                                 !Patterns.EMAIL_ADDRESS.matcher(it).matches()
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -195,9 +188,7 @@ fun RestartPassword1(
                             text = stringResource(id = R.string.resendCode),
                             color = Color(0xFFFF4B3A),
                             textDecoration = TextDecoration.Underline,
-                            modifier = Modifier.clickable {
-                                /* Acción de reenviar codigo */
-                            }
+                            modifier = Modifier.clickable { }
                         )
 
                         Spacer(modifier = Modifier.height(35.dp))

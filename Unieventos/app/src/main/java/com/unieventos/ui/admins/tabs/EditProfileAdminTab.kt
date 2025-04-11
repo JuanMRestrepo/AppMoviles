@@ -36,7 +36,6 @@ fun EditProfileAdminTab(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE6E6E6))
     ){
         Column(
             modifier = Modifier
@@ -72,8 +71,7 @@ fun EditProfileAdminTab(
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFF7F3F8))
+                shape = RoundedCornerShape(12.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     ProfileInfoRow(nameLabel, "Andrés Díaz")
@@ -87,8 +85,7 @@ fun EditProfileAdminTab(
 
             Text(
                 text = stringResource(id = R.string.messageEdit),
-                fontSize = 12.sp,
-                color = Color.Black
+                fontSize = 12.sp
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -102,7 +99,6 @@ fun EditProfileAdminTab(
                 shape = RoundedCornerShape(50.dp)
             ) {
                 Text(text = stringResource(id = R.string.editInformation),
-                    color = Color.White,
                     fontSize = 16.sp)
             }
         }
@@ -112,7 +108,7 @@ fun EditProfileAdminTab(
 @Composable
 fun ProfileInfoRow(label: String, value: String) {
     Column(modifier = Modifier.padding(vertical = 8.dp)) {
-        Text(text = label, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Gray)
+        Text(text = label, fontSize = 14.sp, fontWeight = FontWeight.Bold)
         Text(text = value, fontSize = 16.sp, fontWeight = FontWeight.Medium)
     }
 }

@@ -1,6 +1,5 @@
 package com.unieventos.ui.clientes.bottombar
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -10,11 +9,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,8 +27,8 @@ fun HomeTopBar(navController: NavHostController) {
         title = {},
         navigationIcon  = {
             Image(
-                painter = painterResource(id = R.drawable.logo_black),
-                contentDescription = "Save Report",
+                painter = painterResource(id = R.drawable.save_report),
+                contentDescription = stringResource(id = R.string.imageLogo),
                 modifier = Modifier
                     .width(90.dp)
                     .padding(start = 20.dp)
@@ -43,14 +40,10 @@ fun HomeTopBar(navController: NavHostController) {
             }) {
                 Icon(
                     imageVector = Icons.Outlined.Settings,
-                    contentDescription = "Settings",
-                    tint = Color.Red
+                    contentDescription = stringResource(id = R.string.settingsLbl),
+                    tint = Color(0xFEE53935)
                 )
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
-            titleContentColor = Color.Black
-        )
+        }
     )
 }

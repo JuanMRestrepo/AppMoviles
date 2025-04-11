@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/*
 @Composable
 fun ItemRechazarReporte(
     motivo: String,
@@ -120,3 +121,4 @@ fun ItemRechazarReporte(
         }
     }
 }
+ */

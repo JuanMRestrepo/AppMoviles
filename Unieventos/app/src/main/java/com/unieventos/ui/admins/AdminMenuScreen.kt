@@ -6,15 +6,16 @@ import androidx.navigation.compose.rememberNavController
 import com.unieventos.ui.admins.bottombar.HomeBottomBarAdmin
 import com.unieventos.ui.admins.bottombar.HomeTopBarAdmin
 import com.unieventos.ui.admins.navigation.AdminNavigation
+import com.unieventos.ui.admins.navigation.RouteAdminTab
 
 @Composable
-fun AdminMenuScreen(
-    navigateToDetail: (String) -> Unit
-) {
+fun AdminMenuScreen() {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
-            HomeTopBarAdmin()
+            HomeTopBarAdmin(
+                navController = navController
+            )
         },
         bottomBar = {
             HomeBottomBarAdmin(
@@ -25,7 +26,9 @@ fun AdminMenuScreen(
         AdminNavigation(
             paddingValues = paddingValues,
             navController = navController,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = { id ->
+                navController.navigate(RouteAdminTab.ReportDetailAdmin(id))
+            }
         )
     }
 }

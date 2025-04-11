@@ -1,6 +1,5 @@
 package com.unieventos.ui.clientes.tabs
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.unieventos.ui.clientes.componentsClient.GetTestNotifications
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
@@ -37,7 +35,6 @@ fun NotificationsTab(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         ModifiedSearchBar(
             query = searchQuery,

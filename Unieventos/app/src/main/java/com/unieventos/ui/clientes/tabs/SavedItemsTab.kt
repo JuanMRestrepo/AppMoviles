@@ -1,6 +1,5 @@
 package com.unieventos.ui.clientes.tabs
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,12 +44,10 @@ fun SavedItemsTab(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
                 .padding(start = 20.dp, top = 15.dp)
         ) {
             Text(

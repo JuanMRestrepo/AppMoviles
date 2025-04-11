@@ -4,13 +4,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.unieventos.ui.clientes.bottombar.HomeBottomBar
-import com.unieventos.ui.clientes.navigation.UserNavigation
 import com.unieventos.ui.clientes.bottombar.HomeTopBar
+import com.unieventos.ui.clientes.navigation.RouteUserTab
+import com.unieventos.ui.clientes.navigation.UserNavigation
 
 @Composable
-fun UserMenuScreen(
-    navigateToDetail: (String) -> Unit
-) {
+fun UserMenuScreen() {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -27,7 +26,12 @@ fun UserMenuScreen(
         UserNavigation(
             paddingValues = paddingValues,
             navController = navController,
-            navigateToDetail = navigateToDetail,
+            navigateToDetail = { id ->
+                navController.navigate(RouteUserTab.ReportDetail(id))
+            },
+            navigateToEdit = { id ->
+                navController.navigate(RouteUserTab.ReportDetailEdit(id))
+            }
         )
     }
 }

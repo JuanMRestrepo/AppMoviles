@@ -1,4 +1,4 @@
-package com.unieventos.ui.screens
+package com.unieventos.ui.clientes.tabs
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +46,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,7 +55,7 @@ import com.unieventos.ui.clientes.componentsClient.CommentsItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReportDetailScreen(
+fun DetailReportTab(
     id: String,
     onNavigateBack: () -> Unit
 ) {
@@ -77,7 +78,7 @@ fun ReportDetailScreen(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.Comment,
-                    contentDescription = "Comentarios"
+                    contentDescription = stringResource(id = R.string.commentsLbl),
                 )
             }
         }
@@ -98,7 +99,7 @@ fun ReportDetailScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp, top = 30.dp),
+                        .padding(start = 20.dp, end = 20.dp, top = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -109,7 +110,7 @@ fun ReportDetailScreen(
                     )
                     Icon(
                         imageVector = Icons.Filled.BookmarkBorder,
-                        contentDescription = "Save",
+                        contentDescription = stringResource(id = R.string.saveLabel),
                         tint = Color(0xFEE53935),
                         modifier = Modifier.size(25.dp)
                     )
@@ -133,7 +134,7 @@ fun ReportDetailScreen(
                             onValueChange = {},
                             label = {
                                 Text(
-                                    text = "Details",
+                                    text = stringResource(id = R.string.detailsLabel),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Normal
                                 )
@@ -143,37 +144,38 @@ fun ReportDetailScreen(
                         )
 
                         OutlinedTextField(
-                            value = "Pets",
+                            value = stringResource(id = R.string.petsLbl),
                             onValueChange = {},
                             label = {
                                 Text(
-                                    text = "Category",
+                                    text = stringResource(id = R.string.categoryLbl),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Normal
                                 )
                             },
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                            modifier = Modifier.fillMaxWidth(),
+                            readOnly = true,
+                            )
 
                         Column {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "Address",
+                                    text = stringResource(id = R.string.addressLabel),
                                     color = Color(0xFEE53935),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 15.sp
                                 )
                                 Icon(
                                     imageVector = Icons.Default.Place,
-                                    contentDescription = "Location",
+                                    contentDescription = stringResource(id = R.string.locationLbl),
                                     tint = Color(0xFEE53935),
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
                             Text(
-                                text = "Debajo el punte de la 18",
+                                text = stringResource(id = R.string.under18Label),
                                 fontSize = 13.sp
                             )
                             Spacer(modifier = Modifier.height(8.dp))
@@ -187,13 +189,13 @@ fun ReportDetailScreen(
                             ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.mapa),
-                                    contentDescription = "Map",
+                                    contentDescription = stringResource(id = R.string.mapLabel),
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier.fillMaxSize()
                                 )
                                 Icon(
                                     imageVector = Icons.Default.Place,
-                                    contentDescription = "Location",
+                                    contentDescription = stringResource(id = R.string.locationLbl),
                                     tint = Color(0xFEE53935),
                                     modifier = Modifier.size(36.dp)
                                 )
@@ -201,17 +203,18 @@ fun ReportDetailScreen(
                         }
 
                         OutlinedTextField(
-                            value = "Verified",
+                            value = stringResource(id = R.string.verifiedLabel),
                             onValueChange = {},
                             label = {
                                 Text(
-                                    text = "State",
+                                    text = stringResource(id = R.string.stateLbl),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Normal
                                 )
                             },
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                            modifier = Modifier.fillMaxWidth(),
+                            readOnly = true,
+                            )
 
                         Box(
                             modifier = Modifier
@@ -260,7 +263,7 @@ fun ReportDetailScreen(
                             Row {
                                 Icon(
                                     imageVector = Icons.Default.ThumbUp,
-                                    contentDescription = "Like",
+                                    contentDescription = stringResource(id = R.string.likeLbl),
                                     tint = Color(0xFEE53935),
                                     modifier = Modifier
                                         .size(20.dp)
@@ -285,7 +288,7 @@ fun ReportDetailScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Person,
-                                    contentDescription = "User Icon",
+                                    contentDescription = stringResource(id = R.string.usersIcon),
                                     tint = Color(0xFEE53935),
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -295,7 +298,7 @@ fun ReportDetailScreen(
 
                             Column {
                                 Text(
-                                    text = "Creator",
+                                    text = stringResource(id = R.string.creatorLbl),
                                     color = Color(0xFEE53935),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 14.sp

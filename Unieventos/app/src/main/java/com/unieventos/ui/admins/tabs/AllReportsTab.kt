@@ -1,6 +1,5 @@
 package com.unieventos.ui.admins.tabs
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,8 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.ui.admins.componentsAdmin.AllReportsList
 import com.unieventos.ui.admins.componentsAdmin.GetTestReportsPending
-import com.unieventos.ui.admins.componentsAdmin.ReportsListVerified
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
 
 @Composable
@@ -44,12 +43,10 @@ fun AllReportsTab(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
                 .padding(start = 20.dp, top = 15.dp)
         ) {
             Text(
@@ -67,6 +64,6 @@ fun AllReportsTab(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 15.dp)
         )
-        ReportsListVerified (reports = filteredReports, navigateToDetail = navigateToDetail)
+        AllReportsList (reports = filteredReports, navigateToDetail = navigateToDetail)
     }
 }

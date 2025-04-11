@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/*
 enum class TipoNotificacion {
     NUEVO_REPORTE,
     NUEVO_COMENTARIO,
@@ -134,3 +135,4 @@ private fun getNotificationTypeColor(tipo: TipoNotificacion): Color {
         TipoNotificacion.REPORTE_RESUELTO -> Color(0xFF009688)
     }
 }
+ */

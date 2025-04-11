@@ -36,26 +36,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.TextFieldForm
-import com.unieventos.ui.components.TopBarDefect3
+import com.unieventos.ui.components.topBars.TopBarDefect
 
 @Composable
 fun RestartPassword2(
+    onNavigateBack: () -> Unit,
     navigateToHome: () -> Unit,
-    navigateToRestart1: () -> Unit,
     navigateToLogIn: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .background(Color(0xFFE6E6E6)),
+                .padding(paddingValues),
         ) {
             var password by rememberSaveable { mutableStateOf("") }
             var confirmPassword by rememberSaveable { mutableStateOf("") }
 
-            TopBarDefect3 (
-                navigateToRestart1 = navigateToRestart1,
+            TopBarDefect (
+                onNavigateBack,
                 navigateToHome = navigateToHome
             )
 

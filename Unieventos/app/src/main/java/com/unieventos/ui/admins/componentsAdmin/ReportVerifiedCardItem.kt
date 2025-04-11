@@ -69,7 +69,6 @@ fun ReportVerifiedCardItem(
         ) {
             Text(
                 text = report.state.toString(),
-                color = Color.Gray,
                 fontSize = 14.sp
             )
             Text(
@@ -78,7 +77,6 @@ fun ReportVerifiedCardItem(
             )
             Text(
                 text = report.description,
-                color = Color.Gray,
                 fontSize = 14.sp
             )
         }
@@ -98,7 +96,7 @@ fun ReportVerifiedCardItem(
             Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = stringResource(id = R.string.closeLbl),
-                tint = Color.Red,
+                tint = primaryColor,
                 modifier = Modifier
                     .size(24.dp)
                     .clickable { showRejectDialog = true }
@@ -112,7 +110,6 @@ fun ReportVerifiedCardItem(
             title = {
                 Text(
                     stringResource(id = R.string.reasonLblMessage),
-                    color = primaryColor,
                     fontWeight = FontWeight.Bold
                 )
             },
@@ -131,11 +128,7 @@ fun ReportVerifiedCardItem(
                 Button(
                     onClick = {
                         showRejectDialog = false
-                        // rejectReport(report.id, rejectReason)
                     },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = primaryColor
-                    )
                 ) {
                     Text(stringResource(id = R.string.confirmLbl))
                 }
@@ -146,14 +139,10 @@ fun ReportVerifiedCardItem(
                         showRejectDialog = false
                         rejectReason = ""
                     },
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = primaryColor
-                    )
                 ) {
                     Text(stringResource(id = R.string.closeLbl))
                 }
             },
-            containerColor = Color.White
         )
     }
 
@@ -163,7 +152,6 @@ fun ReportVerifiedCardItem(
             title = {
                 Text(
                     text = stringResource(id = R.string.confirmLbl),
-                    color = Color(0xFF006400),
                     fontWeight = FontWeight.Bold
                 )
             },
@@ -175,24 +163,17 @@ fun ReportVerifiedCardItem(
                     onClick = {
                         showAcceptDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF006400)
-                    )
                 ) {
                     Text(stringResource(id = R.string.confirmLbl))
                 }
             },
             dismissButton = {
                 TextButton(
-                    onClick = { showAcceptDialog = false },
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = Color.Gray
-                    )
+                    onClick = { showAcceptDialog = false }
                 ) {
                     Text(stringResource(id = R.string.closeLbl))
                 }
             },
-            containerColor = Color.White
         )
     }
 }

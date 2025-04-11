@@ -1,4 +1,4 @@
-package com.unieventos.ui.components
+package com.unieventos.ui.components.topBars
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import com.unieventos.R
 
 @Composable
 fun TopBarDefect(
-    navigateToSingUp: () -> Unit,
+    onNavigateBack: () -> Unit,
     navigateToHome: () -> Unit,
 ){
     Box(
@@ -36,7 +36,7 @@ fun TopBarDefect(
         ) {
             IconButton (
                 onClick = {
-                    navigateToSingUp()
+                    onNavigateBack()
                 }
             ) {
                 Icon(

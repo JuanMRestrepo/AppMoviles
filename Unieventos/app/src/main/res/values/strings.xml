@@ -5,20 +5,42 @@
     <string name="loginValidation">Email or password incorrect</string>
 
     <string name="singUpIcon">Icon singUp</string>
+    <string name="selectCityLbl">Select a city</string>
+
     <string name="loginIcon">Icon login</string>
     <string name="logoutIcon">Icon logout</string>
     <string name="SearchIcon">Search</string>
     <string name="moreOptionsLbl">More Options</string>
     <string name="deleteLbl">Delete</string>
     <string name="closeLbl">Close</string>
+    <string name="editingLbl">Edit</string>
     <string name="dateLbl">Date</string>
     <string name="downloadLbl">Download</string>
     <string name="confirmLbl">Confirm</string>
+    <string name="likeLbl">Like</string>
     <string name="settingsLbl">Settings</string>
     <string name="staticsLbl">Statics</string>
     <string name="reasonLbl">Reason</string>
+    <string name="stateLbl">State</string>
+    <string name="spanishLbl">Spanish</string>
+    <string name="creatorLbl">Creator</string>
+    <string name="locationLbl">Location</string>
     <string name="acceptedLbl">Accepted</string>
+    <string name="colombiaLbl">Colombia</string>
     <string name="earringsLbl">Earrings</string>
+    <string name="languageLbl">Language</string>
+    <string name="commentsLbl">Comments</string>
+    <string name="deleteReportLbl">Delete report?</string>
+    <string name="deleteUserLbl">Delete user?</string>
+
+    <string name="under18Label">Under the 18th Bridge</string>
+
+    <string name="currentLocationLbl">Current Location</string>
+
+    <string name="deleteReportSureLbl">Are you sure you want to delete this report?
+        This action cannot be undone</string>
+    <string name="deleteUserSureLbl">Are you sure you want to delete this user?
+        This action cannot be undone</string>
 
     <string name="allReportslbl">All reports</string>
     <string name="downloadReportLbl">Download Report</string>
@@ -49,6 +71,10 @@
     <string name="resendCode">Resend code</string>
     <string name="addressLabel">Address</string>
     <string name="emailLabel">Email</string>
+    <string name="saveLabel">Save</string>
+    <string name="verifiedLabel">Verified</string>
+
+    <string name="detailsLabel">Details</string>
     <string name="emailValidation">The email is not valid</string>
     <string name="passwordLabel">Password</string>
     <string name="passwordValidation">The password must be at least 6 characters long</string>
@@ -59,6 +85,21 @@
     <string name="registerSuccessfully">Successfully registered</string>
     <string name="returnIcon">Return</string>
     <string name="homeIcon">Home</string>
+    <string name="reportsIcon">Reports</string>
+    <string name="youIcon">You</string>
+    <string name="usersIcon">Users</string>
+
+    <string name="listIcon">List</string>
+    <string name="alertIcon">Alerts</string>
+
+    <string name="editIcon">Edit icon</string>
+
+
+    <string name="petsLbl">Pets</string>
+    <string name="mapLabel">Map</string>
+
+
+
     <string name="recoverLabel">Recover password</string>
     <string name="yourEmailLabel">Enter your email</string>
     <string name="sendCodeLbl">Send code</string>

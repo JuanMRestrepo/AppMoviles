@@ -1,9 +1,7 @@
 package com.unieventos.ui.admins.tabs
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -22,6 +19,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.ui.components.ItemDeleteAccount
+import com.unieventos.ui.components.ProfileOption
 
 @Composable
 fun ProfileAdminTab(
@@ -58,7 +61,7 @@ fun ProfileAdminTab(
             painter = painterResource(id = R.drawable.fondo),
             contentDescription = stringResource(id = R.string.imagePerfil),
             modifier = Modifier
-                .size(100.dp)
+                .size(130.dp)
                 .clip(CircleShape)
         )
 
@@ -79,6 +82,7 @@ fun ProfileAdminTab(
             shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.1f))
         ) {
+            var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
             Column(modifier = Modifier.padding(16.dp)) {
                 //ProfileOption(text = changeUser, isRed = true)
                 Spacer(modifier = Modifier.height(5.dp))
@@ -93,8 +97,17 @@ fun ProfileAdminTab(
                     })
                 Spacer(modifier = Modifier.height(20.dp))
                 //ProfileOption(text = activityLbl, isRed = true)
-                ProfileOption(text = deleteAccountLbl, isRed = true)
+                ProfileOption(
+                    text = deleteAccountLbl,
+                    isRed = true,
+                    onClick = { showDeleteDialog = true }
+                )
             }
+
+            ItemDeleteAccount(
+                showDeleteDialog = showDeleteDialog,
+                onDismissRequest = { showDeleteDialog = false }
+            )
         }
 
         Spacer(modifier = Modifier.height(55.dp))
@@ -113,34 +126,6 @@ fun ProfileAdminTab(
                 tint = Color.White
             )
             Text(text = logOutBtn, color = Color.White, fontSize = 16.sp)
-        }
-    }
-}
-
-@Composable
-fun ProfileOption(
-    text: String,
-    hasArrow: Boolean = false,
-    isRed: Boolean = false,
-    onClick: (() -> Unit)? = null
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable {
-                onClick?.invoke()
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = text,
-            color = if (isRed) Color.Red else Color.Black,
-            fontSize = 16.sp,
-            modifier = Modifier.weight(1f)
-        )
-        if (hasArrow) {
-            Icon(Icons.Outlined.ArrowForward, contentDescription = "Arrow", tint = Color.Black)
         }
     }
 }

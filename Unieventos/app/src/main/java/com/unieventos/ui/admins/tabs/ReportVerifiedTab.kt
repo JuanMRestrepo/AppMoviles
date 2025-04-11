@@ -1,6 +1,5 @@
 package com.unieventos.ui.admins.tabs
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,12 +43,10 @@ fun ReportVerifiedTab(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
                 .padding(start = 20.dp, top = 15.dp)
         ) {
             Text(
