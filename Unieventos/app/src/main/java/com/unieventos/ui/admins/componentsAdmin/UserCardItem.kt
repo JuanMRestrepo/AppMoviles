@@ -1,7 +1,6 @@
 package com.unieventos.ui.admins.componentsAdmin
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,17 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -80,59 +74,29 @@ fun UserCardItem(
                 tint = primaryColor,
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable { expanded = true }
+                    .clickable { showDeleteDialog = true }
             )
 
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .width(150.dp)
-            ) {
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = stringResource(id = R.string.deleteLbl),
-                            color = primaryColor
-                        )
-                    },
-                    onClick = {
-                        expanded = false
-                        showDeleteDialog = true
-                    }
-                )
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = stringResource(id = R.string.closeLbl),
-                            color = primaryColor
-                        )
-                    },
-                    onClick = {
-                        expanded = false
-                    }
-                )
-                if (showDeleteDialog) {
-                    AlertDialog(
-                        onDismissRequest = { showDeleteDialog = false },
-                        title = { Text(stringResource(id = R.string.deleteUserLbl)) },
-                        text = { Text(stringResource(id = R.string.deleteUserSureLbl)) },
-                        confirmButton = {
-                            TextButton (
-                                onClick = {
-                                    showDeleteDialog = false
-                                }
-                            ) {
-                                Text(stringResource(id = R.string.deleteLbl), color = Color.Red)
+            if (showDeleteDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDeleteDialog = false },
+                    title = { Text(stringResource(id = R.string.deleteUserLbl)) },
+                    text = { Text(stringResource(id = R.string.deleteUserSureLbl)) },
+                    confirmButton = {
+                        TextButton (
+                            onClick = {
+                                showDeleteDialog = false
                             }
-                        },
-                        dismissButton = {
-                            TextButton(onClick = { showDeleteDialog = false }) {
-                                Text(stringResource(id = R.string.closeLbl))
-                            }
+                        ) {
+                            Text(stringResource(id = R.string.deleteLbl), color = Color.Red)
                         }
-                    )
-                }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showDeleteDialog = false }) {
+                            Text(stringResource(id = R.string.closeLbl))
+                        }
+                    }
+                )
             }
         }
     }
