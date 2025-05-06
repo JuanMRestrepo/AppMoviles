@@ -33,7 +33,9 @@ fun UserNavigation(
         startDestination = RouteUserTab.Home
     ) {
         composable <RouteUserTab.Home> {
-            HomeUserTab()
+            HomeUserTab(
+                onNavitageToDetail = navigateToDetail
+            )
         }
 
         composable <RouteUserTab.Reports> {

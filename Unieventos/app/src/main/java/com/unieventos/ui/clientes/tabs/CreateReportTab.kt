@@ -1,13 +1,7 @@
 package com.unieventos.ui.clientes.tabs
 
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,17 +15,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.CloudUpload
-import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,12 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
+import com.mapbox.maps.extension.compose.annotation.rememberIconImage
 import com.unieventos.R
 import com.unieventos.ui.clientes.componentsClient.ImageUploader
 import com.unieventos.ui.components.DropdownMenu
@@ -63,10 +54,8 @@ fun CreateReportTab(){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
     ) {
-        val imageUrl = "https://motor.elpais.com/wp-content/uploads/2022/01/google-maps-22.jpg"
         val title = stringResource(id = R.string.titleLbl)
         val description = stringResource(id = R.string.descriptionLbl)
-        val categoryLbl = stringResource(id = R.string.categoryLbl)
         val uploadImage = stringResource(id = R.string.uploadImageLbl)
         val select = stringResource(id = R.string.selectLbl)
         val createNewReport = stringResource(id = R.string.createLbl)
@@ -79,6 +68,21 @@ fun CreateReportTab(){
             "Pets",
             "Community"
         )
+
+        var clickedPoint by remember { mutableStateOf<Point?>(null) }
+
+        var markerResourceId by remember {
+            mutableStateOf(R.drawable.red_marker)
+        }
+
+        var marker = rememberIconImage( key = markerResourceId, painter = painterResource(markerResourceId))
+
+        var mapViewportState = rememberMapViewportState {
+            setCameraOptions {
+                zoom(9.0)
+                center( Point.fromLngLat(-75.67, 4.53))
+            }
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -150,15 +154,30 @@ fun CreateReportTab(){
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Image(
-                    painter = rememberAsyncImagePainter(imageUrl),
-                    contentDescription = stringResource(id = R.string.mapImage),
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(190.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
-                )
+                ){
+                    MapboxMap(
+                        modifier = Modifier.fillMaxSize(),
+                        mapViewportState = mapViewportState,
+                        onMapClickListener = { point ->
+                            clickedPoint = point
+                            true
+                        }
+                    ) {
+                        clickedPoint?.let {
+                            PointAnnotation(
+                                point = clickedPoint!!
+                            ) {
+                                iconImage = marker
+                            }
+                        }
+                    }
+                }
 
                 Button(
                     colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),

@@ -50,6 +50,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.compose.MapEffect
+import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
+import com.mapbox.maps.extension.compose.annotation.rememberIconImage
+import com.mapbox.maps.plugin.PuckBearing
+import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.unieventos.R
 import com.unieventos.ui.clientes.componentsClient.CommentsItem
 
@@ -183,22 +192,36 @@ fun DetailReportTab(
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(120.dp)
+                                    .height(150.dp)
                                     .clip(RoundedCornerShape(8.dp)),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.mapa),
-                                    contentDescription = stringResource(id = R.string.mapLabel),
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-                                Icon(
-                                    imageVector = Icons.Default.Place,
-                                    contentDescription = stringResource(id = R.string.locationLbl),
-                                    tint = Color(0xFEE53935),
-                                    modifier = Modifier.size(36.dp)
-                                )
+
+                                var mapViewportState = rememberMapViewportState {
+                                    setCameraOptions {
+                                        zoom(14.0)
+                                        center( Point.fromLngLat(-75.635846, 4.616121))
+                                    }
+                                }
+
+                                var markerResourceId by remember {
+                                    mutableStateOf(R.drawable.red_marker)
+                                }
+
+                                var marker = rememberIconImage( key = markerResourceId, painter = painterResource(markerResourceId))
+
+                                MapboxMap(
+                                    modifier = Modifier.fillMaxSize(),
+                                    mapViewportState = mapViewportState,
+                                ) {
+
+                                    PointAnnotation(
+                                        point = Point.fromLngLat(-75.635846, 4.616121)
+                                    ) {
+                                        iconImage = marker
+                                    }
+
+                                }
                             }
                         }
 
