@@ -17,19 +17,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.unieventos.ui.components.singupItems.ColumnContentSingUp
 import com.unieventos.ui.components.singupItems.TopImageSingUp
+import com.unieventos.viewmodel.UsersViewModel
 
 @Composable
 fun SingUpScreen(
+    usersViewModel: UsersViewModel,
     navigateToLogIn: () -> Unit,
     navigateToVerification: () -> Unit
 ) {
     Scaffold { padding ->
-        SingUpForm(padding, navigateToLogIn, navigateToVerification)
+        SingUpForm(usersViewModel, padding, navigateToLogIn, navigateToVerification)
     }
 }
 
 @Composable
 fun SingUpForm(
+    usersViewModel: UsersViewModel,
     padding: PaddingValues,
     navigateToLogIn: () -> Unit,
     navigateToVerification: () -> Unit
@@ -54,6 +57,7 @@ fun SingUpForm(
                 shape = RoundedCornerShape(40.dp)
             ) {
                 ColumnContentSingUp (
+                    usersViewModel = usersViewModel,
                     navigateToLogIn = navigateToLogIn,
                     navigateToVerification = navigateToVerification
                 )

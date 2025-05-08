@@ -9,12 +9,15 @@ import com.unieventos.ui.admins.navigation.AdminNavigation
 import com.unieventos.ui.admins.navigation.RouteAdminTab
 
 @Composable
-fun AdminMenuScreen() {
+fun AdminMenuScreen(
+    logout: () -> Unit
+) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
             HomeTopBarAdmin(
-                navController = navController
+                navController = navController,
+                logout = logout
             )
         },
         bottomBar = {

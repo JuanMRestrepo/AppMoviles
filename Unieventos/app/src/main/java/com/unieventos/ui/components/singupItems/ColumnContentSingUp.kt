@@ -4,9 +4,17 @@ import android.util.Patterns
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,13 +30,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.model.Role
+import com.unieventos.model.User
 import com.unieventos.ui.components.ButtonHandlingSing
 import com.unieventos.ui.components.DropdownMenu
 import com.unieventos.ui.components.TextFieldForm
 import com.unieventos.ui.components.TextFieldSing
+import com.unieventos.viewmodel.UsersViewModel
+import java.util.UUID
 
 @Composable
 fun ColumnContentSingUp(
+    usersViewModel: UsersViewModel,
     navigateToLogIn: () -> Unit,
     navigateToVerification: () -> Unit
 ){
@@ -126,6 +139,16 @@ fun ColumnContentSingUp(
         Spacer(modifier = Modifier.height(35.dp))
 
         ButtonSingUp(
+            user = User(
+                id = UUID.randomUUID().toString(),
+                name = name,
+                email = email,
+                password = password,
+                role = Role.CLIENT,
+                phoneNumber = "313",
+                address = address
+            ),
+            usersViewModel = usersViewModel,
             navigateToVerification = navigateToVerification,
             infoBtnSignup = infoBtnSignup
         )

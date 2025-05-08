@@ -12,13 +12,7 @@ object TestUsers {
         password = "admin123",
         role = Role.ADMIN,
         phoneNumber = "+57 1234567890",
-        address = Address(
-            street = "Calle 123",
-            city = "Medellín",
-            state = "Antioquia",
-            postalCode = "050010",
-            country = "Colombia"
-        )
+        address = "br"
     )
 
     val normalUser = User(
@@ -28,12 +22,6 @@ object TestUsers {
         password = "andres123",
         role = Role.CLIENT,
         phoneNumber = "+57 3101234567",
-        address = Address(
-            street = "Calle 123",
-            city = "Medellín",
-            state = "Antioquia",
-            postalCode = "050010",
-            country = "Colombia"
-        )
+        address = "br"
     )
 }

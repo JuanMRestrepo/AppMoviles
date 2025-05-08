@@ -24,16 +24,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.model.Role
 import com.unieventos.ui.components.TextFieldForm
+import com.unieventos.viewmodel.UsersViewModel
 
 @Composable
 fun ColumnContentLogin(
+    usersViewModel: UsersViewModel,
     context: Context,
     loginValidation: String,
     navigateToRestart: () -> Unit,
-    navigateToAdmin: () -> Unit,
     navigateToSingUp: () -> Unit,
-    navigateToUser: () -> Unit,
+    navigateToUser: (Role) -> Unit,
     infoBtnLogin: String,
     infoBtnSignup: String
 ){
@@ -92,12 +94,12 @@ fun ColumnContentLogin(
         )
 
         ButtonLogin (
+            usersViewModel = usersViewModel,
             email = email,
             password = password,
             context = context,
             loginValidation = loginValidation,
             infoBtnLogin = infoBtnLogin,
-            navigateToAdmin = navigateToAdmin,
             navigateToUser =  navigateToUser,
         )
 

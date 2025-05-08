@@ -20,17 +20,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.unieventos.R
+import com.unieventos.model.Role
 import com.unieventos.ui.screens.TestUsers
+import com.unieventos.utils.SharedPreferencesUtils
+import com.unieventos.viewmodel.UsersViewModel
 
 @Composable
 fun ButtonLogin(
+    usersViewModel: UsersViewModel,
     email: String,
     password: String,
     context: Context,
     loginValidation: String,
     infoBtnLogin: String,
-    navigateToAdmin: () -> Unit,
-    navigateToUser: () -> Unit
+    navigateToUser: (Role) -> Unit
 ){
     Button(
         colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
@@ -41,16 +44,14 @@ fun ButtonLogin(
             .padding(top = 30.dp)
         ,
         onClick = {
-            when {
-                email == TestUsers.adminUser.email && password == TestUsers.adminUser.password -> {
-                    navigateToAdmin()
-                }
-                email == TestUsers.normalUser.email && password == TestUsers.normalUser.password -> {
-                    navigateToUser()
-                }
-                else -> {
-                    Toast.makeText(context, loginValidation, Toast.LENGTH_SHORT).show()
-                }
+
+            val user = usersViewModel.login(email, password)
+
+            if(user == null){
+                Toast.makeText(context, loginValidation, Toast.LENGTH_SHORT).show()
+            }else {
+                SharedPreferencesUtils.savePreference(context, user.id, user.role)
+                navigateToUser(user.role)
             }
         },
     ) {

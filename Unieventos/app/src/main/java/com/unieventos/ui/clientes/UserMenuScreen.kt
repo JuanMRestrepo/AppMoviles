@@ -9,12 +9,15 @@ import com.unieventos.ui.clientes.navigation.RouteUserTab
 import com.unieventos.ui.clientes.navigation.UserNavigation
 
 @Composable
-fun UserMenuScreen() {
+fun UserMenuScreen(
+    logout: () -> Unit
+) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
             HomeTopBar(
-                navController = navController
+                navController = navController,
+                logout = logout
             )
         },
         bottomBar = {

@@ -9,6 +9,6 @@ class User(
     var password: String,
     var role: Role,
     var phoneNumber: String,
-    var address: Address
+    var address: String
 ){
 }

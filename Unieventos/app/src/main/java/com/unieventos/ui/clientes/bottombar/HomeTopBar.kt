@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,7 +22,10 @@ import com.unieventos.ui.clientes.navigation.RouteUserTab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopBar(navController: NavHostController) {
+fun HomeTopBar(
+    navController: NavHostController,
+    logout: () -> Unit
+) {
 
     TopAppBar(
         title = {},
@@ -40,6 +44,14 @@ fun HomeTopBar(navController: NavHostController) {
             }) {
                 Icon(
                     imageVector = Icons.Outlined.Settings,
+                    contentDescription = stringResource(id = R.string.settingsLbl),
+                    tint = Color(0xFEE53935)
+                )
+            }
+            IconButton(onClick = logout
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Logout,
                     contentDescription = stringResource(id = R.string.settingsLbl),
                     tint = Color(0xFEE53935)
                 )

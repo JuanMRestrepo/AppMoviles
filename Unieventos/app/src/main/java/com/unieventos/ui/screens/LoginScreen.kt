@@ -19,24 +19,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.unieventos.R
+import com.unieventos.model.Role
 import com.unieventos.ui.components.loginItems.ColumnContentLogin
 import com.unieventos.ui.components.loginItems.TopImage
+import com.unieventos.viewmodel.UsersViewModel
 
 @Composable
 fun LoginScreen(
+    usersViewModel: UsersViewModel,
     navigateToRestart: () -> Unit,
     navigateToSingUp: () -> Unit,
-    navigateToAdmin: () -> Unit,
-    navigateToUser: () -> Unit
+    navigateToUser: (Role) -> Unit
 ){
     val context = LocalContext.current
     Scaffold { padding ->
         LoginScreenForm(
+            usersViewModel = usersViewModel,
             padding = padding,
             context = context,
             navigateToRestart,
             navigateToSingUp,
-            navigateToAdmin,
             navigateToUser
         )
     }
@@ -44,12 +46,12 @@ fun LoginScreen(
 
 @Composable
 fun LoginScreenForm(
+    usersViewModel: UsersViewModel,
     padding: PaddingValues,
     context: Context,
     navigateToRestart: () -> Unit,
     navigateToSingUp: () -> Unit,
-    navigateToAdmin: () -> Unit,
-    navigateToUser: () -> Unit
+    navigateToUser: (Role) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -89,10 +91,10 @@ fun LoginScreenForm(
                  */
 
                 ColumnContentLogin(
+                    usersViewModel = usersViewModel,
                     context = context,
                     loginValidation = loginValidation,
                     navigateToRestart = navigateToRestart,
-                    navigateToAdmin = navigateToAdmin,
                     navigateToSingUp = navigateToSingUp,
                     navigateToUser = navigateToUser,
                     infoBtnLogin = infoBtnLogin,
