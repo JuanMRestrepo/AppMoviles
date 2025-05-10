@@ -41,7 +41,6 @@ import java.util.UUID
 
 @Composable
 fun ColumnContentSingUp(
-    usersViewModel: UsersViewModel,
     navigateToLogIn: () -> Unit,
     navigateToVerification: () -> Unit
 ){
@@ -93,7 +92,8 @@ fun ColumnContentSingUp(
             onValueChange = {
                 city = it
             },
-            items = cities
+            items = cities,
+            message = R.string.selectCityLbl
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -148,7 +148,6 @@ fun ColumnContentSingUp(
                 phoneNumber = "313",
                 address = address
             ),
-            usersViewModel = usersViewModel,
             navigateToVerification = navigateToVerification,
             infoBtnSignup = infoBtnSignup
         )

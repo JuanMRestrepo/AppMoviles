@@ -21,13 +21,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.unieventos.R
 import com.unieventos.model.Role
+import com.unieventos.ui.navigation.LocalMainViewModel
 import com.unieventos.ui.screens.TestUsers
 import com.unieventos.utils.SharedPreferencesUtils
 import com.unieventos.viewmodel.UsersViewModel
 
 @Composable
 fun ButtonLogin(
-    usersViewModel: UsersViewModel,
     email: String,
     password: String,
     context: Context,
@@ -35,6 +35,8 @@ fun ButtonLogin(
     infoBtnLogin: String,
     navigateToUser: (Role) -> Unit
 ){
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
+
     Button(
         colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
         shape = RoundedCornerShape(30.dp),

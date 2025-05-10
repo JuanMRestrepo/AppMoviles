@@ -22,11 +22,11 @@ import com.unieventos.R
 import com.unieventos.model.Role
 import com.unieventos.ui.components.loginItems.ColumnContentLogin
 import com.unieventos.ui.components.loginItems.TopImage
+import com.unieventos.ui.navigation.LocalMainViewModel
 import com.unieventos.viewmodel.UsersViewModel
 
 @Composable
 fun LoginScreen(
-    usersViewModel: UsersViewModel,
     navigateToRestart: () -> Unit,
     navigateToSingUp: () -> Unit,
     navigateToUser: (Role) -> Unit
@@ -34,7 +34,6 @@ fun LoginScreen(
     val context = LocalContext.current
     Scaffold { padding ->
         LoginScreenForm(
-            usersViewModel = usersViewModel,
             padding = padding,
             context = context,
             navigateToRestart,
@@ -46,7 +45,6 @@ fun LoginScreen(
 
 @Composable
 fun LoginScreenForm(
-    usersViewModel: UsersViewModel,
     padding: PaddingValues,
     context: Context,
     navigateToRestart: () -> Unit,
@@ -91,7 +89,6 @@ fun LoginScreenForm(
                  */
 
                 ColumnContentLogin(
-                    usersViewModel = usersViewModel,
                     context = context,
                     loginValidation = loginValidation,
                     navigateToRestart = navigateToRestart,

@@ -20,16 +20,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.unieventos.R
 import com.unieventos.model.User
-import com.unieventos.viewmodel.UsersViewModel
+import com.unieventos.ui.navigation.LocalMainViewModel
 
 @Composable
 fun ButtonSingUp(
     user: User,
-    usersViewModel: UsersViewModel,
     navigateToVerification: () -> Unit,
     infoBtnSignup: String
 ){
     val context = LocalContext.current
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
 
     Button(
         colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),

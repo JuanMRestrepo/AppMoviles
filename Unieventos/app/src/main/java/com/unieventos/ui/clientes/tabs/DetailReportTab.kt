@@ -61,6 +61,8 @@ import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.unieventos.R
 import com.unieventos.ui.clientes.componentsClient.CommentsItem
+import com.unieventos.ui.components.MapComposable
+import com.unieventos.ui.navigation.LocalMainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,6 +70,11 @@ fun DetailReportTab(
     id: String,
     onNavigateBack: () -> Unit
 ) {
+
+    val reportsViewModel = LocalMainViewModel.current.reportsViewModel
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
+    val report = reportsViewModel.findById(id) ?: return
+
     var lista = listOf<Int>(
         R.drawable.huecodos,
         R.drawable.hueco,
@@ -113,7 +120,7 @@ fun DetailReportTab(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Reporte #$id",
+                        text = "#${report.title}",
                         color = Color(0xFEE53935),
                         fontSize = 25.sp,
                     )
@@ -136,10 +143,7 @@ fun DetailReportTab(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         OutlinedTextField(
-                            value = "Lorem ipsum dolor sit amet" +
-                                    " consectetur unde omnis iste natus error sit" +
-                                    " voluptatem accusantium doloremque laudantium, totam" +
-                                    " rem aperiam, eaque ipsa",
+                            value = report.description,
                             onValueChange = {},
                             label = {
                                 Text(
@@ -153,7 +157,7 @@ fun DetailReportTab(
                         )
 
                         OutlinedTextField(
-                            value = stringResource(id = R.string.petsLbl),
+                            value = report.category,
                             onValueChange = {},
                             label = {
                                 Text(
@@ -184,7 +188,7 @@ fun DetailReportTab(
                                 )
                             }
                             Text(
-                                text = stringResource(id = R.string.under18Label),
+                                text = report.location.address,
                                 fontSize = 13.sp
                             )
                             Spacer(modifier = Modifier.height(8.dp))
@@ -199,17 +203,19 @@ fun DetailReportTab(
 
                                 var mapViewportState = rememberMapViewportState {
                                     setCameraOptions {
-                                        zoom(14.0)
-                                        center( Point.fromLngLat(-75.635846, 4.616121))
+                                        zoom(15.0)
+                                        center( Point.fromLngLat(report.location.longitude, report.location.latitude))
                                     }
                                 }
 
-                                var markerResourceId by remember {
-                                    mutableStateOf(R.drawable.red_marker)
-                                }
+                                MapComposable(
+                                    modifier = Modifier.fillMaxSize(),
+                                    mapViewportState = mapViewportState,
+                                    centerUserLocation = false,
+                                    reports = listOf(report)
+                                )
 
-                                var marker = rememberIconImage( key = markerResourceId, painter = painterResource(markerResourceId))
-
+                                /*
                                 MapboxMap(
                                     modifier = Modifier.fillMaxSize(),
                                     mapViewportState = mapViewportState,
@@ -222,11 +228,13 @@ fun DetailReportTab(
                                     }
 
                                 }
+
+                                 */
                             }
                         }
 
                         OutlinedTextField(
-                            value = stringResource(id = R.string.verifiedLabel),
+                            value = report.state.toString(),
                             onValueChange = {},
                             label = {
                                 Text(
@@ -327,7 +335,7 @@ fun DetailReportTab(
                                     fontSize = 14.sp
                                 )
                                 Text(
-                                    text = "Ramon Salazar",
+                                    text = usersViewModel.getNameById(report.idUser),
                                     fontSize = 14.sp
                                 )
                             }

@@ -30,7 +30,6 @@ import com.unieventos.viewmodel.UsersViewModel
 
 @Composable
 fun ColumnContentLogin(
-    usersViewModel: UsersViewModel,
     context: Context,
     loginValidation: String,
     navigateToRestart: () -> Unit,
@@ -94,7 +93,6 @@ fun ColumnContentLogin(
         )
 
         ButtonLogin (
-            usersViewModel = usersViewModel,
             email = email,
             password = password,
             context = context,

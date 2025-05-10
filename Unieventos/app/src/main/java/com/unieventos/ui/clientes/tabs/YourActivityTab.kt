@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,23 +22,26 @@ import com.unieventos.R
 import com.unieventos.ui.clientes.componentsClient.GetTestReports
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
 import com.unieventos.ui.clientes.componentsClient.ReportListEdit
+import com.unieventos.ui.navigation.LocalMainViewModel
+import com.unieventos.utils.SharedPreferencesUtils
 
 @Composable
 fun YourActivityTab(
     navigateToDetail: (String) -> Unit,
-    currentUserId: String,
     navigateToEdit: (String) -> Unit
 ) {
-    val reports = GetTestReports()
+    val context = LocalContext.current
+    val reportsViewModel = LocalMainViewModel.current.reportsViewModel
+    val userMap = SharedPreferencesUtils.getPreference(context)
+    val reports = reportsViewModel.findByUserId(userMap.get("userId")!!)
     var searchQuery by remember { mutableStateOf("") }
 
-    val filteredReports = remember(searchQuery, currentUserId) {
-    val userReports = reports.filter { it.idUser == currentUserId }
+    val filteredReports = remember(searchQuery) {
 
         if (searchQuery.isEmpty()) {
-            userReports
+            reports
         } else {
-            userReports.filter {
+            reports.filter {
                 it.title.contains(searchQuery, ignoreCase = true) ||
                         it.description.contains(searchQuery, ignoreCase = true)
             }

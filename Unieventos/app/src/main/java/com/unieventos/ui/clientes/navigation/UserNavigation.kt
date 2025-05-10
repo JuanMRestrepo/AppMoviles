@@ -34,7 +34,7 @@ fun UserNavigation(
     ) {
         composable <RouteUserTab.Home> {
             HomeUserTab(
-                onNavitageToDetail = navigateToDetail
+                onNavigateToDetail = navigateToDetail
             )
         }
 
@@ -45,7 +45,11 @@ fun UserNavigation(
         }
 
         composable <RouteUserTab.CreateReport> {
-            CreateReportTab()
+            CreateReportTab(
+                navigateToLogIn = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable <RouteUserTab.Notifications> {
@@ -79,7 +83,6 @@ fun UserNavigation(
         composable <RouteUserTab.YourActivity> {
             YourActivityTab(
                 navigateToDetail = navigateToDetail,
-                currentUserId = "1",
                 navigateToEdit = navigateToEdit
             )
         }

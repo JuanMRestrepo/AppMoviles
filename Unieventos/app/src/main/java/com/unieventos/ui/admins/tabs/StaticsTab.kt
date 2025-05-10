@@ -45,7 +45,7 @@ fun StaticsTab() {
         val selectedLocalDate = LocalDate.parse(selectedDate, formatter)
 
         allReportsData.filter { report ->
-            val reportDate = report.fecha.toLocalDate()
+            val reportDate = report.date.toLocalDate()
             reportDate == selectedLocalDate
         }
     }

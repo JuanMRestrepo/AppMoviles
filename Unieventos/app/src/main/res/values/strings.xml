@@ -122,6 +122,7 @@
     <string name="categoryLbl">Category</string>
     <string name="uploadImageLbl">Upload images</string>
     <string name="selectLbl">Select location</string>
+    <string name="selectLblCategory">Select category</string>
     <string name="createLbl">Create</string>
     <string name="editLbl">Edit my profile</string>
     <string name="saveItems">Saved items</string>

@@ -24,6 +24,9 @@ fun DropdownMenu(
     value:String,
     onValueChange: (String) -> Unit,
     items: List<String>,
+    message: Int,
+    isError: Boolean = false
+
 ){
     var expanded by rememberSaveable { mutableStateOf(false) }
 
@@ -37,17 +40,18 @@ fun DropdownMenu(
             onValueChange = {},
             readOnly = true,
             placeholder = {
-                Text(text = stringResource(id = R.string.selectCityLbl))
+                Text(text = stringResource(id = message))
             },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
                 )
             },
+            isError = isError,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-                disabledBorderColor = Color.Transparent,
+                focusedBorderColor = if (isError) Color.Red else Color.Transparent,
+                unfocusedBorderColor = if (isError) Color.Red else Color.Transparent,
+                disabledBorderColor = if (isError) Color.Red else Color.Transparent,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 disabledContainerColor = Color.Transparent

@@ -14,10 +14,11 @@ fun GetTestReportsPending(): List<Report> {
             Report(
                 "1",
                 "Report 1",
-                "Armenia",
+                "Infrastructure",
+                "Hay un hueco grande",
                 ReportState.ACCEPTED,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(1.0, 2.0),
+                Location(1.0, 2.0, "Armenia"),
                 false,
                 LocalDateTime.now(),
                 "1"
@@ -25,10 +26,11 @@ fun GetTestReportsPending(): List<Report> {
             Report(
                 "2",
                 "Report 2",
-                "Pereira",
+                "Pets",
+                "Se robaron a un perro",
                 ReportState.ACCEPTED,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(1.0, 2.0),
+                Location(1.0, 2.0, "Armenia"),
                 false,
                 LocalDateTime.now(),
                 "1"
@@ -36,10 +38,11 @@ fun GetTestReportsPending(): List<Report> {
             Report(
                 "3",
                 "Report 3",
-                "Manizales",
+                "Security",
+                "Incendio fuerte",
                 ReportState.PENDING,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(1.0, 2.0),
+                Location(1.0, 2.0, "Circasia"),
                 false,
                 LocalDateTime.now(),
                 "2"
@@ -47,10 +50,11 @@ fun GetTestReportsPending(): List<Report> {
             Report(
                 "4",
                 "Report 4",
-                "Pereira",
+                "Security",
+                "Mucha lluvia",
                 ReportState.PENDING,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(3.0, 6.0),
+                Location(3.0, 6.0, "Pereira"),
                 true,
                 LocalDateTime.now(),
                 "3"
@@ -58,43 +62,11 @@ fun GetTestReportsPending(): List<Report> {
             Report(
                 "5",
                 "Report 5",
-                "Armenia",
+                "Community",
+                "Accidente registrado",
                 ReportState.PENDING,
                 listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(3.0, 6.0),
-                true,
-                LocalDateTime.now(),
-                "3"
-            ),
-            Report(
-                "6",
-                "Report 5",
-                "Armenia",
-                ReportState.PENDING,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(3.0, 6.0),
-                true,
-                LocalDateTime.now(),
-                "1"
-            ),
-            Report(
-                "7",
-                "Report 7",
-                "Armenia",
-                ReportState.PENDING,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(3.0, 6.0),
-                true,
-                LocalDateTime.now(),
-                "3"
-            ),
-            Report(
-                "8",
-                "Report 8",
-                "Armenia",
-                ReportState.PENDING,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                Location(3.0, 6.0),
+                Location(3.0, 6.0, "Manizales"),
                 true,
                 LocalDateTime.now(),
                 "3"

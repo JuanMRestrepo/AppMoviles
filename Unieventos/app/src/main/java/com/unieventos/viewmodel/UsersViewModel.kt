@@ -33,10 +33,15 @@ class UsersViewModel: ViewModel() {
         return _users.value.find { it.id == userId }
     }
 
+    fun getNameById(userId: String): String {
+        val user = _users.value.find { it.id == userId }
+        return user?.name ?: ""
+    }
+
     fun getUsers(): List<User> {
         return listOf(
             User(
-                UUID.randomUUID().toString(),
+                "1095550822",
                 "andres",
                 "andres@gmail.com",
                 "123456",
@@ -45,7 +50,16 @@ class UsersViewModel: ViewModel() {
                 "calle 8 cra 9"
             ),
             User(
-                UUID.randomUUID().toString(),
+                "52535115",
+                "juan",
+                "juan@gmail.com",
+                "654321",
+                Role.CLIENT,
+                "3217565821",
+                "calle 2 cra 1"
+            ),
+            User(
+                "93340449",
                 "admin",
                 "admin@gmail.com",
                 "123456",
