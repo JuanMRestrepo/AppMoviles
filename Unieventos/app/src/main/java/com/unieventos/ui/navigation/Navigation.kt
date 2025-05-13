@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.google.firebase.auth.FirebaseAuth
 import com.unieventos.ui.screens.HomeScreen
 import com.unieventos.ui.screens.LoginScreen
 import com.unieventos.ui.screens.SingUpScreen
@@ -28,7 +29,6 @@ val LocalMainViewModel = staticCompositionLocalOf<MainViewModel> { error("MainVi
 fun Navigation(
     mainViewModel: MainViewModel
 ){
-
     val context = LocalContext.current
     val navController = rememberNavController()
 
@@ -72,11 +72,25 @@ fun Navigation(
                         navigateToSingUp = {
                             navController.navigate(RouteScreen.SingUpScreen)
                         },
-                        navigateToUser = { role ->
-                            if(role == Role.ADMIN){
-                                navController.navigate(RouteScreen.AdminMenuScreen)
-                            }else {
-                                navController.navigate(RouteScreen.UserMenuScreen)
+                        navigateToUser = {
+
+                            val currentUser = mainViewModel.usersViewModel.currentUser.value
+
+                            if(currentUser != null){
+                                SharedPreferencesUtils.savePreference(context, currentUser.id, currentUser.role)
+
+                                val home = if(currentUser.role == Role.ADMIN){
+                                    RouteScreen.AdminMenuScreen
+                                }else {
+                                    RouteScreen.UserMenuScreen
+                                }
+
+                                navController.navigate(home){
+                                    popUpTo(0){
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
+                                }
                             }
                         }
                     )
@@ -148,7 +162,13 @@ fun Navigation(
                     UserMenuScreen(
                         logout = {
                             SharedPreferencesUtils.clearPreference(context)
-                            navController.navigate(RouteScreen.HomeScreen)
+                            mainViewModel.usersViewModel.logout()
+                            navController.navigate(RouteScreen.HomeScreen){
+                                popUpTo(0){
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
                         }
                     )
                 }
@@ -163,9 +183,6 @@ fun Navigation(
                     )
                 }
             }
-
         }
-
-
     }
 }

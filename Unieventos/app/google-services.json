@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "187155292173",
+    "project_id": "unieventos-app-20251",
+    "storage_bucket": "unieventos-app-20251.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187155292173:android:66fa0053b0df91c5fc3544",
+        "android_client_info": {
+          "package_name": "com.unieventos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZh737dwH58r9YU2_a1QpO6zGFP0-pwXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

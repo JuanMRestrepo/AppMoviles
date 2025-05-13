@@ -29,7 +29,7 @@ import com.unieventos.viewmodel.UsersViewModel
 fun LoginScreen(
     navigateToRestart: () -> Unit,
     navigateToSingUp: () -> Unit,
-    navigateToUser: (Role) -> Unit
+    navigateToUser: () -> Unit
 ){
     val context = LocalContext.current
     Scaffold { padding ->
@@ -49,7 +49,7 @@ fun LoginScreenForm(
     context: Context,
     navigateToRestart: () -> Unit,
     navigateToSingUp: () -> Unit,
-    navigateToUser: (Role) -> Unit
+    navigateToUser: () -> Unit
 ) {
     Box(
         modifier = Modifier

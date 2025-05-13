@@ -23,7 +23,9 @@ fun TextFieldForm(
     label:String,
     onValidate:(String) -> Boolean,
     keyboardOptions: KeyboardOptions,
-    isPassword:Boolean
+    isPassword:Boolean,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    showPassword: Boolean = false
 ){
 
     var isError by rememberSaveable { mutableStateOf(false) }
@@ -38,8 +40,13 @@ fun TextFieldForm(
                 Text(text = supportingText)
             }
         },
-        visualTransformation = if(isPassword) {PasswordVisualTransformation()} else {VisualTransformation.None},
+        visualTransformation = if (isPassword && !showPassword) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
+        },
         keyboardOptions = keyboardOptions,
+        trailingIcon = trailingIcon,
         label = {
             Text(text = label)
         },

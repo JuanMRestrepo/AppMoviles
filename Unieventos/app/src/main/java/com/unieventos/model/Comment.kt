@@ -7,6 +7,6 @@ class Comment(
     var content: String,
     var userId: String,
     var reportId: String,
-    var fecha: LocalDateTime
+    var creationDate: LocalDateTime
 ){
 }

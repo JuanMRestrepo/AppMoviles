@@ -70,6 +70,7 @@
     <string name="codeSent">Enter code</string>
     <string name="resendCode">Resend code</string>
     <string name="addressLabel">Address</string>
+    <string name="phoneNumberLabel">Phone number</string>
     <string name="emailLabel">Email</string>
     <string name="saveLabel">Save</string>
     <string name="verifiedLabel">Verified</string>

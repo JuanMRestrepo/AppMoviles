@@ -11,8 +11,12 @@ import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -21,17 +25,45 @@ import androidx.compose.ui.unit.dp
 import com.unieventos.R
 import com.unieventos.model.User
 import com.unieventos.ui.navigation.LocalMainViewModel
+import com.unieventos.utils.RequestResult
+import kotlinx.coroutines.delay
 
 @Composable
 fun ButtonSingUp(
     user: User,
     navigateToVerification: () -> Unit,
-    infoBtnSignup: String
+    infoBtnSignup: String,
+    enabled: Boolean
 ){
     val context = LocalContext.current
     val usersViewModel = LocalMainViewModel.current.usersViewModel
+    val registerResult by usersViewModel.registerResult.collectAsState()
+
+    when(registerResult){
+        null ->{
+        }
+        is RequestResult.Success ->{
+            Toast.makeText(context, (registerResult as RequestResult.Success).message, Toast.LENGTH_SHORT).show()
+            LaunchedEffect(Unit) {
+                delay(300)
+                usersViewModel.resetRegisterResult()
+                navigateToVerification()
+            }
+        }
+        is RequestResult.Failure ->{
+            Toast.makeText(context, (registerResult as RequestResult.Failure).message, Toast.LENGTH_SHORT).show()
+            LaunchedEffect(Unit) {
+                delay(300)
+                usersViewModel.resetRegisterResult()
+            }
+        }
+        is RequestResult.Loading ->{
+            LinearProgressIndicator()
+        }
+    }
 
     Button(
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
         shape = RoundedCornerShape(30.dp),
         modifier = Modifier
@@ -41,17 +73,13 @@ fun ButtonSingUp(
             /* navigateToVerification() */
             usersViewModel.createUser(
                 User (
-                    id = user.id,
                     name = user.name,
                     email = user.email,
                     password = user.password,
-                    role = user.role,
                     phoneNumber = user.phoneNumber,
                     address = user.address
                 )
             )
-            Toast.makeText(context, "Usuario creado", Toast.LENGTH_SHORT).show()
-            navigateToVerification()
         },
     ) {
         Icon(

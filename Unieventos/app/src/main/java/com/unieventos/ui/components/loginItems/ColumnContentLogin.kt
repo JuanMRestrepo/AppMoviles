@@ -34,7 +34,7 @@ fun ColumnContentLogin(
     loginValidation: String,
     navigateToRestart: () -> Unit,
     navigateToSingUp: () -> Unit,
-    navigateToUser: (Role) -> Unit,
+    navigateToUser: () -> Unit,
     infoBtnLogin: String,
     infoBtnSignup: String
 ){
