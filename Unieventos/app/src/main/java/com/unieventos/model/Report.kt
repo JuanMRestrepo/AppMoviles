@@ -1,9 +1,10 @@
 package com.unieventos.model
 
 import java.time.LocalDateTime
+import java.util.Date
 
 class Report(
-    var id: String = "123",
+    var id: String = "",
     var title: String = "",
     var category: String = "",
     var description: String = "",
@@ -12,7 +13,7 @@ class Report(
     var comments: List<Comment> = listOf(),
     var location: Location = Location(),
     var isSave: Boolean = false,
-    var date: LocalDateTime = LocalDateTime.now(),
+    var date: Date = Date(),
     var idUser: String = ""
     ) {
 }

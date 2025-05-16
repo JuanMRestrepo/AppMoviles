@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -24,6 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.unieventos.R
 import com.unieventos.model.User
+import com.unieventos.ui.components.AlertMessage
+import com.unieventos.ui.components.AlertType
 import com.unieventos.ui.navigation.LocalMainViewModel
 import com.unieventos.utils.RequestResult
 import kotlinx.coroutines.delay
@@ -43,17 +46,25 @@ fun ButtonSingUp(
         null ->{
         }
         is RequestResult.Success ->{
-            Toast.makeText(context, (registerResult as RequestResult.Success).message, Toast.LENGTH_SHORT).show()
+            AlertMessage(
+                modifier = Modifier.padding(end = 16.dp, start = 16.dp),
+                type = AlertType.SUCCESS,
+                message = (registerResult as RequestResult.Success).message
+            )
             LaunchedEffect(Unit) {
-                delay(300)
+                delay(2000)
                 usersViewModel.resetRegisterResult()
                 navigateToVerification()
             }
         }
         is RequestResult.Failure ->{
-            Toast.makeText(context, (registerResult as RequestResult.Failure).message, Toast.LENGTH_SHORT).show()
+            AlertMessage(
+                modifier = Modifier.padding(end = 12.dp, start = 12.dp),
+                type = AlertType.ERROR,
+                message = (registerResult as RequestResult.Failure).message
+            )
             LaunchedEffect(Unit) {
-                delay(300)
+                delay(3500)
                 usersViewModel.resetRegisterResult()
             }
         }

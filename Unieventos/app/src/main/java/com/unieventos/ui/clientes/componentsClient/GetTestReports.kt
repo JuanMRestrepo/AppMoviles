@@ -6,6 +6,7 @@ import com.unieventos.model.Location
 import com.unieventos.model.Report
 import com.unieventos.model.ReportState
 import java.time.LocalDateTime
+import java.util.Date
 
 @Composable
 fun GetTestReports(): List<Report> {
@@ -21,7 +22,7 @@ fun GetTestReports(): List<Report> {
                 listOf(),
                 Location(1.0, 2.0, "Armenia"),
                 false,
-                LocalDateTime.now(),
+                Date(),
                 "1"
             ),
             Report(
@@ -34,7 +35,7 @@ fun GetTestReports(): List<Report> {
                 listOf(),
                 Location(1.0, 2.0, "Armenia"),
                 false,
-                LocalDateTime.now(),
+                Date(),
                 "1"
             ),
             Report(
@@ -47,7 +48,7 @@ fun GetTestReports(): List<Report> {
                 listOf(),
                 Location(1.0, 2.0, "Circasia"),
                 false,
-                LocalDateTime.now(),
+                Date(),
                 "2"
             ),
             Report(
@@ -60,7 +61,7 @@ fun GetTestReports(): List<Report> {
                 listOf(),
                 Location(3.0, 6.0, "Pereira"),
                 true,
-                LocalDateTime.now(),
+                Date(),
                 "3"
             ),
             Report(
@@ -73,7 +74,7 @@ fun GetTestReports(): List<Report> {
                 listOf(),
                 Location(3.0, 6.0, "Manizales"),
                 true,
-                LocalDateTime.now(),
+                Date(),
                 "3"
             )
         )

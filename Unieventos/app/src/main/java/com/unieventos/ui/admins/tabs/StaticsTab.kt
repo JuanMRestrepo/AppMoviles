@@ -30,6 +30,7 @@ import com.unieventos.ui.admins.componentsAdmin.StatisticsChartCard
 import com.unieventos.ui.admins.componentsAdmin.DatePickerDialog
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -45,7 +46,7 @@ fun StaticsTab() {
         val selectedLocalDate = LocalDate.parse(selectedDate, formatter)
 
         allReportsData.filter { report ->
-            val reportDate = report.date.toLocalDate()
+            val reportDate = report.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
             reportDate == selectedLocalDate
         }
     }

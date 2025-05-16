@@ -51,7 +51,17 @@ fun ColumnContentSingUp(
     navigateToVerification: () -> Unit
 ){
     val scrollState = rememberScrollState()
-    val cities = listOf("Armenia", "Pereira", "Manizales")
+    val cities = listOf(
+        "Arauca", "Armenia", "Barranquilla", "Bogotá",
+        "Bucaramanga", "Cali", "Cartagena", "Cúcuta",
+        "Florencia", "Ibagué", "Inírida", "Leticia",
+        "Manizales", "Medellín", "Mitú", "Mocoa",
+        "Montería", "Neiva", "Pasto", "Pereira",
+        "Popayán", "Puerto Carreño", "Quibdó", "Riohacha",
+        "San Andrés", "San José del Guaviare", "Santa Marta", "Sincelejo",
+        "Tunja", "Valledupar", "Villavicencio", "Yopal"
+    )
+
     var name by rememberSaveable { mutableStateOf("") }
     var phoneNumber by rememberSaveable { mutableStateOf("") }
     var address by rememberSaveable { mutableStateOf("") }

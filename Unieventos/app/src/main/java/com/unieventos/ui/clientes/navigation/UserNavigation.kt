@@ -46,7 +46,7 @@ fun UserNavigation(
 
         composable <RouteUserTab.CreateReport> {
             CreateReportTab(
-                navigateToLogIn = {
+                navigateBack = {
                     navController.popBackStack()
                 }
             )

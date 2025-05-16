@@ -28,7 +28,25 @@ class UsersViewModel: ViewModel() {
     val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
 
     init {
-        getUsers()
+        getAllUsers()
+    }
+
+    fun getAllUsers(){
+        viewModelScope.launch {
+            _users.value = findAllFirebase()
+        }
+    }
+
+    private suspend fun findAllFirebase(): List<User> {
+        val querySnapshot = db.collection("users")
+            .get()
+            .await()
+
+        return querySnapshot.documents.mapNotNull {
+            it.toObject(User::class.java)?.apply {
+                id = it.id
+            }
+        }
     }
 
     fun createUser(user: User) {
@@ -67,13 +85,6 @@ class UsersViewModel: ViewModel() {
             .await()
     }
 
-    private suspend fun deleteUserFirebase(userId: String) {
-        db.collection("users")
-            .document(userId)
-            .delete()
-            .await()
-    }
-
     fun deleteUser(userId: String) {
         viewModelScope.launch {
             _registerResult.value = RequestResult.Loading
@@ -89,10 +100,10 @@ class UsersViewModel: ViewModel() {
         }
     }
 
-    private suspend fun updateUserFirebase(user: User) {
+    private suspend fun deleteUserFirebase(userId: String) {
         db.collection("users")
-            .document(user.id)
-            .set(user)
+            .document(userId)
+            .delete()
             .await()
     }
 
@@ -109,6 +120,13 @@ class UsersViewModel: ViewModel() {
                     }
                 )
         }
+    }
+
+    private suspend fun updateUserFirebase(user: User) {
+        db.collection("users")
+            .document(user.id)
+            .set(user)
+            .await()
     }
 
     fun login(email: String, password: String) {
@@ -163,58 +181,4 @@ class UsersViewModel: ViewModel() {
     fun resetRegisterResult() {
         _registerResult.value = null
     }
-
-    fun getUsers(){
-        viewModelScope.launch {
-            _users.value = findAllFirebase()
-        }
-    }
-
-    /*
-    fun getUsers(): List<User> {
-        return listOf(
-            User(
-                "1095550822",
-                "andres",
-                "andres@gmail.com",
-                "123456",
-                Role.CLIENT,
-                "3137975273",
-                "calle 8 cra 9"
-            ),
-            User(
-                "52535115",
-                "juan",
-                "juan@gmail.com",
-                "654321",
-                Role.CLIENT,
-                "3217565821",
-                "calle 2 cra 1"
-            ),
-            User(
-                "93340449",
-                "admin",
-                "admin@gmail.com",
-                "123456",
-                Role.ADMIN,
-                "3138821382",
-                "calle 8 cra 9"
-            )
-        )
-    }
-
-     */
-
-    private suspend fun findAllFirebase(): List<User> {
-        val querySnapshot = db.collection("users")
-            .get()
-            .await()
-
-        return querySnapshot.documents.mapNotNull {
-            it.toObject(User::class.java)?.apply {
-                id = it.id
-            }
-        }
-    }
-
 }

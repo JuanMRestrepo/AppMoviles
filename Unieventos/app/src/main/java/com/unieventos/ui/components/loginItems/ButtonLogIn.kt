@@ -57,8 +57,8 @@ fun ButtonLogin(
             )
             LaunchedEffect(Unit) {
                 delay(2000)
-                navigateToUser()
                 usersViewModel.resetRegisterResult()
+                navigateToUser()
             }
         }
         is RequestResult.Failure ->{
@@ -76,32 +76,6 @@ fun ButtonLogin(
             LinearProgressIndicator()
         }
     }
-
-    /*
-    when(registerResult){
-        null ->{
-        }
-        is RequestResult.Success ->{
-            Toast.makeText(context, (registerResult as RequestResult.Success).message, Toast.LENGTH_SHORT).show()
-            LaunchedEffect(Unit) {
-                delay(300)
-                usersViewModel.resetRegisterResult()
-                navigateToUser()
-            }
-        }
-        is RequestResult.Failure ->{
-            Toast.makeText(context, (registerResult as RequestResult.Failure).message, Toast.LENGTH_SHORT).show()
-            LaunchedEffect(Unit) {
-                delay(300)
-                usersViewModel.resetRegisterResult()
-            }
-        }
-        is RequestResult.Loading ->{
-            LinearProgressIndicator()
-        }
-    }
-     */
-
 
     Button(
         colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),

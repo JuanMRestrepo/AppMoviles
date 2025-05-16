@@ -66,4 +66,5 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation("com.mapbox.maps:android:11.11.0")
     implementation("com.mapbox.extension:maps-compose:11.11.0")
+    implementation(libs.cloudinary.android)
 }
