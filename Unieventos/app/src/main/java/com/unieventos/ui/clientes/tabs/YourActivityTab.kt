@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
-import com.unieventos.ui.clientes.componentsClient.GetTestReports
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
 import com.unieventos.ui.clientes.componentsClient.ReportListEdit
 import com.unieventos.ui.navigation.LocalMainViewModel
@@ -31,6 +31,7 @@ fun YourActivityTab(
     navigateToEdit: (String) -> Unit
 ) {
     val context = LocalContext.current
+
     val reportsViewModel = LocalMainViewModel.current.reportsViewModel
     val userMap = SharedPreferencesUtils.getPreference(context)
     val reports = reportsViewModel.findByUserId(userMap.get("userId")!!)

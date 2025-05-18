@@ -25,7 +25,6 @@ import androidx.compose.ui.window.Dialog
 import com.unieventos.R
 import com.unieventos.model.ChartData
 import com.unieventos.model.ReportState
-import com.unieventos.ui.admins.componentsAdmin.GetTestReportsPending
 import com.unieventos.ui.admins.componentsAdmin.StatisticsChartCard
 import com.unieventos.ui.admins.componentsAdmin.DatePickerDialog
 import java.text.SimpleDateFormat
@@ -36,6 +35,7 @@ import java.util.*
 
 @Composable
 fun StaticsTab() {
+    /*
     val scrollState = rememberScrollState()
     var showCalendar by rememberSaveable { mutableStateOf(false) }
     var selectedDate by rememberSaveable { mutableStateOf(getCurrentDateFormatted()) }
@@ -196,6 +196,8 @@ fun StaticsTab() {
             )
         }
     }
+
+     */
 }
 
 fun getCurrentDateFormatted(): String {

@@ -1,6 +1,7 @@
 package com.unieventos.ui.clientes.tabs
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
@@ -36,6 +38,7 @@ import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,11 +48,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -63,6 +68,7 @@ import com.unieventos.R
 import com.unieventos.ui.clientes.componentsClient.CommentsItem
 import com.unieventos.ui.components.MapComposable
 import com.unieventos.ui.navigation.LocalMainViewModel
+import com.unieventos.utils.SharedPreferencesUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,19 +77,27 @@ fun DetailReportTab(
     onNavigateBack: () -> Unit
 ) {
 
+    val context = LocalContext.current
+    val userMap = SharedPreferencesUtils.getPreference(context)
+    val userId = userMap.get("userId") ?: ""
+
     val reportsViewModel = LocalMainViewModel.current.reportsViewModel
     val usersViewModel = LocalMainViewModel.current.usersViewModel
-    val report = reportsViewModel.findById(id) ?: return
 
-    var lista = listOf<Int>(
-        R.drawable.huecodos,
-        R.drawable.hueco,
-        R.drawable.huecotres
-    )
+    val reports by reportsViewModel.reports.collectAsState()
+    val currentUser by usersViewModel.currentUser.collectAsState()
+
+    val report = reports.find { it.id == id } ?: return
+
+    val lista = report.images
+    val imageList: List<String> = report.images
 
     var showComments by remember { mutableStateOf(false) }
     var sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val state = rememberCarouselState { lista.count() }
+
+    val liked = report.likedUsers.contains(userId)
+    val isSaved = currentUser?.savedReportIds?.contains(report.id) ?: false
 
     Scaffold(
         floatingActionButton = {
@@ -125,10 +139,14 @@ fun DetailReportTab(
                         fontSize = 25.sp,
                     )
                     Icon(
-                        imageVector = Icons.Filled.BookmarkBorder,
+                        imageVector = if (isSaved) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
                         contentDescription = stringResource(id = R.string.saveLabel),
                         tint = Color(0xFEE53935),
-                        modifier = Modifier.size(25.dp)
+                        modifier = Modifier
+                            .size(25.dp)
+                            .clickable {
+                                usersViewModel.toggleSaveReport(userId, report.id)
+                            }
                     )
                 }
                 Box(
@@ -187,10 +205,7 @@ fun DetailReportTab(
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
-                            Text(
-                                text = report.location.address,
-                                fontSize = 13.sp
-                            )
+
                             Spacer(modifier = Modifier.height(8.dp))
 
                             Box(
@@ -214,22 +229,6 @@ fun DetailReportTab(
                                     centerUserLocation = false,
                                     reports = listOf(report)
                                 )
-
-                                /*
-                                MapboxMap(
-                                    modifier = Modifier.fillMaxSize(),
-                                    mapViewportState = mapViewportState,
-                                ) {
-
-                                    PointAnnotation(
-                                        point = Point.fromLngLat(-75.635846, 4.616121)
-                                    ) {
-                                        iconImage = marker
-                                    }
-
-                                }
-
-                                 */
                             }
                         }
 
@@ -253,7 +252,7 @@ fun DetailReportTab(
                                 .padding(top = 5.dp)
                         ) {
                             Text(
-                                text = "Photos(3)",
+                                text = "Photos (${imageList.size})",
                                 color = Color(0xFEE53935),
                                 fontSize = 20.sp,
                             )
@@ -268,15 +267,15 @@ fun DetailReportTab(
                             preferredItemWidth = 186.dp,
                             contentPadding = PaddingValues(horizontal = 16.dp),
                         ) { i ->
-                            val item = lista[i]
+                            val imageUrl  = lista[i]
                             ElevatedCard(
                                 modifier = Modifier
                                     .width(186.dp)
                                     .height(140.dp),
                                 shape = RoundedCornerShape(16.dp)
                             ) {
-                                Image(
-                                    painter = painterResource(id = item),
+                                AsyncImage(
+                                    model = imageUrl,
                                     contentDescription = "Reporte imagen ${i + 1}",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
@@ -291,21 +290,25 @@ fun DetailReportTab(
                                 .fillMaxWidth().padding(start = 20.dp),
                             contentAlignment = Alignment.CenterStart
                         ){
-                            Row {
+                            Row(
+                                modifier = Modifier
+                                    .clickable {
+                                        reportsViewModel.toggleLike(report.id, userId)
+                                    },
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 Icon(
                                     imageVector = Icons.Default.ThumbUp,
                                     contentDescription = stringResource(id = R.string.likeLbl),
-                                    tint = Color(0xFEE53935),
-                                    modifier = Modifier
-                                        .size(20.dp)
+                                    tint = if (report.likedUsers.contains(userId)) Color(0xFEE53935) else Color.Gray,
+                                    modifier = Modifier.size(20.dp)
                                 )
                                 Text(
                                     modifier = Modifier.padding(start = 5.dp),
-                                    text = "12"
+                                    text = "${report.likeCount}"
                                 )
                             }
                         }
-
 
                         Row(
                             verticalAlignment = Alignment.CenterVertically,

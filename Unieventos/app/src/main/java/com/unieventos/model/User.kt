@@ -9,6 +9,7 @@ class User(
     var password: String = "",
     var role: Role = Role.CLIENT,
     var phoneNumber: String = "",
-    var address: String = ""
+    var address: String = "",
+    var savedReportIds: MutableList<String> = mutableListOf()
 ){
 }

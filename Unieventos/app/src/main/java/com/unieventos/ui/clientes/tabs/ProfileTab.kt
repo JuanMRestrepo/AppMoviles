@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,6 +36,8 @@ import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.ItemDeleteAccount
 import com.unieventos.ui.components.ProfileOption
+import com.unieventos.ui.navigation.LocalMainViewModel
+import com.unieventos.utils.SharedPreferencesUtils
 
 @Composable
 fun ProfileTab(
@@ -42,6 +45,14 @@ fun ProfileTab(
     navigateToSavedItemsTab: () -> Unit,
     navigateToYourActivity: () -> Unit
 ){
+    val context = LocalContext.current
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
+
+    val userMap = SharedPreferencesUtils.getPreference(context)
+    val userId = userMap.get("userId") ?: ""
+
+    val userName = usersViewModel.getNameById(userId)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +80,7 @@ fun ProfileTab(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(id = R.string.messagePerfil),
+            text = "Hello! $userName",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )

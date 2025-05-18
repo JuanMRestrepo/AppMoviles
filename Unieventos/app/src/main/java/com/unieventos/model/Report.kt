@@ -1,6 +1,5 @@
 package com.unieventos.model
 
-import java.time.LocalDateTime
 import java.util.Date
 
 class Report(
@@ -12,8 +11,9 @@ class Report(
     var images: List<String> = listOf(),
     var comments: List<Comment> = listOf(),
     var location: Location = Location(),
-    var isSave: Boolean = false,
     var date: Date = Date(),
-    var idUser: String = ""
+    var idUser: String = "",
+    var likeCount: Int = 0,
+    var likedUsers: MutableList<String> = mutableListOf()
     ) {
 }

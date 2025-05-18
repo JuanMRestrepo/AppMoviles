@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.model.ReportState
-import com.unieventos.ui.admins.componentsAdmin.GetTestReportsPending
 import com.unieventos.ui.admins.componentsAdmin.ReportsListVerified
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
 
@@ -27,6 +26,7 @@ fun ReportVerifiedTab(
     navigateToDetail: (String) -> Unit
 ) {
 
+    /*
     val reports = GetTestReportsPending()
     var searchQuery by remember { mutableStateOf("") }
 
@@ -65,4 +65,6 @@ fun ReportVerifiedTab(
         )
         ReportsListVerified (reports = filteredReports, navigateToDetail = navigateToDetail)
     }
+
+     */
 }

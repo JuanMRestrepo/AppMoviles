@@ -48,6 +48,9 @@
     <string name="noDataAvailableLbl">No data available for the selected date</string>
     <string name="reasonLblMessage">Enter the reason for rejection</string>
     <string name="noReportsLbl">You have not created any reports yet</string>
+    <string name="noReportsSavedLbl">You have not saved any reports yet</string>
+    <string name="noReportsCreatedLbl">No reports have been created yet</string>
+
     <string name="sureConfirmLbl">Are you sure you want to verify this report?</string>
     <string name="reportsToVerifiedLbl">Reports to be verified</string>
     <string name="allReportsList">All reports list</string>

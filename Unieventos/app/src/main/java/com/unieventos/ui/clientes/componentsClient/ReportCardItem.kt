@@ -69,14 +69,12 @@ fun ReportCardItem(
             contentAlignment = Alignment.Center,
             modifier = Modifier.size(24.dp)
         ) {
-            if (report.isSave) {
-                Icon(
-                    imageVector = Icons.Default.BookmarkAdded,
-                    contentDescription = "Save",
-                    tint = Color(0xFFFF4A3D),
-                    modifier = Modifier.size(28.dp)
-                )
-            }
+            Icon(
+                imageVector = Icons.Default.BookmarkAdded,
+                contentDescription = "Save",
+                tint = Color(0xFFFF4A3D),
+                modifier = Modifier.size(28.dp)
+            )
         }
     }
 }

@@ -2,10 +2,11 @@ package com.unieventos.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.copy
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unieventos.model.Report
-import com.unieventos.model.User
+import com.unieventos.ui.navigation.LocalMainViewModel
 import com.unieventos.utils.RequestResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -71,24 +72,6 @@ class ReportsViewModel: ViewModel()  {
             )
         }
     }
-
-    /*
-    fun createReport(report: Report) {
-        viewModelScope.launch {
-            _reportResult.value = RequestResult.Loading
-            _reportResult.value = runCatching { createFirebaseReport(report) }
-                .fold(
-                    onSuccess = {
-                        RequestResult.Success("Report created correctly")
-                    },
-                    onFailure = {
-                        RequestResult.Failure(it.message ?: "Error creating report")
-                    }
-                )
-        }
-    }
-
-     */
 
     private suspend fun createFirebaseReport(report: Report) {
         db.collection("reports")
@@ -179,97 +162,43 @@ class ReportsViewModel: ViewModel()  {
         return _reports.value.filter { it.idUser == userId }
     }
 
+    fun toggleLike(reportId: String, userId: String) {
+        viewModelScope.launch {
+            val oldReports = _reports.value.toMutableList()
+            val index = oldReports.indexOfFirst { it.id == reportId }
+            if (index != -1) {
+                val report = oldReports[index]
 
+                val updatedReport = Report(
+                    id = report.id,
+                    title = report.title,
+                    category = report.category,
+                    description = report.description,
+                    state = report.state,
+                    images = report.images,
+                    comments = report.comments,
+                    location = report.location,
+                    date = report.date,
+                    idUser = report.idUser,
+                    likeCount = if (report.likedUsers.contains(userId)) report.likeCount - 1 else report.likeCount + 1,
+                    likedUsers = if (report.likedUsers.contains(userId)) {
+                        report.likedUsers.toMutableList().apply { remove(userId) }
+                    } else {
+                        report.likedUsers.toMutableList().apply { add(userId) }
+                    }
+                )
 
+                db.collection("reports")
+                    .document(reportId)
+                    .set(updatedReport)
+                    .await()
 
+                val newReports = oldReports.toMutableList().apply {
+                    set(index, updatedReport)
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    fun getReports(): List<Report> {
-        return listOf(
-            Report(
-                "1",
-                "Report 1",
-                "Infrastructure",
-                "Hay un hueco grande",
-                ReportState.ACCEPTED,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                listOf(),
-                Location(4.46, -75.64, "Armenia"),
-                false,
-                LocalDateTime.now(),
-                "52535115"
-            ),
-            Report(
-                "2",
-                "Report 2",
-                "Pets",
-                "Se robaron a un perro",
-                ReportState.ACCEPTED,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                listOf(),
-                Location(4.537175, -75.670132, "Armenia"),
-                false,
-                LocalDateTime.now(),
-                "1095550822"
-            ),
-            Report(
-                "3",
-                "Report 3",
-                "Security",
-                "Incendio fuerte",
-                ReportState.ACCEPTED,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                listOf(),
-                Location(4.540983, -75.666067, "Circasia"),
-                false,
-                LocalDateTime.now(),
-                "52535115"
-            ),
-            Report(
-                "4",
-                "Report 4",
-                "Security",
-                "Mucha lluvia",
-                ReportState.ACCEPTED,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                listOf(),
-                Location(4.547962, -75.667697, "Pereira"),
-                true,
-                LocalDateTime.now(),
-                "1095550822"
-            ),
-            Report(
-                "5",
-                "Report 5",
-                "Community",
-                "Accidente registrado",
-                ReportState.PENDING,
-                listOf("https://i1.sndcdn.com/artworks-qJ5IFyKat8H70Vkz-tYUbnQ-t500x500.jpg"),
-                listOf(),
-                Location(4.540273, -75.684445, "Manizales"),
-                true,
-                LocalDateTime.now(),
-                "1095550822"
-            )
-        )
+                _reports.value = newReports
+            }
+        }
     }
-
-     */
 }

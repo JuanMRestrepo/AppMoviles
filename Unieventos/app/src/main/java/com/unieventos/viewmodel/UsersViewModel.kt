@@ -181,4 +181,49 @@ class UsersViewModel: ViewModel() {
     fun resetRegisterResult() {
         _registerResult.value = null
     }
+
+    fun toggleSaveReport(userId: String, reportId: String) {
+        viewModelScope.launch {
+            try {
+                val users = _users.value.toMutableList()
+                val userIndex = users.indexOfFirst { it.id == userId }
+                if (userIndex == -1) return@launch
+
+                val user = users[userIndex]
+                val isSaved = user.savedReportIds.contains(reportId)
+
+                // Crear nuevo usuario manualmente
+                val updatedUser = User(
+                    id = user.id,
+                    name = user.name,
+                    email = user.email,
+                    password = user.password,
+                    role = user.role,
+                    phoneNumber = user.phoneNumber,
+                    address = user.address,
+                    savedReportIds = user.savedReportIds.toMutableList().apply {
+                        if (isSaved) remove(reportId) else add(reportId)
+                    }
+                )
+
+                // Actualizar Firestore
+                db.collection("users")
+                    .document(userId)
+                    .set(updatedUser)
+                    .await()
+
+                // Actualizar estado local
+                users[userIndex] = updatedUser
+                _users.value = users
+                _currentUser.value = updatedUser
+
+            } catch (e: Exception) {
+                _registerResult.value = RequestResult.Failure(e.message ?: "Error saving report")
+            }
+        }
+    }
+
+    fun getSavedReportIds(userId: String): List<String> {
+        return _users.value.find { it.id == userId }?.savedReportIds ?: emptyList()
+    }
 }

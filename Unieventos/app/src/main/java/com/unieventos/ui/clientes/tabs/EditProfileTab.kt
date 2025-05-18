@@ -17,20 +17,33 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
+import com.unieventos.ui.navigation.LocalMainViewModel
+import com.unieventos.utils.SharedPreferencesUtils
 
 @Composable
 fun EditProfileTab(
 ) {
+
+    val context = LocalContext.current
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
+
+    val userMap = SharedPreferencesUtils.getPreference(context)
+    val userId = userMap.get("userId") ?: ""
+
+    val userName = usersViewModel.getNameById(userId)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +73,7 @@ fun EditProfileTab(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = stringResource(id = R.string.messagePerfil),
+                text = userName,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -72,7 +85,7 @@ fun EditProfileTab(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    ProfileInfoRow(nameLabel, "Andrés Díaz")
+                    ProfileInfoRow(nameLabel, "C durate")
                     ProfileInfoRow(cityLabel, "Armenia")
                     ProfileInfoRow(addressLabel, "Calle 8 Cra 9 7-73")
                     ProfileInfoRow(emailLabel, "diazandreslm10@gmail.com")

@@ -18,13 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.admins.componentsAdmin.AllReportsList
-import com.unieventos.ui.admins.componentsAdmin.GetTestReportsPending
 import com.unieventos.ui.clientes.componentsClient.ModifiedSearchBar
+
 
 @Composable
 fun AllReportsTab(
     navigateToDetail: (String) -> Unit
 ) {
+    /*
     val reports = GetTestReportsPending()
     var searchQuery by remember { mutableStateOf("") }
 
@@ -66,4 +67,6 @@ fun AllReportsTab(
         )
         AllReportsList (reports = filteredReports, navigateToDetail = navigateToDetail)
     }
+
+     */
 }

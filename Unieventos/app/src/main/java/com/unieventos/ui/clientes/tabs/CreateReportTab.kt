@@ -122,7 +122,6 @@ fun CreateReportTab(
             "Security",
             "Medical emergencies",
             "Infrastructure",
-            "Lighting",
             "Pets",
             "Community"
         )
@@ -300,7 +299,7 @@ fun CreateReportTab(
                         onMapClickListener = { point ->
                             locationSelected = true
                             showError = false
-                            newReport.location = Location(point.latitude(), point.longitude(), "Armenia")
+                            newReport.location = Location(point.latitude(), point.longitude())
                         }
                     )
                 }

@@ -68,7 +68,6 @@ fun ColumnContentSingUp(
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
-    var confirmPasswordError by rememberSaveable { mutableStateOf(false) }
 
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     var confirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
@@ -81,7 +80,6 @@ fun ColumnContentSingUp(
             confirmPassword.length >= 6 &&
             password == confirmPassword &&
             Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
 
     Column(
         modifier = Modifier
