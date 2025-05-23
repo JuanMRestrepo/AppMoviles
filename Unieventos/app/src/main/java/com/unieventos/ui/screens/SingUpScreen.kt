@@ -22,13 +22,11 @@ import com.unieventos.viewmodel.UsersViewModel
 @Composable
 fun SingUpScreen(
     navigateToLogIn: () -> Unit,
-    navigateToVerification: () -> Unit
 ) {
     Scaffold { padding ->
         SingUpForm(
             padding,
             navigateToLogIn,
-            navigateToVerification
         )
     }
 }
@@ -37,7 +35,6 @@ fun SingUpScreen(
 fun SingUpForm(
     padding: PaddingValues,
     navigateToLogIn: () -> Unit,
-    navigateToVerification: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -60,7 +57,6 @@ fun SingUpForm(
             ) {
                 ColumnContentSingUp (
                     navigateToLogIn = navigateToLogIn,
-                    navigateToVerification = navigateToVerification
                 )
             }
         }

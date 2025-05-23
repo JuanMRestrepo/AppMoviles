@@ -10,12 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.unieventos.model.Report
+import com.unieventos.viewmodel.ReportsViewModel
 
 @Composable
 fun ReportListEdit(
     reports: List<Report>,
     navigateToDetail: (String) -> Unit,
-    navigateToEdit: (String) -> Unit
+    navigateToEdit: (String) -> Unit,
+    reportsViewModel: ReportsViewModel
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(top = 5.dp)
@@ -24,7 +26,9 @@ fun ReportListEdit(
             ReportCardEditItem(
                 report = report,
                 navigateToDetail = navigateToDetail,
-                navigateToEdit = navigateToEdit)
+                navigateToEdit = navigateToEdit,
+                reportsViewModel = reportsViewModel
+            )
             Divider(
                 color = Color(0xFFE0E0E0),
                 thickness = 1.dp

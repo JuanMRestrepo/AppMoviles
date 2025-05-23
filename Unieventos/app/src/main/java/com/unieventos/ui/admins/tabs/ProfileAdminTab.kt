@@ -106,7 +106,10 @@ fun ProfileAdminTab(
 
             ItemDeleteAccount(
                 showDeleteDialog = showDeleteDialog,
-                onDismissRequest = { showDeleteDialog = false }
+                onDismissRequest = { showDeleteDialog = false },
+                onConfirm = {
+                    showDeleteDialog = false
+                }
             )
         }
 

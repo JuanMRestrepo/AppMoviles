@@ -33,16 +33,41 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.unieventos.R
 import com.unieventos.model.Report
+import com.unieventos.viewmodel.ReportsViewModel
 
 @Composable
 fun ReportCardEditItem(
     report: Report,
     navigateToDetail: (String) -> Unit,
-    navigateToEdit: (String) -> Unit
+    navigateToEdit: (String) -> Unit,
+    reportsViewModel: ReportsViewModel
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     val primaryColor = Color(0xFFFF4A3D)
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text(stringResource(R.string.deleteReportLbl)) },
+            text = { Text(stringResource(R.string.deleteReportSureLbl)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        reportsViewModel.deleteReport(report.id)
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text(stringResource(R.string.deleteLbl), color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text(stringResource(R.string.closeLbl))
+                }
+            }
+        )
+    }
 
     Row(
         modifier = Modifier
@@ -118,28 +143,6 @@ fun ReportCardEditItem(
                     },
                     onClick = {
                         expanded = false
-                    }
-                )
-            }
-
-            if (showDeleteDialog) {
-                AlertDialog(
-                    onDismissRequest = { showDeleteDialog = false },
-                    title = { Text(stringResource(id = R.string.deleteReportLbl)) },
-                    text = { Text(stringResource(id = R.string.deleteReportSureLbl)) },
-                    confirmButton = {
-                        TextButton (
-                            onClick = {
-                                showDeleteDialog = false
-                            }
-                        ) {
-                            Text(stringResource(id = R.string.deleteLbl), color = primaryColor)
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { showDeleteDialog = false }) {
-                            Text(stringResource(id = R.string.closeLbl))
-                        }
                     }
                 )
             }

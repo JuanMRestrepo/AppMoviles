@@ -1,7 +1,6 @@
 package com.unieventos.ui.components.loginItems
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,14 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.unieventos.R
-import com.unieventos.model.Role
 import com.unieventos.ui.components.AlertMessage
 import com.unieventos.ui.components.AlertType
 import com.unieventos.ui.navigation.LocalMainViewModel
-import com.unieventos.ui.screens.TestUsers
 import com.unieventos.utils.RequestResult
-import com.unieventos.utils.SharedPreferencesUtils
-import com.unieventos.viewmodel.UsersViewModel
 import kotlinx.coroutines.delay
 
 @Composable

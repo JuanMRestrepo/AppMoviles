@@ -12,7 +12,8 @@ import com.unieventos.R
 @Composable
 fun ItemDeleteAccount(
     showDeleteDialog: Boolean,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
+    onConfirm: () -> Unit
 ) {
     if (showDeleteDialog) {
         AlertDialog(
@@ -29,8 +30,8 @@ fun ItemDeleteAccount(
             confirmButton = {
                 TextButton (
                     onClick = {
+                        onConfirm()
                         onDismissRequest()
-                        //navigateToLogIn()
                     }
                 ) {
                     Text(stringResource(id = R.string.deleteLbl), color = Color.Red)

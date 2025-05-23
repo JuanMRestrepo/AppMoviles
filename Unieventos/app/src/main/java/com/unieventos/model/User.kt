@@ -1,7 +1,5 @@
 package com.unieventos.model
 
-import com.unieventos.model.Address
-
 class User(
     var id: String = "",
     var name: String = "",

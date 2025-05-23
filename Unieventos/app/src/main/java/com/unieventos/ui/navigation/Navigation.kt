@@ -9,13 +9,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.google.firebase.auth.FirebaseAuth
 import com.unieventos.ui.screens.HomeScreen
 import com.unieventos.ui.screens.LoginScreen
 import com.unieventos.ui.screens.SingUpScreen
 import com.unieventos.ui.screens.RestartPassword1
 import com.unieventos.ui.screens.RestartPassword2
-import com.unieventos.ui.screens.VerificationAccountScreen
 import com.unieventos.ui.admins.AdminMenuScreen
 import com.unieventos.ui.clientes.UserMenuScreen
 import com.unieventos.ui.clientes.tabs.DetailReportTab
@@ -99,10 +97,7 @@ fun Navigation(
                 composable <RouteScreen.SingUpScreen> {
                     SingUpScreen(
                         navigateToLogIn = {
-                            navController.navigate(RouteScreen.LoginScreen)
-                        },
-                        navigateToVerification = {
-                            navController.navigate(RouteScreen.VerificationAccountScreen)
+                            navController.navigate(RouteScreen.HomeScreen)
                         }
                     )
                 }
@@ -131,20 +126,6 @@ fun Navigation(
                         },
                         navigateToHome = {
                             navController.navigate(RouteScreen.HomeScreen)
-                        }
-                    )
-                }
-
-                composable <RouteScreen.VerificationAccountScreen> {
-                    VerificationAccountScreen(
-                        onNavigateBack = {
-                            navController.popBackStack()
-                        },
-                        navigateToHome = {
-                            navController.navigate(RouteScreen.HomeScreen)
-                        },
-                        navigateToLogIn = {
-                            navController.navigate(RouteScreen.LoginScreen)
                         }
                     )
                 }

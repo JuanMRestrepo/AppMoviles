@@ -307,14 +307,17 @@ fun ReportDetailScreen(
                             }
                         }
 
-                        if(showComments){
-                            CommentsItem (
+                        /*
+                        if (showComments) {
+                            CommentsItem(
+                                reportId = report.id,
                                 state = sheetState,
-                                dismissModalSheet = {
-                                    showComments = false
-                                }
+                                dismissModalSheet = { showComments = false }
                             )
                         }
+
+                         */
+
                     }
                 }
             }

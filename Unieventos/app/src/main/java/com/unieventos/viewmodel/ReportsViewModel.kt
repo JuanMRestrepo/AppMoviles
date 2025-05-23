@@ -2,11 +2,10 @@ package com.unieventos.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.copy
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.unieventos.model.Comment
 import com.unieventos.model.Report
-import com.unieventos.ui.navigation.LocalMainViewModel
 import com.unieventos.utils.RequestResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +25,6 @@ class ReportsViewModel: ViewModel()  {
 
     private val _currentReport = MutableStateFlow<Report?>(null)
     val currentReport: StateFlow<Report?> = _currentReport.asStateFlow()
-
     init {
         getAllReports()
     }
@@ -200,5 +198,49 @@ class ReportsViewModel: ViewModel()  {
                 _reports.value = newReports
             }
         }
+    }
+
+    fun addComment(reportId: String, comment: Comment) {
+        viewModelScope.launch {
+            try {
+                val report = _reports.value.find { it.id == reportId } ?: return@launch
+
+                val newComments = ArrayList(report.comments).apply {
+                    add(comment)
+                }
+
+                val updatedReport = Report(
+                    id = report.id,
+                    title = report.title,
+                    category = report.category,
+                    description = report.description,
+                    state = report.state,
+                    images = report.images,
+                    comments = newComments,
+                    location = report.location,
+                    date = report.date,
+                    idUser = report.idUser,
+                    likeCount = report.likeCount,
+                    likedUsers = ArrayList(report.likedUsers)
+                )
+
+                db.collection("reports")
+                    .document(reportId)
+                    .update("comments", newComments)
+                    .await()
+
+                val updatedList = _reports.value.toMutableList().apply {
+                    set(indexOfFirst { it.id == reportId }, updatedReport)
+                }
+                _reports.value = updatedList
+
+            } catch (e: Exception) {
+                _reportResult.value = RequestResult.Failure("Error al comentar")
+            }
+        }
+    }
+
+    fun getCommentsForReport(reportId: String): List<Comment> {
+        return _reports.value.find { it.id == reportId }?.comments ?: emptyList()
     }
 }

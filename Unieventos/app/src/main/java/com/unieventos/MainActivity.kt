@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.unieventos.ui.navigation.Navigation
-import com.unieventos.ui.screens.SettingsTab
 import com.unieventos.ui.theme.UnieventosTheme
 import com.unieventos.viewmodel.MainViewModel
 import com.unieventos.viewmodel.ReportsViewModel

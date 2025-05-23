@@ -4,25 +4,18 @@ import android.util.Patterns
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,19 +29,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unieventos.R
-import com.unieventos.model.Role
 import com.unieventos.model.User
 import com.unieventos.ui.components.ButtonHandlingSing
 import com.unieventos.ui.components.DropdownMenu
 import com.unieventos.ui.components.TextFieldForm
 import com.unieventos.ui.components.TextFieldSing
-import com.unieventos.viewmodel.UsersViewModel
-import java.util.UUID
 
 @Composable
 fun ColumnContentSingUp(
     navigateToLogIn: () -> Unit,
-    navigateToVerification: () -> Unit
 ){
     val scrollState = rememberScrollState()
     val cities = listOf(
@@ -205,7 +194,7 @@ fun ColumnContentSingUp(
                 phoneNumber = phoneNumber,
                 address = address
             ),
-            navigateToVerification = navigateToVerification,
+            navigateToLogIn = navigateToLogIn,
             infoBtnSignup = infoBtnSignup,
             enabled = isFormValid
         )

@@ -19,6 +19,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,21 +39,38 @@ import com.unieventos.R
 import com.unieventos.ui.components.ItemDeleteAccount
 import com.unieventos.ui.components.ProfileOption
 import com.unieventos.ui.navigation.LocalMainViewModel
+import com.unieventos.utils.RequestResult
 import com.unieventos.utils.SharedPreferencesUtils
 
 @Composable
 fun ProfileTab(
     navigateToEditProfile: () -> Unit,
     navigateToSavedItemsTab: () -> Unit,
-    navigateToYourActivity: () -> Unit
+    navigateToYourActivity: () -> Unit,
+    navigateToLogIn: () -> Unit
 ){
     val context = LocalContext.current
     val usersViewModel = LocalMainViewModel.current.usersViewModel
+
+    val registerResult by usersViewModel.registerResult.collectAsState()
 
     val userMap = SharedPreferencesUtils.getPreference(context)
     val userId = userMap.get("userId") ?: ""
 
     val userName = usersViewModel.getNameById(userId)
+
+    LaunchedEffect(registerResult) {
+        when (registerResult) {
+            is RequestResult.Success -> {
+                navigateToLogIn()
+                usersViewModel.resetRegisterResult()
+            }
+            is RequestResult.Failure -> {
+                usersViewModel.resetRegisterResult()
+            }
+            else -> {}
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -60,7 +79,6 @@ fun ProfileTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        //val changeUser = stringResource(id = R.string.changeUserLbl)
         val editProfile = stringResource(id = R.string.editLbl)
         val saveItems = stringResource(id = R.string.saveItems)
         val activityLbl = stringResource(id = R.string.activityLbl)
@@ -130,14 +148,19 @@ fun ProfileTab(
             }
             ItemDeleteAccount(
                 showDeleteDialog = showDeleteDialog,
-                onDismissRequest = { showDeleteDialog = false }
+                onDismissRequest = { showDeleteDialog = false },
+                onConfirm = {
+                    usersViewModel.deleteUser(userId)
+                }
             )
         }
 
         Spacer(modifier = Modifier.height(60.dp))
 
         Button(
-            onClick = { },
+            onClick = {
+                navigateToLogIn()
+            },
             colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
             modifier = Modifier
                 .fillMaxWidth()

@@ -34,7 +34,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun ButtonSingUp(
     user: User,
-    navigateToVerification: () -> Unit,
+    navigateToLogIn: () -> Unit,
     infoBtnSignup: String,
     enabled: Boolean
 ){
@@ -54,7 +54,7 @@ fun ButtonSingUp(
             LaunchedEffect(Unit) {
                 delay(2000)
                 usersViewModel.resetRegisterResult()
-                navigateToVerification()
+                navigateToLogIn()
             }
         }
         is RequestResult.Failure ->{

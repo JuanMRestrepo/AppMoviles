@@ -1,5 +1,6 @@
 package com.unieventos.ui.clientes
 
+import androidx.activity.viewModels
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
@@ -34,7 +35,8 @@ fun UserMenuScreen(
             },
             navigateToEdit = { id ->
                 navController.navigate(RouteUserTab.ReportDetailEdit(id))
-            }
+            },
+            logout = logout
         )
     }
 }

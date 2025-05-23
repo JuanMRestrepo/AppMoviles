@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Person
@@ -133,6 +134,16 @@ fun DetailReportTab(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.saveLabel),
+                        tint = Color(0xFEE53935),
+                        modifier = Modifier
+                            .size(25.dp)
+                            .clickable {
+                                onNavigateBack()
+                            }
+                    )
                     Text(
                         text = "#${report.title}",
                         color = Color(0xFEE53935),
@@ -344,12 +355,11 @@ fun DetailReportTab(
                             }
                         }
 
-                        if(showComments){
-                            CommentsItem (
+                        if (showComments) {
+                            CommentsItem(
+                                reportId = report.id,
                                 state = sheetState,
-                                dismissModalSheet = {
-                                    showComments = false
-                                }
+                                dismissModalSheet = { showComments = false }
                             )
                         }
                     }

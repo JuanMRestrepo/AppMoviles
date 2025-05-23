@@ -2,6 +2,7 @@ package com.unieventos.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -88,6 +89,38 @@ class UsersViewModel: ViewModel() {
     fun deleteUser(userId: String) {
         viewModelScope.launch {
             _registerResult.value = RequestResult.Loading
+            _registerResult.value = runCatching {
+
+                auth.currentUser?.delete()?.await()
+
+                deleteUserFirebase(userId)
+
+                _currentUser.value = null
+                _users.value = _users.value.filter { it.id != userId }
+
+                auth.signOut()
+
+                "Cuenta eliminada correctamente"
+            }.fold(
+                onSuccess = { RequestResult.Success(it) },
+                onFailure = {
+                    RequestResult.Failure(it.message ?: "Error eliminando cuenta")
+                }
+            )
+        }
+    }
+
+    private suspend fun deleteUserFirebase(userId: String) {
+        db.collection("users")
+            .document(userId)
+            .delete()
+            .await()
+    }
+
+    /*
+    fun deleteUser(userId: String) {
+        viewModelScope.launch {
+            _registerResult.value = RequestResult.Loading
             _registerResult.value = runCatching { deleteUserFirebase(userId) }
                 .fold(
                     onSuccess = {
@@ -99,34 +132,30 @@ class UsersViewModel: ViewModel() {
                 )
         }
     }
+     */
 
-    private suspend fun deleteUserFirebase(userId: String) {
-        db.collection("users")
-            .document(userId)
-            .delete()
-            .await()
-    }
-
-    fun updateUser(user: User) {
+    fun updateUserProfile(
+        updatedUser: User
+    ) {
         viewModelScope.launch {
             _registerResult.value = RequestResult.Loading
-            _registerResult.value = runCatching { updateUserFirebase(user) }
-                .fold(
-                    onSuccess = {
-                        RequestResult.Success("User updated correctly")
-                    },
-                    onFailure = {
-                        RequestResult.Failure(it.message ?: "Error editing user")
-                    }
-                )
-        }
-    }
+            _registerResult.value = runCatching {
 
-    private suspend fun updateUserFirebase(user: User) {
-        db.collection("users")
-            .document(user.id)
-            .set(user)
-            .await()
+                db.collection("users")
+                    .document(updatedUser.id)
+                    .set(updatedUser)
+                    .await()
+
+                _currentUser.value = updatedUser
+                _users.value = _users.value.map {
+                    if (it.id == updatedUser.id) updatedUser else it
+                }
+                "Perfil actualizado correctamente"
+            }.fold(
+                onSuccess = { RequestResult.Success(it) },
+                onFailure = { RequestResult.Failure(it.message ?: "Error actualizando perfil") }
+            )
+        }
     }
 
     fun login(email: String, password: String) {
@@ -173,6 +202,11 @@ class UsersViewModel: ViewModel() {
         return user?.name ?: ""
     }
 
+    fun getEmailById(userId: String): String {
+        val user = _users.value.find { it.id == userId }
+        return user?.email ?: ""
+    }
+
     fun logout(){
         auth.signOut()
         _currentUser.value = null
@@ -192,7 +226,6 @@ class UsersViewModel: ViewModel() {
                 val user = users[userIndex]
                 val isSaved = user.savedReportIds.contains(reportId)
 
-                // Crear nuevo usuario manualmente
                 val updatedUser = User(
                     id = user.id,
                     name = user.name,
@@ -206,13 +239,11 @@ class UsersViewModel: ViewModel() {
                     }
                 )
 
-                // Actualizar Firestore
                 db.collection("users")
                     .document(userId)
                     .set(updatedUser)
                     .await()
 
-                // Actualizar estado local
                 users[userIndex] = updatedUser
                 _users.value = users
                 _currentUser.value = updatedUser
@@ -225,5 +256,18 @@ class UsersViewModel: ViewModel() {
 
     fun getSavedReportIds(userId: String): List<String> {
         return _users.value.find { it.id == userId }?.savedReportIds ?: emptyList()
+    }
+
+    fun verifyPassword(password: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val user = auth.currentUser
+                val credential = EmailAuthProvider.getCredential(user?.email ?: "", password)
+                user?.reauthenticate(credential)?.await()
+                onSuccess()
+            } catch (e: Exception) {
+                onError("Contraseña incorrecta")
+            }
+        }
     }
 }
