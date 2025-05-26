@@ -48,14 +48,6 @@ fun HomeTopBarAdmin(
                     tint = Color(0xFEE53935)
                 )
             }
-            IconButton(onClick = logout
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Logout,
-                    contentDescription = stringResource(id = R.string.settingsLbl),
-                    tint = Color(0xFEE53935)
-                )
-            }
         }
     )
 }

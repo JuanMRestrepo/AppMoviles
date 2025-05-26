@@ -14,12 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.annotation.rememberIconImage
-import com.unieventos.R
 import com.unieventos.ui.components.MapComposable
 import com.unieventos.ui.navigation.LocalMainViewModel
 
@@ -71,23 +68,4 @@ fun HomeUserTab(
         reports = reports,
         onNavigateToDetail = onNavigateToDetail
     )
-
-
-    /*
-    MapboxMap(
-        modifier = Modifier.fillMaxSize(),
-        mapViewportState = mapViewportState,
-        style = { MapStyle(style = "mapbox://styles/mapbox/streets-v12") }
-    ) {
-        MapEffect (Unit) { mapView ->
-            mapView.location.updateSettings {
-                locationPuck = createDefault2DPuck(withBearing = true)
-                enabled = true
-                puckBearing = PuckBearing.COURSE
-                puckBearingEnabled = true
-            }
-            mapViewportState.transitionToFollowPuckState()
-        }
-    }
-     */
 }

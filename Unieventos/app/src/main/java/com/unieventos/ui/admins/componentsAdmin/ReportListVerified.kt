@@ -10,17 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.unieventos.model.Report
+import com.unieventos.viewmodel.ReportsViewModel
 
 @Composable
 fun ReportsListVerified(
     reports: List<Report>,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String) -> Unit,
+    reportsViewModel: ReportsViewModel
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(top = 5.dp)
     ) {
         items(reports) { report ->
-            ReportVerifiedCardItem (report = report, navigateToDetail = navigateToDetail)
+            ReportVerifiedCardItem (
+                report = report,
+                navigateToDetail = navigateToDetail,
+                reportsViewModel = reportsViewModel
+            )
             Divider(
                 color = Color(0xFFE0E0E0),
                 thickness = 1.dp

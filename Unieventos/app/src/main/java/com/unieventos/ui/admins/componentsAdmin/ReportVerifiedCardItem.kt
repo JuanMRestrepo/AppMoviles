@@ -35,11 +35,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.unieventos.R
 import com.unieventos.model.Report
+import com.unieventos.model.ReportState
+import com.unieventos.viewmodel.ReportsViewModel
 
 @Composable
 fun ReportVerifiedCardItem(
     report: Report,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String) -> Unit,
+    reportsViewModel: ReportsViewModel
 ) {
 
     var showRejectDialog by rememberSaveable { mutableStateOf(false) }
@@ -161,6 +164,7 @@ fun ReportVerifiedCardItem(
             confirmButton = {
                 Button(
                     onClick = {
+                        reportsViewModel.updateReportState(report.id, ReportState.ACCEPTED)
                         showAcceptDialog = false
                     },
                 ) {

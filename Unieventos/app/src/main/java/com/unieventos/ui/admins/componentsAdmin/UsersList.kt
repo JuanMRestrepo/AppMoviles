@@ -19,7 +19,9 @@ fun UsersList(
         modifier = Modifier.fillMaxSize().padding(top = 5.dp)
     ) {
         items(users) { user ->
-            UserCardItem(user = user)
+            UserCardItem(
+                user = user
+            )
             Divider(
                 color = Color(0xFFE0E0E0),
                 thickness = 1.dp

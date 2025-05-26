@@ -6,6 +6,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unieventos.model.Comment
 import com.unieventos.model.Report
+import com.unieventos.model.ReportState
 import com.unieventos.utils.RequestResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +26,7 @@ class ReportsViewModel: ViewModel()  {
 
     private val _currentReport = MutableStateFlow<Report?>(null)
     val currentReport: StateFlow<Report?> = _currentReport.asStateFlow()
+
     init {
         getAllReports()
     }
@@ -242,5 +244,48 @@ class ReportsViewModel: ViewModel()  {
 
     fun getCommentsForReport(reportId: String): List<Comment> {
         return _reports.value.find { it.id == reportId }?.comments ?: emptyList()
+    }
+
+    fun updateReportState(reportId: String, newState: ReportState) {
+        viewModelScope.launch {
+            _reportResult.value = RequestResult.Loading
+            _reportResult.value = runCatching {
+                // Buscar el reporte en la lista local
+                val oldReports = _reports.value.toMutableList()
+                val index = oldReports.indexOfFirst { it.id == reportId }
+                if (index == -1) throw Exception("Reporte no encontrado")
+
+                val report = oldReports[index]
+
+                val updatedReport = Report(
+                    id = report.id,
+                    title = report.title,
+                    category = report.category,
+                    description = report.description,
+                    state = newState,
+                    images = report.images,
+                    comments = report.comments,
+                    location = report.location,
+                    date = report.date,
+                    idUser = report.idUser,
+                    likeCount = report.likeCount,
+                    likedUsers = report.likedUsers
+                )
+
+                db.collection("reports")
+                    .document(reportId)
+                    .set(updatedReport)
+                    .await()
+
+                oldReports[index] = updatedReport
+                _reports.value = oldReports
+
+                "Estado actualizado a ${newState.name}"
+            }.fold(
+                onSuccess = { RequestResult.Success(it) },
+                onFailure = { RequestResult.Failure(it.message ?: "Error actualizando estado") }
+            )
+
+        }
     }
 }

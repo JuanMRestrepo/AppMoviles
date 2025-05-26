@@ -1,12 +1,12 @@
 package com.unieventos.model
 
-import java.time.LocalDateTime
+import java.util.Date
 
 class Notification(
     var id: String,
     var title: String,
     var message: String,
-    var creationDate: LocalDateTime,
+    var creationDate: Date,
     var read: Boolean,
     var state: NotificationType,
     var reportId: String,

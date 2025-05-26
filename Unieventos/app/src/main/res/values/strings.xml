@@ -50,6 +50,7 @@
     <string name="noReportsLbl">You have not created any reports yet</string>
     <string name="noReportsSavedLbl">You have not saved any reports yet</string>
     <string name="noReportsCreatedLbl">No reports have been created yet</string>
+    <string name="noReportsForVerifiedLbl">You have not reports for verified</string>
 
     <string name="sureConfirmLbl">Are you sure you want to verify this report?</string>
     <string name="reportsToVerifiedLbl">Reports to be verified</string>

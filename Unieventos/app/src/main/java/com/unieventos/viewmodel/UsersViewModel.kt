@@ -117,23 +117,6 @@ class UsersViewModel: ViewModel() {
             .await()
     }
 
-    /*
-    fun deleteUser(userId: String) {
-        viewModelScope.launch {
-            _registerResult.value = RequestResult.Loading
-            _registerResult.value = runCatching { deleteUserFirebase(userId) }
-                .fold(
-                    onSuccess = {
-                        RequestResult.Success("User eliminated correctly")
-                    },
-                    onFailure = {
-                        RequestResult.Failure(it.message ?: "Error deleting user")
-                    }
-                )
-        }
-    }
-     */
-
     fun updateUserProfile(
         updatedUser: User
     ) {

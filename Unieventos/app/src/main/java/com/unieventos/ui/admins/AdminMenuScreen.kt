@@ -31,7 +31,8 @@ fun AdminMenuScreen(
             navController = navController,
             navigateToDetail = { id ->
                 navController.navigate(RouteAdminTab.ReportDetailAdmin(id))
-            }
+            },
+            logout = logout
         )
     }
 }

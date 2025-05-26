@@ -23,7 +23,8 @@ import com.unieventos.ui.screens.SettingsTab
 fun AdminNavigation(
     paddingValues: PaddingValues,
     navController: NavHostController,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String) -> Unit,
+    logout: () -> Unit
 ) {
     NavHost(
         modifier = Modifier.padding(paddingValues),
@@ -31,7 +32,9 @@ fun AdminNavigation(
         startDestination = RouteAdminTab.HomeAdmin
     ) {
         composable<RouteAdminTab.HomeAdmin> {
-            HomeAdminTab()
+            HomeAdminTab(
+                onNavigateToDetail = navigateToDetail
+            )
         }
 
         composable<RouteAdminTab.UsersAdmin> {
@@ -55,17 +58,27 @@ fun AdminNavigation(
                 },
                 navigateToAllReports = {
                     navController.navigate(RouteAdminTab.AllReports)
+                },
+                navigateToLogIn = {
+                    logout()
                 }
             )
         }
 
         composable<RouteAdminTab.EditProfileAdmin> {
-            EditProfileAdminTab()
+            EditProfileAdminTab(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable<RouteAdminTab.AllReports> {
             AllReportsTab (
-                navigateToDetail = navigateToDetail
+                navigateToDetail = navigateToDetail,
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
             )
         }
 

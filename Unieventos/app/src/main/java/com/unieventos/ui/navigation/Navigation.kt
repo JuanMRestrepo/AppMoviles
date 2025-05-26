@@ -134,7 +134,13 @@ fun Navigation(
                     AdminMenuScreen(
                         logout = {
                             SharedPreferencesUtils.clearPreference(context)
-                            navController.navigate(RouteScreen.HomeScreen)
+                            mainViewModel.usersViewModel.logout()
+                            navController.navigate(RouteScreen.HomeScreen){
+                                popUpTo(0){
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
                         }
                     )
                 }
