@@ -131,6 +131,7 @@ fun ReportVerifiedCardItem(
                 Button(
                     onClick = {
                         showRejectDialog = false
+                        reportsViewModel.solveReport(report.id, ReportState.REJECTED, rejectReason)
                     },
                 ) {
                     Text(stringResource(id = R.string.confirmLbl))

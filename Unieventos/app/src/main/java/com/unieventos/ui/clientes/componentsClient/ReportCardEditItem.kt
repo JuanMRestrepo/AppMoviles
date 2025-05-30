@@ -43,7 +43,6 @@ fun ReportCardEditItem(
     reportsViewModel: ReportsViewModel
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val primaryColor = Color(0xFFFF4A3D)
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
     if (showDeleteDialog) {
@@ -62,7 +61,9 @@ fun ReportCardEditItem(
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) {
+                TextButton(onClick = {
+                    showDeleteDialog = false }
+                ) {
                     Text(stringResource(R.string.closeLbl))
                 }
             }

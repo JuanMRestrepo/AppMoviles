@@ -121,9 +121,6 @@ fun Navigation(
                         onNavigateBack = {
                             navController.popBackStack()
                         },
-                        navigateToRestart2 = {
-                            navController.navigate(RouteScreen.RestartPassword2Screen)
-                        },
                         navigateToHome = {
                             navController.navigate(RouteScreen.HomeScreen)
                         }

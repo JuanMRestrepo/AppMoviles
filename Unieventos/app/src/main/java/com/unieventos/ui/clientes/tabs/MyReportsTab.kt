@@ -63,7 +63,6 @@ fun MyReportsTab(
                 Text(stringResource(id = R.string.noReportsCreatedLbl))
             }
         }
-
         ReportsListStatus (reports = filteredReports, navigateToDetail = navigateToDetail)
     }
 }

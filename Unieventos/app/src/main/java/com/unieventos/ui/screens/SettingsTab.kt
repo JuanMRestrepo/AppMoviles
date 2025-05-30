@@ -69,13 +69,10 @@ fun SettingsTab() {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            language + (if (language == "Español") "(usa)" else ""),
+                            text = "English",
                             modifier = Modifier.weight(1f),
-                            color = if (isDarkMode) Color.LightGray else Color.DarkGray
                         )
                     }
-
-                    Divider(color = if (isDarkMode) Color.DarkGray else Color.LightGray.copy(alpha = 0.3f))
 
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
@@ -94,12 +91,10 @@ fun SettingsTab() {
                     ) {
                         Text(
                             stringResource(id = R.string.colombiaLbl),
-                            modifier = Modifier.weight(1f),
-                            color = if (isDarkMode) Color.LightGray else Color.DarkGray
+                            modifier = Modifier.weight(1f)
                         )
                     }
 
-                    Divider(color = if (isDarkMode) Color.DarkGray else Color.LightGray.copy(alpha = 0.3f))
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }

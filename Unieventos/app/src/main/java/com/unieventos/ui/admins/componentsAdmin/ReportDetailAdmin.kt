@@ -1,7 +1,6 @@
-package com.unieventos.ui.clientes.tabs
+package com.unieventos.ui.admins.componentsAdmin
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,12 +26,11 @@ import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -59,21 +57,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mapbox.geojson.Point
-import com.mapbox.maps.extension.compose.MapEffect
-import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
-import com.mapbox.maps.extension.compose.annotation.rememberIconImage
-import com.mapbox.maps.plugin.PuckBearing
-import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
-import com.mapbox.maps.plugin.locationcomponent.location
 import com.unieventos.R
 import com.unieventos.model.ReportState
 import com.unieventos.ui.clientes.componentsClient.CommentsItem
@@ -84,11 +74,10 @@ import com.unieventos.utils.SharedPreferencesUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailReportTab(
+fun ReportDetailAdmin(
     id: String,
     onNavigateBack: () -> Unit
 ) {
-
     val context = LocalContext.current
     val userMap = SharedPreferencesUtils.getPreference(context)
     val userId = userMap.get("userId") ?: ""
@@ -99,8 +88,32 @@ fun DetailReportTab(
     val reports by reportsViewModel.reports.collectAsState()
     val currentUser by usersViewModel.currentUser.collectAsState()
 
-    val report = reports.find { it.id == id } ?: return
-    val name = usersViewModel.getNameById(report.idUser)
+    // Estado local para el reporte
+    var localReport by remember(id) { mutableStateOf(reports.find { it.id == id }) }
+
+    // Actualizar cuando cambian los reportes
+    LaunchedEffect(reports) {
+        localReport = reports.find { it.id == id }
+    }
+
+    // Manejar cuando el reporte ha sido eliminado
+    var isDeleted by remember { mutableStateOf(false) }
+
+    // Si el reporte fue eliminado, navegar inmediatamente
+    if (isDeleted) {
+        LaunchedEffect(Unit) {
+            onNavigateBack()
+        }
+        return
+    }
+
+    val report = localReport
+    if (report == null) {
+        LaunchedEffect(Unit) {
+            onNavigateBack()
+        }
+        return
+    }
 
     val lista = report.images
     val imageList: List<String> = report.images
@@ -110,20 +123,15 @@ fun DetailReportTab(
     val state = rememberCarouselState { lista.count() }
 
     val liked = report.likedUsers.contains(userId)
-    val isSaved = currentUser?.savedReportIds?.contains(report.id) ?: false
 
-    // Nuevos estados para resolver reporte
-    var showResolveDialog by remember { mutableStateOf(false) }
-    var showRejectDialogResult by rememberSaveable { mutableStateOf(false) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    var showDeleteDialogResult by rememberSaveable { mutableStateOf(false) }
 
-    val updateResult by reportsViewModel.reportResult.collectAsState()
-    val rejectResult by reportsViewModel.updateResult.collectAsState()
-
-    val isCreator = userId == report.idUser
+    val reportResult by reportsViewModel.reportResult.collectAsState()
+    val updateResult by reportsViewModel.updateResult.collectAsState()
 
     Scaffold(
         floatingActionButton = {
-
             FloatingActionButton(
                 onClick = { showComments = true },
                 containerColor = MaterialTheme.colorScheme.primary
@@ -134,13 +142,35 @@ fun DetailReportTab(
                 )
             }
         }
-    ){padding ->
+    ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
             contentAlignment = Alignment.Center
-        ){
+        ) {
+            LaunchedEffect(reportResult) {
+                when (reportResult) {
+                    is RequestResult.Success -> {
+                        Toast.makeText(
+                            context,
+                            "Reporte eliminado correctamente",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        isDeleted = true
+                        reportsViewModel.resetReportResult()
+                    }
+                    is RequestResult.Failure -> {
+                        Toast.makeText(
+                            context,
+                            (reportResult as RequestResult.Failure).message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                        reportsViewModel.resetReportResult()
+                    }
+                    else -> {}
+                }
+            }
 
             LaunchedEffect(updateResult) {
                 when (updateResult) {
@@ -150,7 +180,7 @@ fun DetailReportTab(
                             "Reporte resuelto correctamente",
                             Toast.LENGTH_SHORT
                         ).show()
-                        reportsViewModel.resetReportResult()
+                        reportsViewModel.resetUpdateResult()
                     }
                     is RequestResult.Failure -> {
                         Toast.makeText(
@@ -158,55 +188,10 @@ fun DetailReportTab(
                             (updateResult as RequestResult.Failure).message,
                             Toast.LENGTH_LONG
                         ).show()
-                        reportsViewModel.resetReportResult()
-                    }
-                    else -> {}
-                }
-            }
-
-            LaunchedEffect(rejectResult) {
-                when (rejectResult) {
-                    is RequestResult.Success -> {
-                        Toast.makeText(
-                            context,
-                            "Reporte mandado a revisión",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        reportsViewModel.resetUpdateResult()
-                    }
-                    is RequestResult.Failure -> {
-                        Toast.makeText(
-                            context,
-                            (rejectResult as RequestResult.Failure).message,
-                            Toast.LENGTH_LONG
-                        ).show()
                         reportsViewModel.resetUpdateResult()
                     }
                     else -> {}
                 }
-            }
-
-            if (showRejectDialogResult) {
-                AlertDialog(
-                    onDismissRequest = { showRejectDialogResult = false },
-                    title = { Text("Submit review") },
-                    text = { Text("Are you sure you want to send it for review?") },
-                    confirmButton = {
-                        TextButton(
-                            onClick = {
-                                reportsViewModel.solveReport(report.id, ReportState.PENDING, "")
-                                showRejectDialogResult = false
-                            }
-                        ) {
-                            Text("Review", color = Color.Red)
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { showRejectDialogResult = false }) {
-                            Text(stringResource(R.string.closeLbl))
-                        }
-                    }
-                )
             }
 
             Column(
@@ -216,28 +201,53 @@ fun DetailReportTab(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                if (showResolveDialog) {
+
+                if (showDeleteDialogResult) {
                     AlertDialog(
-                        onDismissRequest = { showResolveDialog = false },
+                        onDismissRequest = { showDeleteDialogResult = false },
                         title = { Text(stringResource(R.string.resultReportLbl)) },
                         text = { Text(stringResource(R.string.resultReportSureLbl)) },
                         confirmButton = {
-                            TextButton (
+                            TextButton(
                                 onClick = {
-                                    reportsViewModel.updateReportState(report.id, ReportState.RESOLVED)
-                                    showResolveDialog = false
+                                    reportsViewModel.solveReport(report.id, ReportState.RESOLVED)
+                                    showDeleteDialogResult = false
                                 }
                             ) {
-                                Text(stringResource(R.string.solveLbl), color = Color(0xFF4CAF50))
+                                Text(stringResource(R.string.solveLbl), color = Color.Red)
                             }
                         },
                         dismissButton = {
-                            TextButton(onClick = { showResolveDialog = false }) {
+                            TextButton(onClick = { showDeleteDialogResult = false }) {
                                 Text(stringResource(R.string.closeLbl))
                             }
                         }
                     )
                 }
+
+                if (showDeleteDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showDeleteDialog = false },
+                        title = { Text(stringResource(R.string.deleteReportLbl)) },
+                        text = { Text(stringResource(R.string.deleteReportSureLbl)) },
+                        confirmButton = {
+                            TextButton(
+                                onClick = {
+                                    reportsViewModel.deleteReport(report.id)
+                                    showDeleteDialog = false
+                                }
+                            ) {
+                                Text(stringResource(R.string.deleteLbl), color = Color.Red)
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showDeleteDialog = false }) {
+                                Text(stringResource(R.string.closeLbl))
+                            }
+                        }
+                    )
+                }
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -260,38 +270,37 @@ fun DetailReportTab(
                         color = Color(0xFEE53935),
                         fontSize = 25.sp,
                     )
-
                     Row {
+                        // Nuevo icono para marcar como resuelto
                         Icon(
-                            imageVector = if (isSaved) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
-                            contentDescription = stringResource(id = R.string.saveLabel),
+                            imageVector = Icons.Filled.CheckBox,
+                            contentDescription = "Marcar como resuelto",
+                            tint = Color(0xFF4CAF50),
+                            modifier = Modifier
+                                .size(30.dp)
+                                .clickable {
+                                    showDeleteDialogResult = true
+                                }
+                                .padding(end = 8.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "Delete report Icon",
                             tint = Color(0xFEE53935),
                             modifier = Modifier
                                 .size(25.dp)
                                 .clickable {
-                                    usersViewModel.toggleSaveReport(userId, report.id)
+                                    showDeleteDialog = true
                                 }
                         )
-                        if (isCreator) {
-                            Icon(
-                                imageVector = Icons.Filled.CheckBox,
-                                contentDescription = "Marcar como resuelto",
-                                tint = Color(0xFF4CAF50),
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .clickable {
-                                        showResolveDialog = true
-                                    }
-                                    .padding(end = 8.dp)
-                            )
-                        }
                     }
                 }
+
                 Box(
                     modifier = Modifier
                         .width(360.dp)
                         .fillMaxHeight()
-                ){
+                ) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -324,7 +333,7 @@ fun DetailReportTab(
                             },
                             modifier = Modifier.fillMaxWidth(),
                             readOnly = true,
-                            )
+                        )
 
                         Column {
                             Row(
@@ -353,11 +362,10 @@ fun DetailReportTab(
                                     .clip(RoundedCornerShape(8.dp)),
                                 contentAlignment = Alignment.Center
                             ) {
-
-                                var mapViewportState = rememberMapViewportState {
+                                val mapViewportState = rememberMapViewportState {
                                     setCameraOptions {
                                         zoom(15.0)
-                                        center( Point.fromLngLat(report.location.longitude, report.location.latitude))
+                                        center(Point.fromLngLat(report.location.longitude, report.location.latitude))
                                     }
                                 }
 
@@ -393,34 +401,6 @@ fun DetailReportTab(
                             }
                         )
 
-                        if (isCreator && report.state == ReportState.REJECTED) {
-                            OutlinedTextField(
-                                value = report.rejectionReason,
-                                onValueChange = {},
-                                label = {
-                                    Text(
-                                        text = "Razón de rechazo",
-                                        fontSize = 12.sp,
-                                        fontWeight = FontWeight.Normal
-                                    )
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                                readOnly = true,
-                            )
-
-                            Button (
-                                onClick = {
-                                    showRejectDialogResult = true
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
-                            ) {
-                                Text("Enviar a revisión")
-                            }
-                        }
-
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -442,7 +422,7 @@ fun DetailReportTab(
                             preferredItemWidth = 186.dp,
                             contentPadding = PaddingValues(horizontal = 16.dp),
                         ) { i ->
-                            val imageUrl  = lista[i]
+                            val imageUrl = lista[i]
                             ElevatedCard(
                                 modifier = Modifier
                                     .width(186.dp)
@@ -464,7 +444,7 @@ fun DetailReportTab(
                             modifier = Modifier
                                 .fillMaxWidth().padding(start = 20.dp),
                             contentAlignment = Alignment.CenterStart
-                        ){
+                        ) {
                             Row(
                                 modifier = Modifier
                                     .clickable {
@@ -513,7 +493,7 @@ fun DetailReportTab(
                                     fontSize = 14.sp
                                 )
                                 Text(
-                                    text = name,
+                                    text = usersViewModel.getNameById(report.idUser),
                                     fontSize = 14.sp
                                 )
                             }

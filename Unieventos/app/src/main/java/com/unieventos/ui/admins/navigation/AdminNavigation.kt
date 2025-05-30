@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.unieventos.ui.admins.componentsAdmin.ReportDetailAdmin
 import com.unieventos.ui.admins.tabs.AllReportsTab
 import com.unieventos.ui.admins.tabs.EditProfileAdminTab
 import com.unieventos.ui.admins.tabs.HomeAdminTab
@@ -88,13 +89,13 @@ fun AdminNavigation(
 
         composable <RouteAdminTab.ReportDetailAdmin> {
             val args = it.toRoute<RouteAdminTab.ReportDetailAdmin>()
-            DetailReportTab (
+
+            ReportDetailAdmin(
                 id = args.id,
                 onNavigateBack = {
                     navController.popBackStack()
                 }
             )
         }
-
     }
 }

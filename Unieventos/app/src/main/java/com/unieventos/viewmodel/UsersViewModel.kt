@@ -53,8 +53,10 @@ class UsersViewModel: ViewModel() {
     fun createUser(user: User) {
         viewModelScope.launch {
             _registerResult.value = RequestResult.Loading
-            _registerResult.value = runCatching { createUserFirebase(user) }
-                .fold(
+            _registerResult.value = runCatching {
+                createUserFirebase(user)
+                _users.value = findAllFirebase()
+            }.fold(
                     onSuccess = {
                         RequestResult.Success("Usuario creado correctamente")
                     },
@@ -144,8 +146,10 @@ class UsersViewModel: ViewModel() {
     fun login(email: String, password: String) {
         viewModelScope.launch {
             _registerResult.value = RequestResult.Loading
-            _registerResult.value = runCatching { loginFirebase(email, password) }
-                .fold(
+            _registerResult.value = runCatching {
+                loginFirebase(email, password)
+                _users.value = findAllFirebase()
+            }.fold(
                     onSuccess = {
                         RequestResult.Success("User logged succesfully")
                     },
@@ -253,4 +257,16 @@ class UsersViewModel: ViewModel() {
             }
         }
     }
+
+    fun sendPasswordResetEmail(email: String, onResult: (RequestResult) -> Unit) {
+        viewModelScope.launch {
+            try {
+                auth.sendPasswordResetEmail(email).await()
+                onResult(RequestResult.Success("Correo de recuperación enviado"))
+            } catch (e: Exception) {
+                onResult(RequestResult.Failure(e.message ?: "Error al enviar el correo"))
+            }
+        }
+    }
+
 }

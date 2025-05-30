@@ -1,5 +1,5 @@
 package com.unieventos.model
 
 enum class ReportState {
-    PENDING, ACCEPTED, REJECTED
+    PENDING, ACCEPTED, REJECTED, RESOLVED
 }

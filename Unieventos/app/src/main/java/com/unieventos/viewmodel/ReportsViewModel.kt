@@ -24,6 +24,9 @@ class ReportsViewModel: ViewModel()  {
     private val _reportResult = MutableStateFlow<RequestResult?>(null)
     val reportResult: StateFlow<RequestResult?> = _reportResult.asStateFlow()
 
+    private val _updateResult = MutableStateFlow<RequestResult?>(null)
+    val updateResult: StateFlow<RequestResult?> = _updateResult.asStateFlow()
+
     private val _currentReport = MutableStateFlow<Report?>(null)
     val currentReport: StateFlow<Report?> = _currentReport.asStateFlow()
 
@@ -158,6 +161,10 @@ class ReportsViewModel: ViewModel()  {
         _reportResult.value = null
     }
 
+    fun resetUpdateResult() {
+        _updateResult.value = null
+    }
+
     fun findByUserId(userId: String): List<Report> {
         return _reports.value.filter { it.idUser == userId }
     }
@@ -246,11 +253,13 @@ class ReportsViewModel: ViewModel()  {
         return _reports.value.find { it.id == reportId }?.comments ?: emptyList()
     }
 
-    fun updateReportState(reportId: String, newState: ReportState) {
+    fun updateReportState(
+        reportId: String,
+        newState: ReportState
+    ) {
         viewModelScope.launch {
             _reportResult.value = RequestResult.Loading
             _reportResult.value = runCatching {
-                // Buscar el reporte en la lista local
                 val oldReports = _reports.value.toMutableList()
                 val index = oldReports.indexOfFirst { it.id == reportId }
                 if (index == -1) throw Exception("Reporte no encontrado")
@@ -262,6 +271,52 @@ class ReportsViewModel: ViewModel()  {
                     title = report.title,
                     category = report.category,
                     description = report.description,
+                    rejectionReason = report.rejectionReason,
+                    state = newState,
+                    images = report.images,
+                    comments = report.comments,
+                    location = report.location,
+                    date = report.date,
+                    idUser = report.idUser,
+                    likeCount = report.likeCount,
+                    likedUsers = report.likedUsers
+                )
+
+                db.collection("reports")
+                    .document(reportId)
+                    .set(updatedReport)
+                    .await()
+
+                oldReports[index] = updatedReport
+                _reports.value = oldReports
+
+                "Estado actualizado a ${newState.name}"
+            }.fold(
+                onSuccess = { RequestResult.Success(it) },
+                onFailure = { RequestResult.Failure(it.message ?: "Error actualizando estado") }
+            )
+        }
+    }
+
+    fun solveReport(reportId: String,
+                    newState: ReportState,
+                    rejectReason: String = ""
+    ) {
+        viewModelScope.launch {
+            _updateResult.value = RequestResult.Loading
+            _updateResult.value = runCatching {
+                val oldReports = _reports.value.toMutableList()
+                val index = oldReports.indexOfFirst { it.id == reportId }
+                if (index == -1) throw Exception("Reporte no encontrado")
+
+                val report = oldReports[index]
+
+                val updatedReport = Report(
+                    id = report.id,
+                    title = report.title,
+                    category = report.category,
+                    description = report.description,
+                    rejectionReason = rejectReason,
                     state = newState,
                     images = report.images,
                     comments = report.comments,

@@ -1,5 +1,6 @@
 package com.unieventos.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -25,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -37,6 +40,8 @@ import androidx.compose.ui.unit.sp
 import com.unieventos.R
 import com.unieventos.ui.components.TextFieldForm
 import com.unieventos.ui.components.topBars.TopBarDefect
+import com.unieventos.ui.navigation.LocalMainViewModel
+import com.unieventos.utils.RequestResult
 
 @Composable
 fun RestartPassword2(
@@ -44,14 +49,23 @@ fun RestartPassword2(
     navigateToHome: () -> Unit,
     navigateToLogIn: () -> Unit
 ) {
+    /*
+    val context = LocalContext.current
+    val usersViewModel = LocalMainViewModel.current.usersViewModel
+
+    var newPassword by rememberSaveable { mutableStateOf("") }
+    var confirmPassword by rememberSaveable { mutableStateOf("") }
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+    var confirmVisible by rememberSaveable { mutableStateOf(false) }
+    var isLoading by rememberSaveable { mutableStateOf(false) }
+    var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
+
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
-            var password by rememberSaveable { mutableStateOf("") }
-            var confirmPassword by rememberSaveable { mutableStateOf("") }
 
             TopBarDefect (
                 onNavigateBack,
@@ -123,17 +137,13 @@ fun RestartPassword2(
                         Spacer(modifier = Modifier.height(20.dp))
 
                         TextFieldForm(
-                            value = password,
-                            onValueChange = {
-                                password = it
-                            },
-                            supportingText = stringResource(id = R.string.passwordValidation),
+                            value = newPassword,
+                            onValueChange = { newPassword = it },
                             label = stringResource(id = R.string.passwordLabel),
-                            onValidate = {
-                                password.length < 6
-                            },
+                            supportingText = stringResource(id = R.string.passwordValidation),
+                            onValidate = { newPassword.length < 6 },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            isPassword = true
+                            isPassword = !passwordVisible
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
@@ -149,16 +159,12 @@ fun RestartPassword2(
 
                         TextFieldForm(
                             value = confirmPassword,
-                            onValueChange = {
-                                confirmPassword = it
-                            },
-                            supportingText = stringResource(id = R.string.passwordValidation),
+                            onValueChange = { confirmPassword = it },
                             label = stringResource(id = R.string.passwordConfLabel),
-                            onValidate = {
-                                confirmPassword.length < 6
-                            },
+                            supportingText = "Las contraseñas deben coincidir",
+                            onValidate = { confirmPassword != newPassword },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            isPassword = true
+                            isPassword = !confirmVisible
                         )
 
                         Spacer(modifier = Modifier.height(30.dp))
@@ -180,6 +186,13 @@ fun RestartPassword2(
 
                         Spacer(modifier = Modifier.height(10.dp))
 
+                        errorMessage?.let {
+                            Text(
+                                text = it,
+                                color = Color.Red,
+                                modifier = Modifier.padding(8.dp))
+                        }
+
                         Button(
                             colors = ButtonDefaults.buttonColors(Color(0xFFFF4A3D)),
                             shape = RoundedCornerShape(30.dp),
@@ -187,14 +200,49 @@ fun RestartPassword2(
                                 .width(300.dp)
                                 .padding(top = 30.dp)
                                 .height(60.dp),
-                            onClick = { navigateToLogIn() },
+                            onClick = {
+                                if (newPassword.length < 6) {
+                                    errorMessage = "La contraseña debe tener al menos 6 caracteres"
+                                } else if (newPassword != confirmPassword) {
+                                    errorMessage = "Las contraseñas no coinciden"
+                                } else {
+                                    isLoading = true
+                                    errorMessage = null
+
+                                    usersViewModel.updatePassword(email, newPassword) { result ->
+                                        isLoading = false
+                                        when (result) {
+                                            is RequestResult.Success -> {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Contraseña actualizada correctamente",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                navigateToLogIn()
+                                            }
+                                            is RequestResult.Failure -> {
+                                                errorMessage = result.message
+                                            }
+                                            else -> {}
+                                        }
+                                    }
+                                }
+                            },
                         ) {
-                            Text(changeLbl, color = Color.White,
-                                fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                            if (isLoading) {
+                                CircularProgressIndicator(color = Color.White)
+                            } else {
+                                Text(stringResource(id = R.string.changePasswordLbl),
+                                    color = Color.White,
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Bold)
+                            }
                         }
                     }
                 }
             }
         }
     }
+
+     */
 }

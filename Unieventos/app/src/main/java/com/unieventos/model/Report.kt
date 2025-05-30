@@ -7,6 +7,7 @@ class Report(
     var title: String = "",
     var category: String = "",
     var description: String = "",
+    var rejectionReason: String = "",
     var state: ReportState = ReportState.PENDING,
     var images: List<String> = listOf(),
     var comments: List<Comment> = listOf(),
